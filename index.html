@@ -91,7 +91,7 @@
             overflow: hidden;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
-        .dark-mode .profile-pic { border-color: #4a90e2; }
+        .dark-mode .profile-pic { border-color: #a0aec0; }
         .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
         .profile-info { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; }
         .profile-name {
@@ -102,7 +102,7 @@
             align-items: center;
             gap: 0.3rem;
         }
-        .dark-mode .profile-name { color: #4a90e2; }
+        .dark-mode .profile-name { color: #a0aec0; }
         .profile-name i { font-size: 1rem; animation: bounce 2s infinite; }
         .creator-name {
             font-size: 0.9rem;
@@ -154,6 +154,7 @@
             border: 1px solid #2b6cb0;
             transition: 0.3s;
         }
+        .dark-mode .slider { border-color: #a0aec0; }
         .slider:before {
             position: absolute;
             content: "";
@@ -165,7 +166,7 @@
             border-radius: 50%;
             transition: 0.3s;
         }
-        input:checked + .slider { background: #4a90e2; }
+        input:checked + .slider { background: #a0aec0; }
         input:checked + .slider:before { transform: translateX(16px); }
         .mode-toggle i { font-size: 0.8rem; }
         .light-mode .mode-toggle i.fa-sun { color: #f6ad55; }
@@ -192,7 +193,7 @@
             cursor: pointer;
             transition: background 0.3s ease;
         }
-        .dark-mode .dropdown-selected { background: #3d4a5a; border-color: #4a90e2; }
+        .dark-mode .dropdown-selected { background: #3d4a5a; border-color: #a0aec0; }
         .dropdown-selected:hover { background: #e2e8f0; }
         .dark-mode .dropdown-selected:hover { background: #4a5b6d; }
         .dropdown-selected i { margin-left: 0.3rem; font-size: 0.7rem; }
@@ -255,10 +256,10 @@
             gap: 0.2rem;
             color: #2b6cb0;
         }
-        .dark-mode .input-group label { color: #4a90e2; }
+        .dark-mode .input-group label { color: #a0aec0; }
         .input-group i { font-size: 0.9rem; }
         .light-mode .input-group i { color: #2b6cb0; }
-        .dark-mode .input-group i { color: #4a90e2; }
+        .dark-mode .input-group i { color: #a0aec0; }
         .input-group input {
             width: 100%;
             padding: 0.3rem;
@@ -270,11 +271,11 @@
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
         .input-group input:focus {
-            border-color: #4a90e2;
-            box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
+            border-color: #a0aec0;
+            box-shadow: 0 0 8px rgba(160, 174, 192, 0.3);
             outline: none;
         }
-        .dark-mode .input-group input { background: #3d4a5a; color: #ffffff; border-color: #4a90e2; }
+        .dark-mode .input-group input { background: #3d4a5a; color: #ffffff; border-color: #a0aec0; }
         .input-group.tax-group {
             grid-column: 1 / -1;
             flex-direction: row;
@@ -285,7 +286,7 @@
             border-radius: 0.5rem;
             background: #ffffff;
         }
-        .dark-mode .input-group.tax-group { border-color: #4a90e2; background: #3d4a5a; }
+        .dark-mode .input-group.tax-group { border-color: #a0aec0; background: #3d4a5a; }
         .tax-toggle { display: flex; align-items: center; gap: 0.2rem; }
         #taxStatus { font-size: 0.9rem; display: flex; align-items: center; gap: 0.2rem; }
         .status-dot {
@@ -295,7 +296,7 @@
         }
         .light-mode .status-dot.active { background: #2b6cb0; }
         .light-mode .status-dot.inactive { background: #e53e3e; }
-        .dark-mode .status-dot.active { background: #4a90e2; }
+        .dark-mode .status-dot.active { background: #a0aec0; }
         .dark-mode .status-dot.inactive { background: #e53e3e; }
 
         /* Decorative Line */
@@ -305,7 +306,7 @@
             margin: 0.5rem 0;
             border-radius: 1rem;
         }
-        .dark-mode .decorative-line { background: linear-gradient(to right, transparent, #4a90e2, transparent); }
+        .dark-mode .decorative-line { background: linear-gradient(to right, transparent, #a0aec0, transparent); }
 
         /* Results Section */
         .results-section {
@@ -326,7 +327,7 @@
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
             transition: box-shadow 0.3s ease;
         }
-        .dark-mode .result-card { background: #3d4a5a; border-color: #4a90e2; }
+        .dark-mode .result-card { background: #3d4a5a; border-color: #a0aec0; }
         .result-card.visible { box-shadow: 0 4px 16px rgba(43, 108, 176, 0.2); }
         .result-card.hidden { display: none; }
         .result-card p:first-child {
@@ -338,10 +339,10 @@
             gap: 0.2rem;
             color: #2b6cb0;
         }
-        .dark-mode .result-card p:first-child { color: #4a90e2; }
+        .dark-mode .result-card p:first-child { color: #a0aec0; }
         .result-card i { font-size: 0.9rem; }
         .result-card p:last-child {
-            font-size: 1.2rem; /* Adjusted to be closer to input size */
+            font-size: 1rem; /* Smaller and consistent with inputs */
             font-weight: 900;
             transition: color 0.3s ease, transform 0.3s ease;
             margin-top: 0.2rem;
@@ -353,7 +354,7 @@
         }
         .dark-mode .result-card.bg-blue-50 { background: #2d4a6a; }
         .result-card.bg-blue-50 p:last-child {
-            font-size: 1.8rem; /* Reduced for mobile compatibility */
+            font-size: 2rem; /* Larger for net profit */
         }
         .result-value {
             animation: scaleUp 0.5s ease;
@@ -389,7 +390,7 @@
             cursor: pointer;
             transition: opacity 0.3s ease;
         }
-        .dark-mode .show-more-btn { background: #4a90e2; }
+        .dark-mode .show-more-btn { background: #a0aec0; }
         .show-more-btn:hover { opacity: 0.9; }
         .reset-btn {
             width: 100%;
@@ -421,8 +422,8 @@
             .input-group label { font-size: 1rem; }
             .input-group input { padding: 0.5rem; font-size: 1.1rem; }
             .result-card p:first-child { font-size: 1rem; }
-            .result-card p:last-child { font-size: 1.5rem; } /* Adjusted for larger screens */
-            .result-card.bg-blue-50 p:last-child { font-size: 2.5rem; } /* Adjusted for larger screens */
+            .result-card p:last-child { font-size: 1.2rem; } /* Slightly larger for desktop */
+            .result-card.bg-blue-50 p:last-child { font-size: 2.5rem; } /* Larger net profit for desktop */
             .show-more-btn, .reset-btn { max-width: 150px; font-size: 1rem; }
         }
     </style>
