@@ -4,20 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aff Price</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Flag Icons CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
-    <!-- Google Fonts: Tajawal -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Tajawal', sans-serif;
             background: #f0f4f8;
@@ -26,11 +18,9 @@
             padding: 0.5rem;
             display: flex;
             flex-direction: column;
-            overflow-x: hidden;
         }
         .light-mode { background: #f0f4f8; color: #1a202c; }
         .dark-mode { background: #1a202c; color: #ffffff; }
-
         .container {
             background: #ffffff;
             border-radius: 1rem;
@@ -44,13 +34,6 @@
         }
         .dark-mode .container { background: #2d3748; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); }
 
-        h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 0.5rem;
-        }
-
         /* Header */
         .header {
             display: flex;
@@ -58,16 +41,15 @@
             align-items: center;
             gap: 0.5rem;
         }
-        @media (min-width: 768px) {
-            .header { flex-direction: row; justify-content: space-between; }
-        }
         .profile-card {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 0.5rem;
             padding: 0.5rem;
             border: 1px solid #2b6cb0;
             border-radius: 0.5rem;
+            width: 100%;
             background: transparent;
         }
         .dark-mode .profile-card { border-color: #48bb78; }
@@ -80,26 +62,21 @@
         }
         .dark-mode .profile-pic { border-color: #48bb78; }
         .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
-        .profile-name { font-size: 0.9rem; font-weight: 700; }
+        .profile-name { font-size: 1rem; font-weight: 700; text-align: center; }
         .social-links { display: flex; gap: 0.3rem; }
-        .social-links a {
-            font-size: 0.8rem;
-            color: #ffffff;
-            padding: 0.3rem;
-            border-radius: 50%;
-        }
+        .social-links a { font-size: 0.8rem; color: #ffffff; padding: 0.3rem; border-radius: 50%; }
         .social-links .facebook { background: #1877F2; }
         .social-links .whatsapp { background: #25D366; }
         .social-links .instagram { background: #E1306C; }
         .social-links .tiktok { background: #000000; }
         .social-links .linkedin { background: #0077B5; }
 
-        /* Mode Toggle & Dropdown */
+        /* Controls */
         .controls {
             display: flex;
-            flex-wrap: wrap;
+            justify-content: space-between;
+            width: 100%;
             gap: 0.5rem;
-            justify-content: center;
         }
         .mode-toggle {
             display: flex;
@@ -143,7 +120,7 @@
 
         .custom-dropdown {
             position: relative;
-            width: 140px;
+            width: 120px;
         }
         .dropdown-selected {
             display: flex;
@@ -182,52 +159,83 @@
         .dark-mode .dropdown-option:hover { background: #4a5568; }
         .dropdown-option span { margin: 0 0.3rem; }
 
-        /* Inputs */
-        .inputs-container {
+        /* Inputs & Results */
+        .inputs-container, .results-container {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
             justify-content: space-between;
         }
-        .input-group {
+        .input-group, .result-card {
             width: calc(50% - 0.25rem);
             display: flex;
             flex-direction: column;
             gap: 0.2rem;
         }
         @media (min-width: 768px) {
-            .input-group { width: calc(33.33% - 0.33rem); }
+            .input-group, .result-card { width: calc(33.33% - 0.33rem); }
         }
-        .input-group label {
+        .input-group label, .result-card p:first-child {
             font-size: 0.8rem;
             font-weight: 700;
             display: flex;
             align-items: center;
             gap: 0.3rem;
         }
-        .light-mode .input-group label { color: #1a202c; }
-        .dark-mode .input-group label { color: #ffffff; }
-        .input-group i { font-size: 0.8rem; }
-        .light-mode .input-group i { color: #2b6cb0; }
-        .dark-mode .input-group i { color: #48bb78; }
+        .light-mode .input-group label, .light-mode .result-card p:first-child { color: #1a202c; }
+        .dark-mode .input-group label, .dark-mode .result-card p:first-child { color: #ffffff; }
+        .input-group i, .result-card i { font-size: 0.8rem; }
+        .light-mode .input-group i, .light-mode .result-card i { color: #2b6cb0; }
+        .dark-mode .input-group i, .dark-mode .result-card i { color: #48bb78; }
         .input-group input {
             width: 100%;
-            padding: 0.3rem 0.5rem;
+            padding: 0.3rem;
             font-size: 0.8rem;
             border: 1px solid #2b6cb0;
             border-radius: 0.5rem;
             background: #f7fafc;
         }
         .dark-mode .input-group input { background: #4a5568; color: #ffffff; border-color: #48bb78; }
+        .result-card {
+            background: #ffffff;
+            border: 1px solid #2b6cb0;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            text-align: center;
+        }
+        .dark-mode .result-card { background: #2d3748; border-color: #48bb78; }
+        .result-card p:last-child { font-size: 0.9rem; font-weight: 700; }
+        .result-card.bg-blue-50 { width: 100%; background: #e6fffa; }
+        .dark-mode .result-card.bg-blue-50 { background: #000000; }
+        #netProfitAfterAds { font-size: 1.2rem; }
+        .profit-indicators { display: flex; justify-content: center; align-items: center; gap: 0.3rem; }
+        #profitIndicator, #trendIndicator { font-size: 0.7rem; }
+        .up { color: #48bb78; }
+        .down { color: #e53e3e; }
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 0.2rem;
+        }
+        .progress { height: 100%; transition: width 0.5s ease; }
+        .light-mode .progress { background: #2b6cb0; }
+        .dark-mode .progress { background: #48bb78; }
+        .negative { background: #e53e3e; }
+
+        /* Tax Toggle */
         .input-group.tax-group {
             width: 100%;
             flex-direction: row;
             align-items: center;
-            gap: 0.5rem;
+            justify-content: space-between;
+            padding: 0.5rem;
+            border: 1px solid #2b6cb0;
+            border-radius: 0.5rem;
         }
-        @media (min-width: 768px) {
-            .input-group.tax-group { width: calc(33.33% - 0.33rem); }
-        }
+        .dark-mode .input-group.tax-group { border-color: #48bb78; }
         .tax-toggle { display: flex; align-items: center; gap: 0.3rem; }
         #taxStatus { font-size: 0.8rem; display: flex; align-items: center; gap: 0.2rem; }
         .status-dot {
@@ -239,57 +247,6 @@
         .light-mode .status-dot.inactive { background: #e53e3e; }
         .dark-mode .status-dot.active { background: #48bb78; }
         .dark-mode .status-dot.inactive { background: #e53e3e; }
-
-        /* Results */
-        .results-container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 0.5rem;
-        }
-        @media (min-width: 768px) {
-            .results-container { grid-template-columns: repeat(2, 1fr); }
-        }
-        .result-card {
-            background: #ffffff;
-            border: 1px solid #2b6cb0;
-            border-radius: 0.5rem;
-            padding: 0.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.2rem;
-        }
-        .dark-mode .result-card { background: #2d3748; border-color: #48bb78; }
-        .result-card p:first-child {
-            font-size: 0.8rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-        .light-mode .result-card p:first-child { color: #1a202c; }
-        .dark-mode .result-card p:first-child { color: #ffffff; }
-        .result-card i { font-size: 0.8rem; }
-        .light-mode .result-card i { color: #2b6cb0; }
-        .dark-mode .result-card i { color: #48bb78; }
-        .result-card p:last-child { font-size: 0.9rem; font-weight: 700; }
-        .result-card.bg-blue-50 { background: #e6fffa; }
-        .dark-mode .result-card.bg-blue-50 { background: #000000; }
-        #netProfitAfterAds { font-size: 1.2rem; }
-        .profit-indicators { display: flex; align-items: center; gap: 0.3rem; }
-        #profitIndicator, #trendIndicator { font-size: 0.7rem; }
-        .up { color: #48bb78; }
-        .down { color: #e53e3e; }
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: #e2e8f0;
-            border-radius: 3px;
-            overflow: hidden;
-        }
-        .progress { height: 100%; transition: width 0.5s ease; }
-        .light-mode .progress { background: #2b6cb0; }
-        .dark-mode .progress { background: #48bb78; }
-        .negative { background: #e53e3e; }
 
         /* Reset Button */
         .reset-btn {
@@ -304,22 +261,19 @@
             font-weight: 700;
             text-align: center;
             cursor: pointer;
-            display: block;
         }
         .dark-mode .reset-btn { background: #48bb78; }
     </style>
 </head>
 <body class="light-mode">
     <div class="container">
-        <h1>Aff Price</h1>
-
         <!-- Header -->
         <header class="header">
             <div class="profile-card">
                 <div class="profile-pic">
-                    <img src="https://scontent.faly1-2.fna.fbcdn.net/v/t39.30808-6/478724180_2012750999223754_4950667810291165018_n.jpg" alt="Ahmed Muhammed Abdeslam">
+                    <img src="https://scontent.faly1-2.fna.fbcdn.net/v/t39.30808-6/478724180_2012750999223754_4950667810291165018_n.jpg" alt="أحمد محمد عبدالسلام">
                 </div>
-                <span class="profile-name">Ahmed M. Abdeslam</span>
+                <span class="profile-name">أحمد محمد عبدالسلام</span>
                 <div class="social-links">
                     <a href="https://web.facebook.com/ahmed10az" target="_blank" class="facebook"><i class="fab fa-facebook"></i></a>
                     <a href="https://wa.me/201282512082" target="_blank" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
@@ -362,7 +316,7 @@
         <!-- Inputs -->
         <div class="inputs-container">
             <div class="input-group">
-                <label><i class="fas fa-dollar-sign"></i> سعر الجملة</label>
+                <label><i class="fas fa-dollar-sign"></i> سعر المنتج</label>
                 <input type="number" id="productPrice" step="any" min="0" value="324">
             </div>
             <div class="input-group">
@@ -423,7 +377,7 @@
                 <p><i class="fas fa-calculator"></i> بعد الضريبة</p>
                 <p id="adSpendWithTax"></p>
             </div>
-            <div class="result-card bg-blue-50 col-span-full">
+            <div class="result-card bg-blue-50">
                 <p><i class="fas fa-wallet"></i> صافي الربح</p>
                 <div class="profit-indicators">
                     <p id="netProfitAfterAds"></p>
@@ -436,6 +390,7 @@
             </div>
         </div>
 
+        <!-- Reset Button -->
         <button class="reset-btn" onclick="resetValues()">إعادة</button>
     </div>
 
