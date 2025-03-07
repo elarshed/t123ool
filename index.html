@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Untitled</title>
+  
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حساب أرباح المنتجات - Ahmed Muhammed Abdeslam</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Flag Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+    <!-- Google Fonts: Tajawal -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Tajawal', sans-serif; 
+            transition: background-color 0.5s ease, color 0.5s ease;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+            overflow-x: hidden;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 20%, rgba(43, 108, 176, 0.05) 0%, transparent 70%);
+            z-index: -1;
+            animation: wave 10s infinite alternate ease-in-out;
+        }
+        @keyframes wave {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+            100% { transform: translateY(0); }
+        }
+        .light-mode { 
+            background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+            color: #1a202c;
+        }
+        .dark-mode { 
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            color: #ffffff;
+        }
+        .container { 
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin: 1rem auto;
+            max-width: 95%;
+            transition: background-color 0.5s ease, box-shadow 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(43, 108, 176, 0.2);
+        }
+        .light-mode .container { 
+            background: #ffffff;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+        }
+        .dark-mode .container { 
+            background: #2d3748;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(43, 108, 176, 0.1) 0%, transparent 70%);
+            z-index: -1;
+            animation: glow 10s infinite alternate;
+        }
+        @keyframes glow {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.2); opacity: 0; }
+        }
+
+        h1 { 
+            font-size: 2rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            animation: fadeInDown 1.2s ease-in-out;
+        }
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            border-radius: 2px;
+            background: #2b6cb0;
+            animation: pulse 2.5s infinite alternate;
+        }
+        .dark-mode h1::after { background: #48bb78; }
+        @keyframes fadeInDown {
+            0% { opacity: 0; transform: translateY(-30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0% { width: 80px; }
+            100% { width: 100px; }
+        }
+
+        /* تصميم الـ header */
+        .header {
+            width: 100%;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            background: inherit;
+            animation: slideIn 1.2s ease-in-out;
+        }
+        @media (min-width: 768px) {
+            .header {
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 1.5rem 2rem;
+            }
+        }
+        @keyframes slideIn {
+            0% { transform: translateY(-30px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        /* تصميم بطاقة البروفايل */
+        .profile-card {
+            background: transparent;
+            padding: 0.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            border: 2px solid #2b6cb0;
+            border-radius: 1rem;
+            width: 100%;
+            max-width: 300px;
+        }
+        .profile-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 25px rgba(43, 108, 176, 0.4);
+        }
+        .dark-mode .profile-card { border-color: #48bb78; }
+        .profile-pic {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid #2b6cb0;
+            margin: 0 auto;
+            transition: transform 0.3s ease;
+            overflow: hidden;
+            animation: rotateIn 1.2s ease-in-out;
+        }
+        .dark-mode .profile-pic { border-color: #48bb78; }
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .profile-pic:hover {
+            transform: scale(1.1);
+        }
+        @keyframes rotateIn {
+            0% { transform: rotate(-10deg); opacity: 0; }
+            100% { transform: rotate(0); opacity: 1; }
+        }
+        .profile-name {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-top: 0.5rem;
+            transition: color 0.3s ease;
+        }
+        .light-mode .profile-name { color: #1a202c; }
+        .dark-mode .profile-name { color: #ffffff; }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .social-links a {
+            font-size: 1rem;
+            color: #ffffff;
+            padding: 0.4rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+        .social-links a:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        .social-links .facebook { background: #1877F2; }
+        .social-links .whatsapp { background: #25D366; }
+        .social-links .instagram { background: #E1306C; }
+        .social-links .tiktok { background: #000000; }
+        .social-links .tiktok:hover { background: #00F7F9; }
+        .social-links .linkedin { background: #0077B5; }
+        .dark-mode .social-links a { box-shadow: 0 3px 10px rgba(72, 187, 120, 0.3); }
+        .dark-mode .social-links a:hover { box-shadow: 0 6px 15px rgba(72, 187, 120, 0.5); }
+
+        .input-group { 
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+            animation: fadeIn 1.2s ease-in-out;
+            position: relative;
+        }
+        @media (min-width: 768px) {
+            .input-group {
+                flex-direction: row;
+                align-items: center;
+                gap: 1rem;
+                margin-bottom: 1.2rem;
+            }
+        }
+        /* أزلت التأثير عند الـ hover */
+        .input-group label { 
+            font-size: 1rem;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+        }
+        @media (min-width: 768px) {
+            .input-group label { font-size: 1.2rem; }
+        }
+        .light-mode .input-group label { color: #1a202c; }
+        .dark-mode .input-group label { color: #ffffff; }
+        .input-group i { 
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+        .light-mode .input-group i { color: #2b6cb0; }
+        .dark-mode .input-group i { color: #48bb78; }
+        .input-group input { 
+            font-size: 1rem;
+            padding: 0.6rem;
+            border-radius: 0.7rem;
+            border: 2px solid #2b6cb0;
+            width: 100%;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            color: #1a202c;
+        }
+        @media (min-width: 768px) {
+            .input-group input {
+                font-size: 1.1rem;
+                padding: 0.7rem;
+                width: auto;
+                flex-grow: 1;
+            }
+        }
+        .light-mode .input-group input { background: #f7fafc; }
+        .dark-mode .input-group input { background: #4a5568; color: #ffffff; }
+        .input-group input:focus { 
+            border-color: #1e40af;
+            box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.2);
+        }
+        .dark-mode .input-group input:focus { border-color: #48bb78; box-shadow: 0 0 0 4px rgba(72, 187, 120, 0.2); }
+
+        /* تصميم المخرجات (النتائج) */
+        .result-card { 
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #2b6cb0;
+            background: #ffffff;
+            animation: fadeInUp 1.2s ease-in-out;
+            transform-style: preserve-3d;
+        }
+        @media (min-width: 768px) {
+            .result-card {
+                border-radius: 1.2rem;
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+        .dark-mode .result-card { background: #2d3748; border-color: #48bb78; }
+        /* أزلت التأثير عند الـ hover */
+        .result-card p:first-child { 
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+        }
+        @media (min-width: 768px) {
+            .result-card p:first-child { font-size: 1.1rem; gap: 0.6rem; }
+        }
+        .light-mode .result-card p:first-child { color: #1a202c; }
+        .dark-mode .result-card p:first-child { color: #ffffff; }
+        .result-card p:last-child { 
+            font-size: 1.2rem;
+            font-weight: 900;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+            margin-top: 0.5rem;
+            color: #1a202c;
+        }
+        @media (min-width: 768px) {
+            .result-card p:last-child { font-size: 1.5rem; margin-top: 0.6rem; }
+        }
+        .dark-mode .result-card p:last-child { color: #ffffff; }
+        .result-card.bg-blue-50 { 
+            border-color: #2b6cb0;
+            position: relative;
+        }
+        .dark-mode .result-card.bg-blue-50 { 
+            background: #000000;
+            border-color: #48bb78;
+        }
+        .light-mode .result-card.bg-blue-50 { 
+            background: #e6fffa;
+        }
+        .result-card i {
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+        @media (min-width: 768px) {
+            .result-card i { font-size: 1.4rem; }
+        }
+        .light-mode .result-card i { color: #2b6cb0; }
+        .dark-mode .result-card i { color: #48bb78; }
+
+        /* نتيجة صافي الأرباح (أكبر وأوضح) */
+        #netProfitAfterAds {
+            font-size: 1.8rem;
+            font-weight: 900;
+        }
+        @media (min-width: 768px) {
+            #netProfitAfterAds { font-size: 2.5rem; }
+        }
+        .dark-mode #netProfitAfterAds { }
+        #profitIndicator, #trendIndicator {
+            margin-left: 1.5rem;
+            font-size: 0.8rem;
+            transition: all 0.5s ease;
+        }
+        @media (min-width: 768px) {
+            #profitIndicator, #trendIndicator { margin-left: 3rem; font-size: 1rem; }
+        }
+
+        /* زر الوضع النهاري/الليلي */
+        .toggle-switch { 
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+        @media (min-width: 768px) {
+            .toggle-switch { width: 65px; height: 32px; }
+        }
+        .toggle-switch input { 
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider { 
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #a0aec0;
+            transition: 0.4s ease;
+            border-radius: 32px;
+            border: 2px solid #2b6cb0;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        .slider:before { 
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: #ffffff;
+            transition: 0.4s ease;
+            border-radius: 50%;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        }
+        @media (min-width: 768px) {
+            .slider:before { height: 26px; width: 26px; }
+        }
+        input:checked + .slider { background-color: #2d3748; }
+        input:checked + .slider:before { transform: translateX(24px); }
+        @media (min-width: 768px) {
+            input:checked + .slider:before { transform: translateX(33px); }
+        }
+        .mode-toggle { 
+            margin-left: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        @media (min-width: 768px) {
+            .mode-toggle { margin-left: 1.2rem; gap: 0.6rem; }
+        }
+        .mode-toggle i {
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+        @media (min-width: 768px) {
+            .mode-toggle i { font-size: 1.3rem; }
+        }
+        .light-mode .mode-toggle i.fa-sun { color: #f6ad55; }
+        .dark-mode .mode-toggle i.fa-moon { color: #a0aec0; }
+        .light-mode .mode-toggle span { color: #1a202c; }
+        .dark-mode .mode-toggle span { color: #ffffff; }
+
+        .custom-dropdown { 
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            max-width: 180px;
+            margin-left: 0;
+        }
+        @media (min-width: 768px) {
+            .custom-dropdown { width: 210px; margin-left: 1.2rem; }
+        }
+        .dropdown-selected { 
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            border-radius: 0.7rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 700;
+            border: 2px solid #2b6cb0;
+        }
+        @media (min-width: 768px) {
+            .dropdown-selected { padding: 0.7rem 1.2rem; font-size: 1.1rem; }
+        }
+        .light-mode .dropdown-selected { background-color: #f0f4f8; color: #1a202c; }
+        .dark-mode .dropdown-selected { background-color: #4a5568; color: #ffffff; }
+        .dropdown-selected:hover { background-color: #e2e8f0; box-shadow: 0 4px 12px rgba(43, 108, 176, 0.2); }
+        .dark-mode .dropdown-selected:hover { background-color: #5a677a; box-shadow: 0 4px 12px rgba(72, 187, 120, 0.2); }
+        .dropdown-selected i { margin-left: 0.5rem; }
+        .dropdown-options { 
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 0.7rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 1000;
+        }
+        .dark-mode .dropdown-options { background-color: #2d3748; }
+        .dropdown-options.active { display: block; }
+        .dropdown-option { 
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        @media (min-width: 768px) {
+            .dropdown-option { padding: 0.7rem 1.2rem; }
+        }
+        .light-mode .dropdown-option { color: #1a202c; }
+        .dark-mode .dropdown-option { color: #ffffff; }
+        .dropdown-option:hover { background-color: #f0f4f8; }
+        .dark-mode .dropdown-option:hover { background-color: #4a5568; }
+        .dropdown-option span { margin-left: 0.5rem; margin-right: 0.5rem; }
+
+        /* شريط التقدم */
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 6px;
+            margin-top: 0.8rem;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+        @media (min-width: 768px) {
+            .progress-bar { height: 12px; margin-top: 1rem; }
+        }
+        .progress {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.5s ease, background-color 0.5s ease;
+        }
+        .light-mode .progress { background-color: #2b6cb0; }
+        .dark-mode .progress { background-color: #48bb78; }
+        .negative { background-color: #e53e3e; }
+
+        /* زر إعادة التعيين */
+        .reset-btn {
+            display: block;
+            width: 100%;
+            max-width: 200px;
+            margin: 1rem auto;
+            padding: 0.6rem 1rem;
+            background: #2b6cb0;
+            color: #ffffff;
+            border-radius: 0.7rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            font-size: 1rem;
+        }
+        @media (min-width: 768px) {
+            .reset-btn {
+                display: inline-block;
+                width: auto;
+                padding: 0.7rem 1.5rem;
+                font-size: 1.1rem;
+            }
+        }
+        .dark-mode .reset-btn { background: #48bb78; }
+        .reset-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(43, 108, 176, 0.3); }
+        .dark-mode .reset-btn:hover { box-shadow: 0 6px 15px rgba(72, 187, 120, 0.3); }
+        .ripple {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: rippleEffect 0.6s linear;
+        }
+        @keyframes rippleEffect {
+            to { transform: scale(4); opacity: 0; }
+        }
+
+        /* مؤشر حالة الربح */
+        .profit-indicator {
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+            transition: all 0.5s ease;
+        }
+        @media (min-width: 768px) {
+            .profit-indicator { font-size: 1rem; }
+        }
+        .up { color: #48bb78; animation: moveUp 1.5s infinite; }
+        .down { color: #e53e3e; animation: moveDown 1.5s infinite; }
+        @keyframes moveUp { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes moveDown { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+
+        /* مؤشر اتجاه الربح */
+        .trend-indicator {
+            font-size: 0.7rem;
+            margin-left: 0.5rem;
+            transition: all 0.5s ease;
+        }
+        @media (min-width: 768px) {
+            .trend-indicator { font-size: 0.8rem; }
+        }
+        .up-trend { color: #48bb78; animation: pulseTrend 1s infinite; }
+        .down-trend { color: #e53e3e; animation: pulseTrend 1s infinite; }
+        @keyframes pulseTrend { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+    </style>
+</head>
+<body class="min-h-screen p-3 light-mode">
+    <!-- الـ header -->
+    <header class="header">
+        <div class="profile-card">
+            <div class="profile-pic">
+                <img src="https://scontent.faly1-2.fna.fbcdn.net/v/t39.30808-6/478724180_2012750999223754_4950667810291165018_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHGVoV1nv_uBT6VDiUmkTUBt9Lm4gk8hxC30ubiCTyHECTpTi2wl8gfRfMESNTozonQZKpDfqy38PE-slzWn9Ck&_nc_ohc=v_k1rOPK2F0Q7kNvgFLv1QA&_nc_oc=AdhvcaU_nFdQ4Z3Kg3E9swCkPRk7JtChJHFOQT9zYUpJ2idA5GZBKG6zFFvqxVjJidw&_nc_zt=23&_nc_ht=scontent.faly1-2.fna&_nc_gid=AbAw2Mu7xWr-PKwk6ugrtKI&oh=00_AYEYtgolj04R5gnDNMBBPxyJ8SDMHtIZyPBKUEH1wGiRpA&oe=67D072AD" alt="Ahmed Muhammed Abdeslam">
+            </div>
+            <h2 class="profile-name">Ahmed Muhammed Abdeslam</h2>
+            <div class="social-links">
+                <a href="https://web.facebook.com/ahmed10az" target="_blank" class="facebook"><i class="fab fa-facebook"></i></a>
+                <a href="https://wa.me/201282512082" target="_blank" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://instagram.com/ahmed10az" target="_blank" class="instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://tiktok.com/@elarshedok" target="_blank" class="tiktok"><i class="fab fa-tiktok"></i></a>
+                <a href="https://linkedin.com/in/elarshedok" target="_blank" class="linkedin"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+        <div class="flex flex-col items-center gap-2 md:flex-row">
+            <div class="mode-toggle">
+                <label class="toggle-switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider"></span>
+                </label>
+                <i class="fas fa-sun mode-icon light-mode-icon"></i>
+                <i class="fas fa-moon mode-icon dark-mode-icon" style="display: none;"></i>
+                <span class="text-base md:text-lg font-semibold ml-2" id="modeLabel">وضع النهار</span>
+            </div>
+            <div class="custom-dropdown">
+                <div class="dropdown-selected" id="dropdownSelected">
+                    <span class="flag-icon flag-icon-eg"></span> جنيه مصري (EGP)
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="dropdown-options" id="dropdownOptions">
+                    <div class="dropdown-option" data-value="EGP">
+                        <span class="flag-icon flag-icon-eg"></span> جنيه مصري (EGP)
+                    </div>
+                    <div class="dropdown-option" data-value="USD">
+                        <span class="flag-icon flag-icon-us"></span> دولار أمريكي (USD)
+                    </div>
+                    <div class="dropdown-option" data-value="SAR">
+                        <span class="flag-icon flag-icon-sa"></span> ريال سعودي (SAR)
+                    </div>
+                    <div class="dropdown-option" data-value="AED">
+                        <span class="flag-icon flag-icon-ae"></span> درهم إماراتي (AED)
+                    </div>
+                    <div class="dropdown-option" data-value="KWD">
+                        <span class="flag-icon flag-icon-kw"></span> دينار كويتي (KWD)
+                    </div>
+                    <div class="dropdown-option" data-value="QAR">
+                        <span class="flag-icon flag-icon-qa"></span> ريال قطري (QAR)
+                    </div>
+                    <div class="dropdown-option" data-value="JOD">
+                        <span class="flag-icon flag-icon-jo"></span> دينار أردني (JOD)
+                    </div>
+                    <div class="dropdown-option" data-value="BHD">
+                        <span class="flag-icon flag-icon-bh"></span> دينار بحريني (BHD)
+                    </div>
+                    <div class="dropdown-option" data-value="LYD">
+                        <span class="flag-icon flag-icon-ly"></span> دينار ليبي (LYD)
+                    </div>
+                </div>
+                <input type="hidden" id="currency" value="EGP">
+            </div>
+        </div>
+    </header>
+
+    <div class="container w-full max-w-5xl">
+        <h1 class="text-center mb-4">حساب أرباح المنتجات</h1>
+
+        <!-- قسم المدخلات -->
+        <div class="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
+            <div class="input-group">
+                <i class="fas fa-dollar-sign"></i>
+                <label>سعر المنتج بدون عمولة</label>
+                <input type="number" id="productPrice" step="any" min="0" value="320">
+            </div>
+            <div class="input-group">
+                <i class="fas fa-shopping-cart"></i>
+                <label>سعر البيع بالشحن</label>
+                <input type="number" id="sellingPrice" step="any" min="0" value="324">
+            </div>
+            <div class="input-group">
+                <i class="fas fa-truck"></i>
+                <label>سعر شحن المنصة</label>
+                <input type="number" id="shippingCost" step="any" min="0" value="55">
+            </div>
+            <div class="input-group">
+                <i class="fas fa-boxes"></i>
+                <label>عدد الأوردرات المستهدف</label>
+                <input type="number" id="targetOrders" step="1" min="0" value="438">
+            </div>
+            <div class="input-group">
+                <i class="fas fa-percentage"></i>
+                <label>نسبة التسليمات المتوقعة (%)</label>
+                <input type="number" id="deliveryRate" step="any" min="0" max="100" value="15">
+            </div>
+            <div class="input-group">
+                <i class="fas fa-ad"></i>
+                <label>متوسط تكلفة الطلب الإعلاني</label>
+                <input type="number" id="adCostPerOrder" step="any" min="0" value="17">
+            </div>
+            <div class="input-group flex flex-col items-start gap-2 md:flex-row md:items-center md:gap-3">
+                <i class="fas fa-tax"></i>
+                <label class="flex-1">تطبيق ضريبة 14% على الإعلانات</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="applyTax" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <!-- قسم النتائج -->
+        <div id="results" class="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4 mt-4">
+            <div class="result-card">
+                <p><i class="fas fa-coins"></i>الربح الصافي لكل طلب</p>
+                <p id="netProfitPerOrder"></p>
+            </div>
+            <div class="result-card">
+                <p><i class="fas fa-chart-line"></i>هامش الربح (%)</p>
+                <p id="profitMargin"></p>
+            </div>
+            <div class="result-card">
+                <p><i class="fas fa-truck-loading"></i>عدد الطلبات المسلمة</p>
+                <p id="deliveredOrders"></p>
+            </div>
+            <div class="result-card">
+                <p><i class="fas fa-money-bill-wave"></i>الربح قبل خصم الإعلانات</p>
+                <p id="profitBeforeAds"></p>
+            </div>
+            <div class="result-card">
+                <p><i class="fas fa-bullhorn"></i>إجمالي إنفاق الإعلانات</p>
+                <p id="totalAdSpend"></p>
+            </div>
+            <div class="result-card">
+                <p><i class="fas fa-calculator"></i>إجمالي إنفاق الإعلانات بعد الضريبة</p>
+                <p id="adSpendWithTax"></p>
+            </div>
+            <div class="result-card bg-blue-50 col-span-full text-center">
+                <p><i class="fas fa-wallet"></i>صافي الأرباح بعد الإعلان</p>
+                <div class="flex items-center justify-center">
+                    <p id="netProfitAfterAds" class="text-2xl font-bold mr-3 md:text-3xl md:mr-4"></p>
+                    <i id="profitIndicator" class="fas fa-arrow-up profit-indicator up" style="display: none;"></i>
+                    <i id="trendIndicator" class="fas fa-arrow-up trend-indicator up-trend" style="display: none;"></i>
+                </div>
+                <div class="progress-bar mt-2">
+                    <div class="progress" id="profitProgress"></div>
+                </div>
+            </div>
+        </div>
+        <button class="reset-btn" onclick="resetValues()">إعادة التعيين</button>
+    </div>
+
+    <script>
+        let previousProfit = 0;
+
+        const currencySymbols = {
+            EGP: 'ج.م',
+            USD: '$',
+            SAR: 'ر.س',
+            AED: 'د.إ',
+            KWD: 'د.ك',
+            QAR: 'ر.ق',
+            JOD: 'د.أ',
+            BHD: 'د.ب',
+            LYD: 'د.ل'
+        };
+
+        const getCurrencySymbol = () => currencySymbols[document.getElementById('currency').value];
+
+        const calculateResults = () => {
+            const productPrice = parseFloat(document.getElementById('productPrice').value) || 0;
+            const sellingPrice = parseFloat(document.getElementById('sellingPrice').value) || 0;
+            const shippingCost = parseFloat(document.getElementById('shippingCost').value) || 0;
+            const targetOrders = parseFloat(document.getElementById('targetOrders').value) || 0;
+            const deliveryRate = parseFloat(document.getElementById('deliveryRate').value) || 0;
+            const adCostPerOrder = parseFloat(document.getElementById('adCostPerOrder').value) || 0;
+            const applyTax = document.getElementById('applyTax').checked;
+            const currencySymbol = getCurrencySymbol();
+
+            const netProfitPerOrder = sellingPrice - productPrice - shippingCost;
+            const profitMargin = sellingPrice ? (netProfitPerOrder / sellingPrice) * 100 : 0;
+            const deliveredOrders = (targetOrders * deliveryRate) / 100;
+            const profitBeforeAds = deliveredOrders * netProfitPerOrder;
+            const totalAdSpend = targetOrders * adCostPerOrder;
+            const adSpendWithTax = applyTax ? totalAdSpend * 1.14 : totalAdSpend;
+            const netProfitAfterAds = profitBeforeAds - adSpendWithTax;
+            const totalInvestment = totalAdSpend + adSpendWithTax + (productPrice + shippingCost) * deliveredOrders;
+            const profitPercentage = totalInvestment > 0 ? (netProfitAfterAds / totalInvestment) * 100 : 0;
+
+            const updateElement = (id, value, isPercentage = false, isNumberOnly = false) => {
+                const element = document.getElementById(id);
+                element.textContent = isPercentage ? `${value.toFixed(2)}%` : (isNumberOnly ? value.toFixed(2) : `${currencySymbol} ${value.toFixed(2)}`);
+                element.classList.remove('text-red-500', 'text-yellow-500', 'text-green-500');
+                if (value > 0) element.classList.add('text-green-500');
+                else if (value < 0) element.classList.add('text-red-500');
+                else element.classList.add('text-yellow-500');
+            };
+
+            updateElement('netProfitPerOrder', netProfitPerOrder);
+            updateElement('profitMargin', profitMargin, true);
+            updateElement('deliveredOrders', deliveredOrders, false, true);
+            updateElement('profitBeforeAds', profitBeforeAds);
+            updateElement('totalAdSpend', totalAdSpend);
+            updateElement('adSpendWithTax', adSpendWithTax);
+            updateElement('netProfitAfterAds', netProfitAfterAds);
+
+            // تحديث شريط التقدم
+            const progress = document.getElementById('profitProgress');
+            const progressWidth = Math.min(Math.abs(profitPercentage), 100);
+            progress.style.width = `${progressWidth}%`;
+            progress.classList.remove('negative');
+            if (netProfitAfterAds < 0) progress.classList.add('negative');
+
+            // تحديث مؤشر الحالة
+            const indicator = document.getElementById('profitIndicator');
+            indicator.style.display = netProfitAfterAds !== 0 ? 'inline' : 'none';
+            indicator.classList.remove('fa-arrow-up', 'fa-arrow-down', 'up', 'down');
+            if (netProfitAfterAds > 0) {
+                indicator.classList.add('fa-arrow-up', 'up');
+            } else if (netProfitAfterAds < 0) {
+                indicator.classList.add('fa-arrow-down', 'down');
+            }
+
+            // تحديث مؤشر اتجاه الربح
+            const trendIndicator = document.getElementById('trendIndicator');
+            if (netProfitAfterAds !== previousProfit) {
+                trendIndicator.style.display = 'inline';
+                trendIndicator.classList.remove('fa-arrow-up', 'fa-arrow-down', 'up-trend', 'down-trend');
+                if (netProfitAfterAds > previousProfit) {
+                    trendIndicator.classList.add('fa-arrow-up', 'up-trend');
+                } else if (netProfitAfterAds < previousProfit) {
+                    trendIndicator.classList.add('fa-arrow-down', 'down-trend');
+                }
+                setTimeout(() => trendIndicator.style.display = 'none', 2000);
+            }
+            previousProfit = netProfitAfterAds;
+        };
+
+        // منطق تبديل المود
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const modeLabel = document.getElementById('modeLabel');
+        const lightModeIcon = document.querySelector('.light-mode-icon');
+        const darkModeIcon = document.querySelector('.dark-mode-icon');
+
+        darkModeToggle.addEventListener('change', () => {
+            if (darkModeToggle.checked) {
+                document.body.classList.remove('light-mode');
+                document.body.classList.add('dark-mode');
+                modeLabel.textContent = 'وضع الليل';
+                lightModeIcon.style.display = 'none';
+                darkModeIcon.style.display = 'inline';
+            } else {
+                document.body.classList.remove('dark-mode');
+                document.body.classList.add('light-mode');
+                modeLabel.textContent = 'وضع النهار';
+                lightModeIcon.style.display = 'inline';
+                darkModeIcon.style.display = 'none';
+            }
+        });
+
+        // منطق القائمة المنسدلة
+        const dropdownSelected = document.getElementById('dropdownSelected');
+        const dropdownOptions = document.getElementById('dropdownOptions');
+        const currencyInput = document.getElementById('currency');
+        const options = document.querySelectorAll('.dropdown-option');
+
+        dropdownSelected.addEventListener('click', () => {
+            dropdownOptions.classList.toggle('active');
+        });
+
+        options.forEach(option => {
+            option.addEventListener('click', () => {
+                const value = option.getAttribute('data-value');
+                const text = option.textContent.trim();
+                dropdownSelected.innerHTML = `<span class="${option.querySelector('span').className}"></span> ${text} <i class="fas fa-chevron-down"></i>`;
+                currencyInput.value = value;
+                dropdownOptions.classList.remove('active');
+                calculateResults();
+            });
+        });
+
+        // إغلاق القائمة عند النقر خارجها
+        document.addEventListener('click', (e) => {
+            if (!dropdownSelected.contains(e.target) && !dropdownOptions.contains(e.target)) {
+                dropdownOptions.classList.remove('active');
+            }
+        });
+
+        // إعادة التعيين بجعل القيم صفرًا
+        function resetValues() {
+            document.getElementById('productPrice').value = 0;
+            document.getElementById('sellingPrice').value = 0;
+            document.getElementById('shippingCost').value = 0;
+            document.getElementById('targetOrders').value = 0;
+            document.getElementById('deliveryRate').value = 0;
+            document.getElementById('adCostPerOrder').value = 0;
+            document.getElementById('applyTax').checked = false;
+            calculateResults();
+
+            const btn = event.target;
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+            const rect = btn.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = event.clientX - rect.left - size / 2;
+            const y = event.clientY - rect.top - size / 2;
+            ripple.style.left = `${x}px`;
+            ripple.style.top = `${y}px`;
+            ripple.style.width = `${size}px`;
+            ripple.style.height = `${size}px`;
+            btn.appendChild(ripple);
+
+            setTimeout(() => ripple.remove(), 600);
+        }
+
+        // تحديث النتائج في الوقت الحقيقي
+        document.querySelectorAll('input, #currency, #applyTax').forEach(input => {
+            input.addEventListener('input', () => {
+                const results = document.getElementById('results').children;
+                for (let result of results) {
+                    result.style.opacity = '0';
+                    setTimeout(() => {
+                        result.style.transition = 'opacity 0.5s ease';
+                        result.style.opacity = '1';
+                    }, 50);
+                }
+                calculateResults();
+            });
+        });
+        calculateResults();
+    </script>
+</body>
+</html>
+<!-- partial -->
+  
+</body>
+</html>
