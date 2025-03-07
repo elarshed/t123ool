@@ -1,14 +1,4 @@
 <!DOCTYPE html>
-<html lang="en" >
-<head>
-  <meta charset="UTF-8">
-  <title>Aff Price</title>
-  
-
-</head>
-<body>
-<!-- partial:index.partial.html -->
-<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -238,7 +228,6 @@
                 margin-bottom: 1.2rem;
             }
         }
-        /* أزلت التأثير عند الـ hover */
         .input-group label { 
             font-size: 1rem;
             font-weight: 700;
@@ -301,7 +290,6 @@
             }
         }
         .dark-mode .result-card { background: #2d3748; border-color: #48bb78; }
-        /* أزلت التأثير عند الـ hover */
         .result-card p:first-child { 
             font-size: 0.9rem;
             font-weight: 700;
@@ -355,7 +343,6 @@
         @media (min-width: 768px) {
             #netProfitAfterAds { font-size: 2.5rem; }
         }
-        .dark-mode #netProfitAfterAds { }
         #profitIndicator, #trendIndicator {
             margin-left: 1.5rem;
             font-size: 0.8rem;
@@ -579,6 +566,24 @@
         .up-trend { color: #48bb78; animation: pulseTrend 1s infinite; }
         .down-trend { color: #e53e3e; animation: pulseTrend 1s infinite; }
         @keyframes pulseTrend { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+        /* حالة تطبيق الضريبة */
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+        .light-mode .status-dot.active { background-color: #48bb78; }
+        .light-mode .status-dot.inactive { background-color: #e53e3e; }
+        .dark-mode .status-dot.active { background-color: #48bb78; }
+        .dark-mode .status-dot.inactive { background-color: #e53e3e; }
+        #taxStatus {
+            transition: color 0.3s ease;
+        }
+        .light-mode #taxStatus { color: #1a202c; }
+        .dark-mode #taxStatus { color: #ffffff; }
     </style>
 </head>
 <body class="min-h-screen p-3 light-mode">
@@ -684,10 +689,16 @@
             <div class="input-group flex flex-col items-start gap-2 md:flex-row md:items-center md:gap-3">
                 <i class="fas fa-tax"></i>
                 <label class="flex-1">تطبيق ضريبة 14% على الإعلانات</label>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="applyTax" checked>
-                    <span class="slider"></span>
-                </label>
+                <div class="flex items-center gap-2">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="applyTax" checked>
+                        <span class="slider"></span>
+                    </label>
+                    <span id="taxStatus" class="text-sm font-semibold flex items-center gap-1">
+                        <span class="status-dot active"></span>
+                        <span id="taxText">مفعلة</span>
+                    </span>
+                </div>
             </div>
         </div>
 
@@ -818,6 +829,26 @@
             previousProfit = netProfitAfterAds;
         };
 
+        // دالة لتحديث حالة تطبيق الضريبة
+        const updateTaxStatus = () => {
+            const applyTax = document.getElementById('applyTax').checked;
+            const taxText = document.getElementById('taxText');
+            const statusDot = document.querySelector('.status-dot');
+
+            if (applyTax) {
+                taxText.textContent = 'مفعلة';
+                statusDot.classList.remove('inactive');
+                statusDot.classList.add('active');
+            } else {
+                taxText.textContent = 'غير مفعلة';
+                statusDot.classList.remove('active');
+                statusDot.classList.add('inactive');
+            }
+        };
+
+        // استدعاء الدالة عند تحميل الصفحة
+        updateTaxStatus();
+
         // منطق تبديل المود
         const darkModeToggle = document.getElementById('darkModeToggle');
         const modeLabel = document.getElementById('modeLabel');
@@ -878,6 +909,7 @@
             document.getElementById('adCostPerOrder').value = 0;
             document.getElementById('applyTax').checked = false;
             calculateResults();
+            updateTaxStatus(); // تحديث حالة الضريبة بعد إعادة التعيين
 
             const btn = event.target;
             const ripple = document.createElement('span');
@@ -907,13 +939,11 @@
                     }, 50);
                 }
                 calculateResults();
+                updateTaxStatus(); // تحديث حالة الضريبة مع كل تغيير
             });
         });
+
         calculateResults();
     </script>
-</body>
-</html>
-<!-- partial -->
-  
 </body>
 </html>
