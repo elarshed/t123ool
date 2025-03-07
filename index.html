@@ -210,6 +210,7 @@
         .dark-mode .social-links a { box-shadow: 0 3px 10px rgba(72, 187, 120, 0.3); }
         .dark-mode .social-links a:hover { box-shadow: 0 6px 15px rgba(72, 187, 120, 0.5); }
 
+        /* تعديل قسم المدخلات للموبايل */
         .input-group { 
             display: flex;
             flex-direction: column;
@@ -219,6 +220,7 @@
             transition: transform 0.3s ease;
             animation: fadeIn 1.2s ease-in-out;
             position: relative;
+            width: 100%; /* ضمان أن كل مدخل يأخذ العرض الكامل للحاوية */
         }
         @media (min-width: 768px) {
             .input-group {
@@ -229,7 +231,7 @@
             }
         }
         .input-group label { 
-            font-size: 1rem;
+            font-size: 0.9rem; /* تقليل حجم النص للموبايل */
             font-weight: 700;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
         }
@@ -239,14 +241,17 @@
         .light-mode .input-group label { color: #1a202c; }
         .dark-mode .input-group label { color: #ffffff; }
         .input-group i { 
-            font-size: 1.2rem;
+            font-size: 1rem; /* تقليل حجم الأيقونة للموبايل */
             transition: color 0.3s ease;
+        }
+        @media (min-width: 768px) {
+            .input-group i { font-size: 1.2rem; }
         }
         .light-mode .input-group i { color: #2b6cb0; }
         .dark-mode .input-group i { color: #48bb78; }
         .input-group input { 
-            font-size: 1rem;
-            padding: 0.6rem;
+            font-size: 0.9rem; /* تقليل حجم النص للموبايل */
+            padding: 0.5rem;
             border-radius: 0.7rem;
             border: 2px solid #2b6cb0;
             width: 100%;
@@ -268,6 +273,19 @@
             box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.2);
         }
         .dark-mode .input-group input:focus { border-color: #48bb78; box-shadow: 0 0 0 4px rgba(72, 187, 120, 0.2); }
+
+        /* تصميم حاوية المدخلات للموبايل */
+        .inputs-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* عمودين متساويين على الموبايل */
+            gap: 0.75rem; /* تقليل المسافة بين المدخلات */
+        }
+        @media (min-width: 768px) {
+            .inputs-container {
+                grid-template-columns: repeat(2, 1fr); /* الحفاظ على عمودين على الشاشات الكبيرة */
+                gap: 1rem;
+            }
+        }
 
         /* تصميم المخرجات (النتائج) */
         .result-card { 
@@ -655,7 +673,7 @@
         <h1 class="text-center mb-4">Aff Price</h1>
 
         <!-- قسم المدخلات -->
-        <div class="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
+        <div class="inputs-container">
             <div class="input-group">
                 <i class="fas fa-dollar-sign"></i>
                 <label>سعر المنتج بدون عمولة</label>
@@ -909,7 +927,7 @@
             document.getElementById('adCostPerOrder').value = 0;
             document.getElementById('applyTax').checked = false;
             calculateResults();
-            updateTaxStatus(); // تحديث حالة الضريبة بعد إعادة التعيين
+            updateTaxStatus();
 
             const btn = event.target;
             const ripple = document.createElement('span');
@@ -939,7 +957,7 @@
                     }, 50);
                 }
                 calculateResults();
-                updateTaxStatus(); // تحديث حالة الضريبة مع كل تغيير
+                updateTaxStatus();
             });
         });
 
