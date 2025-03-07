@@ -20,7 +20,7 @@
             flex-direction: column;
             overflow-x: hidden;
             transition: background 0.3s ease;
-            background-attachment: fixed; /* Parallax effect */
+            background-attachment: fixed;
             background-size: cover;
         }
         .light-mode { background: linear-gradient(135deg, #e6fffa 0%, #e2e8f0 100%); color: #1a202c; }
@@ -49,11 +49,6 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
         @keyframes glow {
             0% { text-shadow: 0 0 5px rgba(43, 108, 176, 0.7); }
             50% { text-shadow: 0 0 10px rgba(43, 108, 176, 1), 0 0 20px rgba(43, 108, 176, 0.7); }
@@ -80,16 +75,14 @@
             width: 100%;
         }
         .profile-pic {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             border: 3px solid #2b6cb0;
             overflow: hidden;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s ease;
         }
         .dark-mode .profile-pic { border-color: #48bb78; }
-        .profile-pic:hover { transform: scale(1.05); }
         .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
         .profile-info { display: flex; flex-direction: column; gap: 0.1rem; flex: 1; }
         .profile-name {
@@ -108,16 +101,9 @@
             padding: 0.4rem;
             border-radius: 50%;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s ease;
-            animation: pulse 2s infinite;
-            background: linear-gradient(45deg, #ffffff10, #ffffff30);
+            background: linear-gradient(45deg, #2b6cb0, #48bb78);
         }
-        .social-links a:hover { transform: translateY(-3px); }
-        .social-links .facebook { background: linear-gradient(45deg, #1877F2, #166fe5); }
-        .social-links .whatsapp { background: linear-gradient(45deg, #25D366, #1da851); }
-        .social-links .instagram { background: linear-gradient(45deg, #E1306C, #c13584); }
-        .social-links .tiktok { background: linear-gradient(45deg, #000000, #333333); }
-        .social-links .linkedin { background: linear-gradient(45deg, #0077B5, #005f91); }
+        .dark-mode .social-links a { background: linear-gradient(45deg, #48bb78, #2b6cb0); }
 
         /* Controls */
         .controls {
@@ -261,16 +247,15 @@
         .dark-mode .input-group input { background: #3d4a5a; color: #ffffff; border-color: #48bb78; }
         .result-card {
             background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
-            border: 1px solid #d4af37; /* Golden border in light mode */
+            border: 1px solid #d4af37;
             border-radius: 0.5rem;
             padding: 0.4rem;
             text-align: center;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease, opacity 0.3s ease;
         }
-        .dark-mode .result-card { background: #3d4a5a; border-color: #c0c0c0; } /* Silver border in dark mode */
+        .dark-mode .result-card { background: #3d4a5a; border-color: #c0c0c0; }
         .result-card:hover { transform: translateY(-2px); }
-        .result-card.hidden { display: none; opacity: 0; }
         .result-card p:last-child {
             font-size: 1.1rem;
             font-weight: 900;
@@ -354,24 +339,6 @@
         .dark-mode .status-dot.active { background: #48bb78; }
         .dark-mode .status-dot.inactive { background: #e53e3e; }
 
-        /* Show More Button */
-        .show-more-btn {
-            width: 100%;
-            max-width: 120px;
-            margin: 0.3rem auto;
-            padding: 0.4rem 1rem;
-            background: linear-gradient(90deg, #2b6cb0, #48bb78);
-            color: #ffffff;
-            border-radius: 0.5rem;
-            font-size: 0.9rem;
-            font-weight: 700;
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .dark-mode .show-more-btn { background: linear-gradient(90deg, #48bb78, #2b6cb0); }
-        .show-more-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); }
-
         /* Floating Reset Button */
         .reset-btn {
             position: fixed;
@@ -398,7 +365,7 @@
         @media (min-width: 768px) {
             .container { padding: 1rem; max-width: 800px; margin: 0 auto; }
             .header { padding: 0.75rem; }
-            .profile-pic { width: 70px; height: 70px; }
+            .profile-pic { width: 80px; height: 80px; }
             .profile-name { font-size: 1.2rem; }
             .social-links a { font-size: 1.2rem; padding: 0.5rem; }
             .inputs-container, .results-container { gap: 0.5rem; }
@@ -407,7 +374,6 @@
             .result-card { padding: 0.5rem; }
             .result-card p:last-child { font-size: 1.2rem; }
             #netProfitAfterAds { font-size: 1.5rem; }
-            .show-more-btn { max-width: 150px; font-size: 1rem; }
             .circular-progress { width: 80px; height: 80px; }
             .circular-progress .progress-text { font-size: 1rem; }
         }
@@ -515,15 +481,15 @@
                 <p><i class="fas fa-truck-loading"></i> الأوردرات المسلمة</p>
                 <p id="deliveredOrders" class="result-value"></p>
             </div>
-            <div class="result-card hidden" id="profitBeforeAdsCard" style="--order: 4;">
+            <div class="result-card" style="--order: 4;">
                 <p><i class="fas fa-money-bill-wave"></i> الربح قبل الإنفاق</p>
                 <p id="profitBeforeAds" class="result-value"></p>
             </div>
-            <div class="result-card hidden" id="totalAdSpendCard" style="--order: 5;">
+            <div class="result-card" style="--order: 5;">
                 <p><i class="fas fa-bullhorn"></i> إنفاق الإعلانات</p>
                 <p id="totalAdSpend" class="result-value"></p>
             </div>
-            <div class="result-card hidden" id="adSpendWithTaxCard" style="--order: 6;">
+            <div class="result-card" style="--order: 6;">
                 <p><i class="fas fa-calculator"></i> الإنفاق بعد الضريبة</p>
                 <p id="adSpendWithTax" class="result-value"></p>
             </div>
@@ -544,9 +510,6 @@
             </div>
         </div>
 
-        <!-- Show More Button -->
-        <button class="show-more-btn" id="showMoreBtn" onclick="toggleMoreResults()">إظهار التفاصيل</button>
-
         <!-- Floating Reset Button -->
         <div class="reset-btn" onclick="resetValues()">
             <i class="fas fa-sync-alt"></i>
@@ -555,7 +518,6 @@
 
     <script>
         let previousProfit = 0;
-        let isDetailsVisible = false;
         const currencySymbols = { EGP: 'ج.م', USD: '$', SAR: 'ر.س', AED: 'د.إ', KWD: 'د.ك', QAR: 'ر.ق', JOD: 'د.أ', BHD: 'د.ب', LYD: 'د.ل' };
         const getCurrencySymbol = () => currencySymbols[document.getElementById('currency').value];
 
@@ -635,26 +597,6 @@
             document.querySelector('.status-dot').classList.toggle('inactive', !applyTax);
         };
 
-        const toggleMoreResults = () => {
-            isDetailsVisible = !isDetailsVisible;
-            const hiddenCards = document.querySelectorAll('.result-card.hidden');
-            hiddenCards.forEach((card, index) => {
-                if (isDetailsVisible) {
-                    card.classList.remove('hidden');
-                    card.style.display = 'flex';
-                    setTimeout(() => card.style.opacity = '1', index * 100);
-                } else {
-                    card.style.opacity = '0';
-                    setTimeout(() => {
-                        card.classList.add('hidden');
-                        card.style.display = 'none';
-                    }, 300);
-                }
-            });
-            const showMoreBtn = document.getElementById('showMoreBtn');
-            showMoreBtn.textContent = isDetailsVisible ? 'إخفاء التفاصيل' : 'إظهار التفاصيل';
-        };
-
         document.getElementById('darkModeToggle').addEventListener('change', () => {
             document.body.classList.toggle('light-mode', !document.getElementById('darkModeToggle').checked);
             document.body.classList.toggle('dark-mode', document.getElementById('darkModeToggle').checked);
@@ -692,14 +634,6 @@
             document.getElementById('applyTax').checked = false;
             calculateResults();
             updateTaxStatus();
-            isDetailsVisible = false;
-            const hiddenCards = document.querySelectorAll('.result-card.hidden');
-            hiddenCards.forEach(card => {
-                card.classList.add('hidden');
-                card.style.display = 'none';
-                card.style.opacity = '0';
-            });
-            document.getElementById('showMoreBtn').textContent = 'إظهار التفاصيل';
         }
 
         document.querySelectorAll('input, #currency, #applyTax').forEach(input => {
@@ -726,7 +660,6 @@
             .glow {
                 animation: glow 0.5s ease;
             }
-            .hidden { display: none; }
             .result-card {
                 opacity: 1;
                 transition: opacity 0.3s ease;
