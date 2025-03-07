@@ -19,11 +19,12 @@
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
+            transition: background 0.3s ease;
         }
         .light-mode { background: linear-gradient(135deg, #e6fffa 0%, #e2e8f0 100%); color: #1a202c; }
-        .dark-mode { background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%); color: #ffffff; }
+        .dark-mode { background: #2d3748; color: #ffffff; }
         .container {
-            background: #ffffff;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
             border-radius: 0.75rem;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             padding: 0.5rem;
@@ -33,8 +34,20 @@
             flex-direction: column;
             gap: 0.5rem;
             position: relative;
+            animation: fadeIn 0.5s ease;
         }
         .dark-mode .container { background: #2d3748; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
 
         /* Header */
         .header {
@@ -43,11 +56,11 @@
             align-items: center;
             gap: 0.3rem;
             padding: 0.5rem;
-            background: linear-gradient(90deg, #f7fafc 0%, #e6fffa 100%);
+            background: #f7fafc;
             border-radius: 0.5rem;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
         }
-        .dark-mode .header { background: linear-gradient(90deg, #4a5568 0%, #1a2a44 100%); }
+        .dark-mode .header { background: #2d3748; }
         .profile-card {
             display: flex;
             align-items: center;
@@ -71,16 +84,19 @@
         .profile-name {
             font-size: 1.2rem;
             font-weight: 900;
-            background: linear-gradient(90deg, #2b6cb0, #48bb78);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #2b6cb0;
+            white-space: nowrap; /* To keep name in one line */
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
+        .dark-mode .profile-name { color: #48bb78; }
         .social-links { display: flex; gap: 0.3rem; }
         .social-links a {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             color: #ffffff;
             padding: 0.3rem;
             border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             transition: transform 0.3s ease;
             animation: pulse 2s infinite;
         }
@@ -90,11 +106,6 @@
         .social-links .instagram { background: #E1306C; }
         .social-links .tiktok { background: #000000; }
         .social-links .linkedin { background: #0077B5; }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
 
         /* Controls */
         .controls {
@@ -158,13 +169,13 @@
             border-radius: 0.5rem;
             font-size: 0.7rem;
             font-weight: 700;
-            background: #f0f4f8;
+            background: #f7fafc;
             cursor: pointer;
             transition: background 0.3s ease;
         }
-        .dark-mode .dropdown-selected { background: #4a5568; border-color: #48bb78; }
+        .dark-mode .dropdown-selected { background: #3d4a5a; border-color: #48bb78; }
         .dropdown-selected:hover { background: #e2e8f0; }
-        .dark-mode .dropdown-selected:hover { background: #5a6980; }
+        .dark-mode .dropdown-selected:hover { background: #4a5b6d; }
         .dropdown-selected i { margin-left: 0.2rem; font-size: 0.6rem; }
         .dropdown-options {
             position: absolute;
@@ -179,7 +190,7 @@
             max-height: 150px;
             overflow-y: auto;
         }
-        .dark-mode .dropdown-options { background: #2d3748; }
+        .dark-mode .dropdown-options { background: #3d4a5a; }
         .dropdown-options.active { display: block; }
         .dropdown-option {
             display: flex;
@@ -191,7 +202,7 @@
         .light-mode .dropdown-option { color: #1a202c; }
         .dark-mode .dropdown-option { color: #ffffff; }
         .dropdown-option:hover { background: #e2e8f0; }
-        .dark-mode .dropdown-option:hover { background: #4a5568; }
+        .dark-mode .dropdown-option:hover { background: #4a5b6d; }
         .dropdown-option span { margin: 0 0.3rem; }
 
         /* Inputs & Results */
@@ -205,16 +216,17 @@
             flex-direction: column;
             gap: 0.2rem;
             position: relative;
+            animation: fadeIn 0.5s ease;
         }
         .input-group label, .result-card p:first-child {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 700;
             display: flex;
             align-items: center;
             gap: 0.2rem;
         }
         .light-mode .input-group label, .light-mode .result-card p:first-child { color: #1a202c; }
-        .dark-mode .input-group label, .dark-mode .result-card p:first-child { color: #ffffff; }
+        .dark-mode .input-group label, .dark-mode .result-card p:first-child { color: #e2e8f0; }
         .input-group i, .result-card i { font-size: 0.8rem; animation: pulse 2s infinite; }
         .light-mode .input-group i, .light-mode .result-card i { color: #2b6cb0; }
         .dark-mode .input-group i, .dark-mode .result-card i { color: #48bb78; }
@@ -233,7 +245,7 @@
             box-shadow: 0 0 8px rgba(72, 187, 120, 0.3);
             outline: none;
         }
-        .dark-mode .input-group input { background: #4a5568; color: #ffffff; border-color: #48bb78; }
+        .dark-mode .input-group input { background: #3d4a5a; color: #ffffff; border-color: #48bb78; }
         .result-card {
             background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
             border: 1px solid #2b6cb0;
@@ -243,7 +255,7 @@
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease;
         }
-        .dark-mode .result-card { background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%); border-color: #48bb78; }
+        .dark-mode .result-card { background: #3d4a5a; border-color: #48bb78; }
         .result-card:hover { transform: translateY(-2px); }
         .result-card p:last-child {
             font-size: 1rem;
@@ -251,7 +263,7 @@
             transition: color 0.3s ease;
         }
         .result-card.bg-blue-50 { grid-column: 1 / -1; background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%); }
-        .dark-mode .result-card.bg-blue-50 { background: linear-gradient(135deg, #1a2a44 0%, #2d3748 100%); }
+        .dark-mode .result-card.bg-blue-50 { background: #2d4a6a; }
         #netProfitAfterAds { font-size: 1.2rem; font-weight: 900; }
         .profit-indicators { display: flex; justify-content: center; align-items: center; gap: 0.3rem; }
         #profitIndicator, #trendIndicator { font-size: 0.8rem; }
@@ -281,7 +293,7 @@
             border-radius: 0.5rem;
             background: #f7fafc;
         }
-        .dark-mode .input-group.tax-group { border-color: #48bb78; background: #4a5568; }
+        .dark-mode .input-group.tax-group { border-color: #48bb78; background: #3d4a5a; }
         .tax-toggle { display: flex; align-items: center; gap: 0.2rem; }
         #taxStatus { font-size: 0.8rem; display: flex; align-items: center; gap: 0.2rem; }
         .status-dot {
@@ -340,12 +352,12 @@
             .header { padding: 0.75rem; }
             .profile-pic { width: 60px; height: 60px; }
             .profile-name { font-size: 1.5rem; }
-            .social-links a { font-size: 0.9rem; padding: 0.4rem; }
+            .social-links a { font-size: 1rem; padding: 0.4rem; }
             .inputs-container, .results-container { gap: 0.5rem; }
-            .input-group label, .result-card p:first-child { font-size: 0.9rem; }
-            .input-group input { padding: 0.5rem; font-size: 0.9rem; }
+            .input-group label, .result-card p:first-child { font-size: 1rem; }
+            .input-group input { padding: 0.5rem; font-size: 1rem; }
             .result-card { padding: 0.5rem; }
-            .result-card p:last-child { font-size: 1rem; }
+            .result-card p:last-child { font-size: 1.2rem; }
             #netProfitAfterAds { font-size: 1.5rem; }
             .show-more-btn { max-width: 150px; font-size: 0.9rem; }
         }
@@ -479,7 +491,7 @@
         </div>
 
         <!-- Show More Button -->
-        <button class="show-more-btn" onclick="toggleMoreResults()">إظهار المزيد</button>
+        <button class="show-more-btn" onclick="toggleMoreResults()">إظهار التفاصيل</button>
 
         <!-- Floating Reset Button -->
         <div class="reset-btn" onclick="resetValues()">
@@ -489,6 +501,7 @@
 
     <script>
         let previousProfit = 0;
+        let showMore = false;
         const currencySymbols = { EGP: 'ج.م', USD: '$', SAR: 'ر.س', AED: 'د.إ', KWD: 'د.ك', QAR: 'ر.ق', JOD: 'د.أ', BHD: 'د.ب', LYD: 'د.ل' };
         const getCurrencySymbol = () => currencySymbols[document.getElementById('currency').value];
 
@@ -509,12 +522,10 @@
             const totalAdSpend = targetOrders * adCostPerOrder;
             const adSpendWithTax = applyTax ? totalAdSpend * 1.14 : totalAdSpend;
             const netProfitAfterAds = profitBeforeAds - adSpendWithTax;
-            const totalInvestment = totalAdSpend + adSpendWithTax + (productPrice + shippingCost) * deliveredOrders;
-            const profitPercentage = totalInvestment > 0 ? (netProfitAfterAds / totalInvestment) * 100 : 0;
 
             const updateElement = (id, value, isPercentage = false, isNumberOnly = false) => {
                 const element = document.getElementById(id);
-                const oldValue = parseFloat(element.textContent) || 0;
+                const oldValue = parseFloat(element.textContent.replace(/[^\d.-]/g, '')) || 0;
                 element.textContent = isPercentage ? `${value.toFixed(2)}%` : (isNumberOnly ? value.toFixed(0) : `${currencySymbol} ${value.toFixed(2)}`);
                 element.classList.remove('text-red-600', 'text-green-600', 'text-gray-600');
                 if (value > 0) element.classList.add('text-green-600');
@@ -522,6 +533,7 @@
                 else element.classList.add('text-gray-600');
                 if (value !== oldValue) {
                     element.classList.add('animate-value');
+                    setTimeout(() => element.classList.remove('animate-value'), 500);
                 }
             };
 
@@ -534,6 +546,8 @@
             updateElement('netProfitAfterAds', netProfitAfterAds);
 
             const progress = document.getElementById('profitProgress');
+            const totalInvestment = totalAdSpend + adSpendWithTax + (productPrice + shippingCost) * deliveredOrders;
+            const profitPercentage = totalInvestment > 0 ? (netProfitAfterAds / totalInvestment) * 100 : 0;
             progress.style.width = `${Math.min(Math.abs(profitPercentage), 100)}%`;
             progress.classList.toggle('negative', netProfitAfterAds < 0);
 
@@ -560,10 +574,11 @@
         };
 
         const toggleMoreResults = () => {
+            showMore = !showMore;
             const hiddenCards = document.querySelectorAll('.result-card.hidden');
-            hiddenCards.forEach(card => card.classList.toggle('hidden'));
+            hiddenCards.forEach(card => card.classList.toggle('hidden', !showMore));
             const showMoreBtn = document.querySelector('.show-more-btn');
-            showMoreBtn.textContent = showMoreBtn.textContent === 'إظهار المزيد' ? 'إخفاء التفاصيل' : 'إظهار المزيد';
+            showMoreBtn.textContent = showMore ? 'إخفاء التفاصيل' : 'إظهار التفاصيل';
         };
 
         document.getElementById('darkModeToggle').addEventListener('change', () => {
@@ -603,9 +618,10 @@
             document.getElementById('applyTax').checked = false;
             calculateResults();
             updateTaxStatus();
+            showMore = false;
             const hiddenCards = document.querySelectorAll('.result-card.hidden');
             hiddenCards.forEach(card => card.classList.add('hidden'));
-            document.querySelector('.show-more-btn').textContent = 'إظهار المزيد';
+            document.querySelector('.show-more-btn').textContent = 'إظهار التفاصيل';
         }
 
         document.querySelectorAll('input, #currency, #applyTax').forEach(input => {
