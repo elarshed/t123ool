@@ -330,7 +330,7 @@
         .result-card.visible { box-shadow: 0 4px 16px rgba(43, 108, 176, 0.2); }
         .result-card.hidden { display: none; }
         .result-card p:first-child {
-            font-size: 0.9rem;
+            font-size: 0.9rem; /* حجم خط العنوان */
             font-weight: 700;
             display: flex;
             align-items: center;
@@ -341,7 +341,7 @@
         .dark-mode .result-card p:first-child { color: #4a90e2; }
         .result-card i { font-size: 0.9rem; }
         .result-card p:last-child {
-            font-size: 1.8rem;
+            font-size: 1.5rem; /* حجم خط الأرقام العادية */
             font-weight: 900;
             transition: color 0.3s ease, transform 0.3s ease;
             margin-top: 0.2rem;
@@ -353,7 +353,7 @@
         }
         .dark-mode .result-card.bg-blue-50 { background: #2d4a6a; }
         .result-card.bg-blue-50 p:last-child {
-            font-size: 2rem;
+            font-size: 2.5rem; /* حجم خط صافي الربح */
         }
         .result-value {
             animation: scaleUp 0.5s ease;
@@ -421,8 +421,8 @@
             .input-group label { font-size: 1rem; }
             .input-group input { padding: 0.5rem; font-size: 1.1rem; }
             .result-card p:first-child { font-size: 1rem; }
-            .result-card p:last-child { font-size: 2.5rem; }
-            .result-card.bg-blue-50 p:last-child { font-size: 3rem; }
+            .result-card p:last-child { font-size: 2rem; }
+            .result-card.bg-blue-50 p:last-child { font-size: 3.5rem; }
             .show-more-btn, .reset-btn { max-width: 150px; font-size: 1rem; }
         }
     </style>
@@ -603,6 +603,7 @@
             updateElement('totalAdSpend', totalAdSpend);
             updateElement('adSpendWithTax', adSpendWithTax);
             updateElement('netProfitAfterAds', netProfitAfterAds);
+
             const indicator = document.getElementById('profitIndicator');
             indicator.style.display = netProfitAfterAds !== 0 ? 'inline' : 'none';
             indicator.classList.remove('fa-arrow-up', 'fa-arrow-down', 'up', 'down');
