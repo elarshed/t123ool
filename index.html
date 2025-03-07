@@ -12,7 +12,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Tajawal', sans-serif;
-            background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+            background: linear-gradient(135deg, #e6f0fa 0%, #f0f4f8 100%);
             color: #1a202c;
             min-height: 100vh;
             padding: 0.5rem;
@@ -20,57 +20,60 @@
             flex-direction: column;
             overflow-x: hidden;
         }
-        .light-mode { background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%); color: #1a202c; }
-        .dark-mode { background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%); color: #ffffff; }
+        .light-mode { background: linear-gradient(135deg, #e6f0fa 0%, #f0f4f8 100%); }
+        .dark-mode { background: linear-gradient(135deg, #1a2a44 0%, #2d3748 100%); }
         .container {
-            background: #ffffff;
+            background: linear-gradient(135deg, #ffffff 0%, #f7fafc 100%);
             border-radius: 0.75rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            padding: 0.5rem;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            padding: 0.3rem;
             max-width: 100%;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.25rem;
         }
-        .dark-mode .container { background: #2d3748; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); }
+        .dark-mode .container { background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%); }
 
         /* Header */
         .header {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.3rem;
-            padding: 0.5rem;
-            background: #f7fafc;
+            gap: 0.2rem;
+            padding: 0.3rem;
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 0.5rem;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(5px);
         }
-        .dark-mode .header { background: #4a5568; }
+        .dark-mode .header { background: rgba(45, 55, 72, 0.9); }
         .profile-card {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 0.5rem;
             width: 100%;
+            padding: 0.2rem;
         }
         .profile-pic {
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            border: 2px solid #2b6cb0;
+            border: 3px solid #2b6cb0;
+            box-shadow: 0 2px 8px rgba(43, 108, 176, 0.3);
             overflow: hidden;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .dark-mode .profile-pic { border-color: #48bb78; }
-        .profile-pic:hover { transform: scale(1.05); }
+        .dark-mode .profile-pic { border-color: #48bb78; box-shadow: 0 2px 8px rgba(72, 187, 120, 0.3); }
+        .profile-pic:hover { transform: scale(1.1); box-shadow: 0 4px 15px rgba(43, 108, 176, 0.5); }
         .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
         .profile-info { display: flex; flex-direction: column; gap: 0.1rem; flex: 1; }
-        .profile-name { font-size: 1.1rem; font-weight: 900; }
+        .profile-name { font-size: 1.1rem; font-weight: 900; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
         .light-mode .profile-name { color: #2b6cb0; }
         .dark-mode .profile-name { color: #48bb78; }
-        .social-links { display: flex; gap: 0.3rem; }
-        .social-links a { font-size: 0.7rem; color: #ffffff; padding: 0.3rem; border-radius: 50%; transition: transform 0.3s ease; }
+        .social-links { display: flex; gap: 0.2rem; }
+        .social-links a { font-size: 0.7rem; color: #ffffff; padding: 0.2rem; border-radius: 50%; transition: transform 0.3s ease; }
         .social-links a:hover { transform: translateY(-2px); }
         .social-links .facebook { background: #1877F2; }
         .social-links .whatsapp { background: #25D366; }
@@ -84,17 +87,17 @@
             justify-content: space-between;
             align-items: center;
             width: 100%;
-            gap: 0.3rem;
+            gap: 0.2rem;
         }
         .mode-toggle {
             display: flex;
             align-items: center;
-            gap: 0.2rem;
+            gap: 0.15rem;
         }
         .toggle-switch {
             position: relative;
-            width: 36px;
-            height: 18px;
+            width: 34px;
+            height: 16px;
         }
         .toggle-switch input { opacity: 0; width: 0; height: 0; }
         .slider {
@@ -104,15 +107,15 @@
             right: 0;
             bottom: 0;
             background: #a0aec0;
-            border-radius: 18px;
+            border-radius: 16px;
             border: 1px solid #2b6cb0;
             transition: 0.3s;
         }
         .slider:before {
             position: absolute;
             content: "";
-            height: 14px;
-            width: 14px;
+            height: 12px;
+            width: 12px;
             left: 2px;
             bottom: 2px;
             background: #ffffff;
@@ -121,7 +124,7 @@
         }
         input:checked + .slider { background: #48bb78; }
         input:checked + .slider:before { transform: translateX(16px); }
-        .mode-toggle i { font-size: 0.8rem; }
+        .mode-toggle i { font-size: 0.7rem; }
         .light-mode .mode-toggle i.fa-sun { color: #f6ad55; }
         .dark-mode .mode-toggle i.fa-moon { color: #a0aec0; }
         .mode-toggle span { font-size: 0.7rem; font-weight: 700; }
@@ -130,20 +133,23 @@
 
         .custom-dropdown {
             position: relative;
-            width: 100px;
+            width: 90px;
         }
         .dropdown-selected {
             display: flex;
             align-items: center;
-            padding: 0.3rem 0.5rem;
+            padding: 0.25rem 0.4rem;
             border: 1px solid #2b6cb0;
             border-radius: 0.5rem;
             font-size: 0.7rem;
             font-weight: 700;
-            background: #f0f4f8;
+            background: rgba(240, 244, 248, 0.9);
             cursor: pointer;
+            transition: background 0.3s ease;
         }
-        .dark-mode .dropdown-selected { background: #4a5568; border-color: #48bb78; }
+        .dark-mode .dropdown-selected { background: rgba(74, 85, 104, 0.9); border-color: #48bb78; }
+        .dropdown-selected:hover { background: rgba(224, 232, 240, 0.9); }
+        .dark-mode .dropdown-selected:hover { background: rgba(60, 70, 88, 0.9); }
         .dropdown-selected i { margin-left: 0.2rem; font-size: 0.6rem; }
         .dropdown-options {
             position: absolute;
@@ -163,9 +169,10 @@
         .dropdown-option {
             display: flex;
             align-items: center;
-            padding: 0.3rem 0.5rem;
+            padding: 0.25rem 0.4rem;
             font-size: 0.7rem;
             cursor: pointer;
+            transition: background 0.3s ease;
         }
         .light-mode .dropdown-option { color: #1a202c; }
         .dark-mode .dropdown-option { color: #ffffff; }
@@ -176,61 +183,72 @@
         /* Inputs & Results */
         .inputs-container, .results-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 0.3rem;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 0.25rem;
         }
         .input-group, .result-card {
             display: flex;
             flex-direction: column;
-            gap: 0.2rem;
+            gap: 0.15rem;
         }
         .input-group label, .result-card p:first-child {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 700;
             display: flex;
             align-items: center;
             gap: 0.2rem;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
         }
         .light-mode .input-group label, .light-mode .result-card p:first-child { color: #1a202c; }
-        .dark-mode .input-group label, .dark-mode .result-card p:first-child { color: #ffffff; }
+        .dark-mode .input-group label, .dark-mode .result-card p:first-child { color: #e2e8f0; }
         .input-group i, .result-card i { font-size: 0.8rem; }
         .light-mode .input-group i, .light-mode .result-card i { color: #2b6cb0; }
         .dark-mode .input-group i, .dark-mode .result-card i { color: #48bb78; }
         .input-group input {
             width: 100%;
             padding: 0.3rem;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             border: 1px solid #2b6cb0;
             border-radius: 0.5rem;
-            background: #f7fafc;
+            background: rgba(247, 250, 252, 0.9);
+            transition: border-color 0.3s ease;
         }
-        .dark-mode .input-group input { background: #4a5568; color: #ffffff; border-color: #48bb78; }
+        .dark-mode .input-group input { background: rgba(74, 85, 104, 0.9); color: #ffffff; border-color: #48bb78; }
+        .input-group input:focus { border-color: #3182ce; outline: none; }
+        .dark-mode .input-group input:focus { border-color: #38a169; }
         .result-card {
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.95);
             border: 1px solid #2b6cb0;
             border-radius: 0.5rem;
-            padding: 0.4rem;
+            padding: 0.3rem;
             text-align: center;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
         }
-        .dark-mode .result-card { background: #2d3748; border-color: #48bb78; }
-        .result-card p:last-child { font-size: 0.8rem; font-weight: 700; }
-        .result-card.bg-blue-50 { grid-column: 1 / -1; background: #e6fffa; }
-        .dark-mode .result-card.bg-blue-50 { background: #1a2a44; }
-        #netProfitAfterAds { font-size: 1rem; font-weight: 900; }
-        .profit-indicators { display: flex; justify-content: center; align-items: center; gap: 0.3rem; }
+        .dark-mode .result-card { background: rgba(45, 55, 72, 0.95); border-color: #48bb78; }
+        .result-card:hover { transform: translateY(-2px); }
+        .result-card p:last-child { font-size: 0.9rem; font-weight: 900; }
+        .result-card.bg-blue-50 { grid-column: 1 / -1; background: rgba(230, 255, 250, 0.95); border-color: #2b6cb0; }
+        .dark-mode .result-card.bg-blue-50 { background: rgba(26, 42, 68, 0.95); border-color: #48bb78; }
+        #netProfitAfterAds { font-size: 1.1rem; font-weight: 900; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
+        .profit-indicators { display: flex; justify-content: center; align-items: center; gap: 0.25rem; }
         #profitIndicator, #trendIndicator { font-size: 0.7rem; }
         .up, .up-trend { color: #48bb78; }
         .down, .down-trend { color: #e53e3e; }
         .progress-bar {
-            width: 100%;
+            width: 60px;
             height: 6px;
             background: #e2e8f0;
-            border-radius: 3px;
+            border-radius: 50px;
             overflow: hidden;
-            margin-top: 0.2rem;
+            margin: 0.2rem auto;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
         }
-        .progress { height: 100%; transition: width 0.5s ease; }
+        .progress {
+            height: 100%;
+            transition: width 0.5s ease;
+            border-radius: 50px;
+        }
         .light-mode .progress { background: #2b6cb0; }
         .dark-mode .progress { background: #48bb78; }
         .negative { background: #e53e3e; }
@@ -241,14 +259,14 @@
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
-            padding: 0.4rem;
+            padding: 0.3rem;
             border: 1px solid #2b6cb0;
             border-radius: 0.5rem;
-            background: #f7fafc;
+            background: rgba(247, 250, 252, 0.9);
         }
-        .dark-mode .input-group.tax-group { border-color: #48bb78; background: #4a5568; }
-        .tax-toggle { display: flex; align-items: center; gap: 0.2rem; }
-        #taxStatus { font-size: 0.8rem; display: flex; align-items: center; gap: 0.2rem; }
+        .dark-mode .input-group.tax-group { border-color: #48bb78; background: rgba(74, 85, 104, 0.9); }
+        .tax-toggle { display: flex; align-items: center; gap: 0.15rem; }
+        #taxStatus { font-size: 0.85rem; display: flex; align-items: center; gap: 0.15rem; }
         .status-dot {
             width: 8px;
             height: 8px;
@@ -262,35 +280,35 @@
         /* Reset Button */
         .reset-btn {
             width: 100%;
-            max-width: 120px;
-            margin: 0.3rem auto;
-            padding: 0.4rem 1rem;
-            background: #2b6cb0;
+            max-width: 110px;
+            margin: 0.2rem auto;
+            padding: 0.3rem 0.8rem;
+            background: linear-gradient(90deg, #2b6cb0 0%, #3182ce 100%);
             color: #ffffff;
             border-radius: 0.5rem;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 700;
             text-align: center;
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .dark-mode .reset-btn { background: #48bb78; }
-        .reset-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); }
+        .dark-mode .reset-btn { background: linear-gradient(90deg, #48bb78 0%, #38a169 100%); }
+        .reset-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(43, 108, 176, 0.3); }
 
         /* Responsive Adjustments */
         @media (min-width: 768px) {
-            .container { padding: 1rem; max-width: 800px; margin: 0 auto; }
-            .header { padding: 0.75rem; }
-            .profile-pic { width: 50px; height: 50px; }
+            .container { padding: 0.8rem; max-width: 800px; margin: 0 auto; }
+            .header { padding: 0.6rem; }
+            .profile-pic { width: 60px; height: 60px; }
             .profile-name { font-size: 1.3rem; }
-            .social-links a { font-size: 0.8rem; padding: 0.4rem; }
+            .social-links a { font-size: 0.8rem; padding: 0.3rem; }
             .inputs-container, .results-container { gap: 0.5rem; }
             .input-group label, .result-card p:first-child { font-size: 0.9rem; }
-            .input-group input { padding: 0.5rem; font-size: 0.9rem; }
-            .result-card { padding: 0.5rem; }
-            .result-card p:last-child { font-size: 0.9rem; }
-            #netProfitAfterAds { font-size: 1.2rem; }
-            .reset-btn { max-width: 150px; font-size: 0.9rem; }
+            .input-group input { padding: 0.4rem; font-size: 0.9rem; }
+            .result-card { padding: 0.4rem; }
+            .result-card p:last-child { font-size: 1rem; }
+            #netProfitAfterAds { font-size: 1.3rem; }
+            .reset-btn { max-width: 140px; font-size: 0.9rem; padding: 0.4rem 1rem; }
         }
     </style>
 </head>
@@ -299,9 +317,6 @@
         <!-- Header -->
         <header class="header">
             <div class="profile-card">
-                <div class="profile-pic">
-                    <img src="https://scontent.faly1-2.fna.fbcdn.net/v/t39.30808-6/478724180_2012750999223754_4950667810291165018_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHGVoV1nv_uBT6VDiUmkTUBt9Lm4gk8hxC30ubiCTyHECTpTi2wl8gfRfMESNTozonQZKpDfqy38PE-slzWn9Ck&_nc_ohc=v_k1rOPK2F0Q7kNvgFLv1QA&_nc_oc=AdhvcaU_nFdQ4Z3Kg3E9swCkPRk7JtChJHFOQT9zYUpJ2idA5GZBKG6zFFvqxVjJidw&_nc_zt=23&_nc_ht=scontent.faly1-2.fna&_nc_gid=A_mUbigqD8_rNyd4OoHW9AM&oh=00_AYFDdgaYR159DtFUSCb60jQqfWAmWMrG9davjLCYD83ONw&oe=67D0AAED" alt="Ahmed Muhammed Abdeslam">
-                </div>
                 <div class="profile-info">
                     <span class="profile-name">Ahmed Muhammed Abdeslam</span>
                     <div class="social-links">
@@ -311,6 +326,9 @@
                         <a href="https://tiktok.com/@elarshedok" target="_blank" class="tiktok"><i class="fab fa-tiktok"></i></a>
                         <a href="https://linkedin.com/in/elarshedok" target="_blank" class="linkedin"><i class="fab fa-linkedin"></i></a>
                     </div>
+                </div>
+                <div class="profile-pic">
+                    <img src="https://scontent.faly1-2.fna.fbcdn.net/v/t39.30808-6/478724180_2012750999223754_4950667810291165018_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHGVoV1nv_uBT6VDiUmkTUBt9Lm4gk8hxC30ubiCTyHECTpTi2wl8gfRfMESNTozonQZKpDfqy38PE-slzWn9Ck&_nc_ohc=v_k1rOPK2F0Q7kNvgFLv1QA&_nc_oc=AdhvcaU_nFdQ4Z3Kg3E9swCkPRk7JtChJHFOQT9zYUpJ2idA5GZBKG6zFFvqxVjJidw&_nc_zt=23&_nc_ht=scontent.faly1-2.fna&_nc_gid=A_mUbigqD8_rNyd4OoHW9AM&oh=00_AYFDdgaYR159DtFUSCb60jQqfWAmWMrG9davjLCYD83ONw&oe=67D0AAED" alt="Ahmed Muhammed Abdeslam">
                 </div>
             </div>
             <div class="controls">
@@ -396,18 +414,6 @@
                 <p><i class="fas fa-truck-loading"></i> الأوردرات المسلمة</p>
                 <p id="deliveredOrders"></p>
             </div>
-            <div class="result-card">
-                <p><i class="fas fa-money-bill-wave"></i> الربح قبل الإنفاق</p>
-                <p id="profitBeforeAds"></p>
-            </div>
-            <div class="result-card">
-                <p><i class="fas fa-bullhorn"></i> إنفاق الإعلانات</p>
-                <p id="totalAdSpend"></p>
-            </div>
-            <div class="result-card">
-                <p><i class="fas fa-calculator"></i> الإنفاق بعد الضريبة</p>
-                <p id="adSpendWithTax"></p>
-            </div>
             <div class="result-card bg-blue-50">
                 <p><i class="fas fa-wallet"></i> صافي الربح</p>
                 <div class="profit-indicators">
@@ -462,9 +468,6 @@
             updateElement('netProfitPerOrder', netProfitPerOrder);
             updateElement('profitMargin', profitMargin, true);
             updateElement('deliveredOrders', deliveredOrders, false, true);
-            updateElement('profitBeforeAds', profitBeforeAds);
-            updateElement('totalAdSpend', totalAdSpend);
-            updateElement('adSpendWithTax', adSpendWithTax);
             updateElement('netProfitAfterAds', netProfitAfterAds);
 
             const progress = document.getElementById('profitProgress');
