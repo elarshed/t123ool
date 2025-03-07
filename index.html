@@ -1,709 +1,112 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aff Price - Ahmed Muhammed Abdeslam</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Cairo', sans-serif;
-            background: #f0f4f8;
-            color: #1a202c;
-            min-height: 100vh;
-            padding: 0.5rem;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-            transition: background 0.3s ease;
-        }
-        .light-mode { background: #f0f4f8; color: #1a202c; }
-        .dark-mode { background: #1a202c; color: #ffffff; }
-        .container {
-            background: #ffffff;
-            border-radius: 0.75rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            padding: 0.5rem;
-            max-width: 100%;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            position: relative;
-            animation: fadeIn 0.5s ease;
-            z-index: 2;
-        }
-        .dark-mode .container { background: #2d3748; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); }
+/* Results Section */
+.results-section {
+    padding: 0.5rem;
+    animation: slideIn 0.5s ease 0.2s backwards;
+}
 
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes glow {
-            0% { text-shadow: 0 0 5px rgba(56, 161, 105, 0.7); }
-            50% { text-shadow: 0 0 10px rgba(56, 161, 105, 1), 0 0 20px rgba(56, 161, 105, 0.7); }
-            100% { text-shadow: 0 0 5px rgba(56, 161, 105, 0.7); }
-        }
-        @keyframes scaleUp {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
+.results-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.3rem;
+}
 
-        /* Header */
-        .header {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.3rem;
-            padding: 0.5rem;
-            border-radius: 0.5rem;
-        }
-        .dark-mode .header { background: #2d3748; }
-        .profile-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            width: 100%;
-            padding: 0.75rem;
-            background: #f7fafc;
-            border-radius: 1rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transition: transform 0.5s ease, box-shadow 0.3s ease;
-        }
-        .profile-card.visible { transform: translateY(0); box-shadow: 0 6px 16px rgba(43, 108, 176, 0.2); }
-        .dark-mode .profile-card { background: #3d4a5a; }
-        .profile-pic {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 4px solid #2b6cb0;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-        }
-        .dark-mode .profile-pic { border-color: #4a90e2; }
-        .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
-        .profile-info { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; }
-        .profile-name {
-            font-size: 1.3rem;
-            font-weight: 900;
-            color: #2b6cb0;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-        .dark-mode .profile-name { color: #4a90e2; }
-        .profile-name i { font-size: 1rem; animation: bounce 2s infinite; }
-        .creator-name {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: #4a5568;
-        }
-        .dark-mode .creator-name { color: #a0aec0; }
-        .social-links { display: flex; gap: 0.3rem; margin-top: 0.3rem; }
-        .social-links a {
-            font-size: 1rem;
-            padding: 0.4rem;
-            border-radius: 50%;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        .social-links .facebook { color: #1877F2; }
-        .social-links .whatsapp { color: #25D366; }
-        .social-links .instagram { color: #E1306C; }
-        .social-links .tiktok { color: #000000; }
-        .social-links .linkedin { color: #0077B5; }
+.result-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    padding: 0.4rem;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease;
+}
 
-        /* Controls */
-        .controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            gap: 0.3rem;
-            padding: 0 0.5rem;
-        }
-        .mode-toggle {
-            display: flex;
-            align-items: center;
-            gap: 0.2rem;
-        }
-        .toggle-switch {
-            position: relative;
-            width: 36px;
-            height: 18px;
-        }
-        .toggle-switch input { opacity: 0; width: 0; height: 0; }
-        .slider {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: #a0aec0;
-            border-radius: 18px;
-            border: 1px solid #2b6cb0;
-            transition: 0.3s;
-        }
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 14px;
-            width: 14px;
-            left: 2px;
-            bottom: 2px;
-            background: #ffffff;
-            border-radius: 50%;
-            transition: 0.3s;
-        }
-        input:checked + .slider { background: #4a90e2; }
-        input:checked + .slider:before { transform: translateX(16px); }
-        .mode-toggle i { font-size: 0.8rem; }
-        .light-mode .mode-toggle i.fa-sun { color: #f6ad55; }
-        .dark-mode .mode-toggle i.fa-moon { color: #a0aec0; }
-        .mode-toggle span { font-size: 0.7rem; font-weight: 700; }
-        .light-mode .mode-toggle span { color: #1a202c; }
-        .dark-mode .mode-toggle span { color: #ffffff; }
+.dark-mode .result-card {
+    background: #3d4a5a;
+    border-color: #4a90e2;
+}
 
-        /* Currency Dropdown */
-        .custom-dropdown {
-            width: 90px;
-            position: relative;
-        }
-        .dropdown-selected {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.3rem 0.5rem;
-            border: 1px solid #2b6cb0;
-            border-radius: 0.5rem;
-            font-size: 0.8rem;
-            font-weight: 700;
-            background: #f7fafc;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        .dark-mode .dropdown-selected { background: #3d4a5a; border-color: #4a90e2; }
-        .dropdown-selected:hover { background: #e2e8f0; }
-        .dark-mode .dropdown-selected:hover { background: #4a5b6d; }
-        .dropdown-selected i { margin-left: 0.3rem; font-size: 0.7rem; }
-        .dropdown-options {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            width: 90px;
-            background: #ffffff;
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            display: none;
-            z-index: 10;
-            max-height: 150px;
-            overflow-y: auto;
-        }
-        .dark-mode .dropdown-options { background: #3d4a5a; }
-        .dropdown-options.active { display: block; }
-        .dropdown-option {
-            display: flex;
-            align-items: center;
-            padding: 0.3rem 0.5rem;
-            font-size: 0.8rem;
-            cursor: pointer;
-        }
-        .light-mode .dropdown-option { color: #1a202c; }
-        .dark-mode .dropdown-option { color: #ffffff; }
-        .dropdown-option:hover { background: #e2e8f0; }
-        .dark-mode .dropdown-option:hover { background: #4a5b6d; }
-        .dropdown-option span { margin: 0 0.3rem; }
+.result-card.visible {
+    box-shadow: 0 4px 16px rgba(43, 108, 176, 0.2);
+}
 
-        /* Inputs Section */
-        .inputs-section {
-            background: #e6f0fa;
-            border-radius: 0.75rem;
-            padding: 0.5rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            animation: slideIn 0.5s ease;
-            margin-bottom: 0.5rem;
-        }
-        .dark-mode .inputs-section { background: #2d4a6a; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); }
-        .inputs-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 0.3rem;
-        }
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.2rem;
-            position: relative;
-            animation: slideIn 0.5s ease backwards;
-            animation-delay: calc(var(--order) * 0.1s);
-        }
-        .input-group label {
-            font-size: 0.9rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.2rem;
-            color: #2b6cb0;
-        }
-        .dark-mode .input-group label { color: #4a90e2; }
-        .input-group i { font-size: 0.9rem; }
-        .light-mode .input-group i { color: #2b6cb0; }
-        .dark-mode .input-group i { color: #4a90e2; }
-        .input-group input {
-            width: 100%;
-            padding: 0.3rem;
-            font-size: 1rem;
-            font-weight: 700;
-            border: 1px solid #2b6cb0;
-            border-radius: 0.5rem;
-            background: #ffffff;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        .input-group input:focus {
-            border-color: #4a90e2;
-            box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
-            outline: none;
-        }
-        .dark-mode .input-group input { background: #3d4a5a; color: #ffffff; border-color: #4a90e2; }
-        .input-group.tax-group {
-            grid-column: 1 / -1;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0.4rem;
-            border: 1px solid #2b6cb0;
-            border-radius: 0.5rem;
-            background: #ffffff;
-        }
-        .dark-mode .input-group.tax-group { border-color: #4a90e2; background: #3d4a5a; }
-        .tax-toggle { display: flex; align-items: center; gap: 0.2rem; }
-        #taxStatus { font-size: 0.9rem; display: flex; align-items: center; gap: 0.2rem; }
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-        .light-mode .status-dot.active { background: #2b6cb0; }
-        .light-mode .status-dot.inactive { background: #e53e3e; }
-        .dark-mode .status-dot.active { background: #4a90e2; }
-        .dark-mode .status-dot.inactive { background: #e53e3e; }
+.result-card.hidden {
+    display: none;
+}
 
-        /* Decorative Line */
-        .decorative-line {
-            height: 2px;
-            background: linear-gradient(to right, transparent, #2b6cb0, transparent);
-            margin: 0.5rem 0;
-            border-radius: 1rem;
-        }
-        .dark-mode .decorative-line { background: linear-gradient(to right, transparent, #4a90e2, transparent); }
+.result-card p:first-child {
+    font-size: 0.8rem; /* تقليل حجم خط العنوان */
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    color: #2b6cb0;
+}
 
-        /* Results Section */
-        .results-section {
-            padding: 0.5rem;
-            animation: slideIn 0.5s ease 0.2s backwards;
-        }
-        .results-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 0.3rem;
-        }
-        .result-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 0.5rem;
-            padding: 0.4rem;
-            text-align: center;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-            transition: box-shadow 0.3s ease;
-        }
-        .dark-mode .result-card { background: #3d4a5a; border-color: #4a90e2; }
-        .result-card.visible { box-shadow: 0 4px 16px rgba(43, 108, 176, 0.2); }
-        .result-card.hidden { display: none; }
-        .result-card p:first-child {
-            font-size: 0.9rem; /* حجم خط العنوان */
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.2rem;
-            color: #2b6cb0;
-        }
-        .dark-mode .result-card p:first-child { color: #4a90e2; }
-        .result-card i { font-size: 0.9rem; }
-        .result-card p:last-child {
-            font-size: 1.5rem; /* حجم خط الأرقام العادية */
-            font-weight: 900;
-            transition: color 0.3s ease, transform 0.3s ease;
-            margin-top: 0.2rem;
-        }
-        .result-card.bg-blue-50 {
-            grid-column: 1 / -1;
-            background: #e6fffa;
-            padding: 0.5rem;
-        }
-        .dark-mode .result-card.bg-blue-50 { background: #2d4a6a; }
-        .result-card.bg-blue-50 p:last-child {
-            font-size: 2.5rem; /* حجم خط صافي الربح */
-        }
-        .result-value {
-            animation: scaleUp 0.5s ease;
-        }
-        .text-green-600 { color: #38a169; }
-        .dark-mode .text-green-600 { color: #48bb78; }
-        .text-red-600 { color: #e53e3e; }
-        .text-gray-600 { color: #718096; }
-        .dark-mode .text-gray-600 { color: #a0aec0; }
-        .profit-indicators { display: flex; justify-content: center; align-items: center; gap: 0.3rem; }
-        #profitIndicator, #trendIndicator { font-size: 1rem; }
-        .up, .up-trend { color: #38a169; }
-        .dark-mode .up, .dark-mode .up-trend { color: #48bb78; }
-        .down, .down-trend { color: #e53e3e; }
+.dark-mode .result-card p:first-child {
+    color: #4a90e2;
+}
 
-        /* Show More and Reset Buttons */
-        .buttons-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.5rem 0;
-        }
-        .show-more-btn {
-            width: 100%;
-            max-width: 120px;
-            padding: 0.4rem 1rem;
-            background: #2b6cb0;
-            color: #ffffff;
-            border-radius: 0.5rem;
-            font-size: 0.9rem;
-            font-weight: 700;
-            text-align: center;
-            cursor: pointer;
-            transition: opacity 0.3s ease;
-        }
-        .dark-mode .show-more-btn { background: #4a90e2; }
-        .show-more-btn:hover { opacity: 0.9; }
-        .reset-btn {
-            width: 100%;
-            max-width: 120px;
-            padding: 0.4rem 1rem;
-            background: #e53e3e;
-            color: #ffffff;
-            border-radius: 0.5rem;
-            font-size: 0.9rem;
-            font-weight: 700;
-            text-align: center;
-            cursor: pointer;
-            transition: opacity 0.3s ease;
-        }
-        .reset-btn:hover { opacity: 0.9; }
+.result-card i {
+    font-size: 0.8rem; /* تقليل حجم الأيقونة لتتناسب مع العنوان */
+}
 
-        /* Responsive Adjustments */
-        @media (min-width: 768px) {
-            .container { padding: 1rem; max-width: 800px; margin: 0 auto; }
-            .header { padding: 0.75rem; }
-            .profile-pic { width: 90px; height: 90px; }
-            .profile-name { font-size: 1.5rem; }
-            .creator-name { font-size: 1rem; }
-            .social-links a { font-size: 1.2rem; padding: 0.5rem; }
-            .custom-dropdown { width: 110px; }
-            .dropdown-selected { font-size: 0.9rem; }
-            .dropdown-option { font-size: 0.9rem; }
-            .inputs-section, .results-section { padding: 1rem; }
-            .input-group label { font-size: 1rem; }
-            .input-group input { padding: 0.5rem; font-size: 1.1rem; }
-            .result-card p:first-child { font-size: 1rem; }
-            .result-card p:last-child { font-size: 2rem; }
-            .result-card.bg-blue-50 p:last-child { font-size: 3.5rem; }
-            .show-more-btn, .reset-btn { max-width: 150px; font-size: 1rem; }
-        }
-    </style>
-</head>
-<body class="light-mode">
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="profile-card">
-                <div class="profile-pic">
-                    <img src="https://scontent.faly1-2.fna.fbcdn.net/v/t39.30808-6/478724180_2012750999223754_4950667810291165018_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHGVoV1nv_uBT6VDiUmkTUBt9Lm4gk8hxC30ubiCTyHECTpTi2wl8gfRfMESNTozonQZKpDfqy38PE-slzWn9Ck&_nc_ohc=v_k1rOPK2F0Q7kNvgFLv1QA&_nc_oc=AdhvcaU_nFdQ4Z3Kg3E9swCkPRk7JtChJHFOQT9zYUpJ2idA5GZBKG6zFFvqxVjJidw&_nc_zt=23&_nc_ht=scontent.faly1-2.fna&_nc_gid=A_mUbigqD8_rNyd4OoHW9AM&oh=00_AYFDdgaYR159DtFUSCb60jQqfWAmWMrG9davjLCYD83ONw&oe=67D0AAED" alt="Ahmed Muhammed Abdeslam">
-                </div>
-                <div class="profile-info">
-                    <span class="profile-name">Aff Price <i class="fas fa-calculator"></i></span>
-                    <span class="creator-name">Ahmed Muhammed Abdeslam</span>
-                    <div class="social-links">
-                        <a href="https://web.facebook.com/ahmed10az" target="_blank" class="facebook"><i class="fab fa-facebook"></i></a>
-                        <a href="https://wa.me/201282512082" target="_blank" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
-                        <a href="https://instagram.com/ahmed10az" target="_blank" class="instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="https://tiktok.com/@elarshedok" target="_blank" class="tiktok"><i class="fab fa-tiktok"></i></a>
-                        <a href="https://linkedin.com/in/elarshedok" target="_blank" class="linkedin"><i class="fab fa-linkedin"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="controls">
-                <div class="mode-toggle">
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="darkModeToggle">
-                        <span class="slider"></span>
-                    </label>
-                    <i class="fas fa-sun mode-icon light-mode-icon"></i>
-                    <i class="fas fa-moon mode-icon dark-mode-icon" style="display: none;"></i>
-                    <span id="modeLabel">نهار</span>
-                </div>
-                <div class="custom-dropdown">
-                    <div class="dropdown-selected" id="dropdownSelected">
-                        <span class="flag-icon flag-icon-eg"></span> EGP
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="dropdown-options" id="dropdownOptions">
-                        <div class="dropdown-option" data-value="EGP"><span class="flag-icon flag-icon-eg"></span> EGP</div>
-                        <div class="dropdown-option" data-value="LYD"><span class="flag-icon flag-icon-ly"></span> LYD</div>
-                        <div class="dropdown-option" data-value="SAR"><span class="flag-icon flag-icon-sa"></span> SAR</div>
-                        <div class="dropdown-option" data-value="AED"><span class="flag-icon flag-icon-ae"></span> AED</div>
-                    </div>
-                    <input type="hidden" id="currency" value="EGP">
-                </div>
-            </div>
-        </header>
+.result-card p:last-child {
+    font-size: 1.2rem; /* تقليل حجم الأرقام العادية */
+    font-weight: 900;
+    transition: color 0.3s ease, transform 0.3s ease;
+    margin-top: 0.2rem;
+}
 
-        <!-- Inputs Section -->
-        <div class="inputs-section">
-            <div class="inputs-container">
-                <div class="input-group" style="--order: 1;">
-                    <label><i class="fas fa-dollar-sign"></i> سعر الجملة</label>
-                    <input type="number" id="productPrice" step="any" min="0" value="324">
-                </div>
-                <div class="input-group" style="--order: 2;">
-                    <label><i class="fas fa-shopping-cart"></i> سعر البيع</label>
-                    <input type="number" id="sellingPrice" step="any" min="0" value="550">
-                </div>
-                <div class="input-group" style="--order: 3;">
-                    <label><i class="fas fa-truck"></i> تكلفة الشحن</label>
-                    <input type="number" id="shippingCost" step="any" min="0" value="55">
-                </div>
-                <div class="input-group" style="--order: 4;">
-                    <label><i class="fas fa-boxes"></i> الأوردرات</label>
-                    <input type="number" id="targetOrders" step="1" min="0" value="438">
-                </div>
-                <div class="input-group" style="--order: 5;">
-                    <label><i class="fas fa-percentage"></i> نسبة التسليم</label>
-                    <input type="number" id="deliveryRate" step="any" min="0" max="100" value="15">
-                </div>
-                <div class="input-group" style="--order: 6;">
-                    <label><i class="fas fa-ad"></i> تكلفة الأوردر</label>
-                    <input type="number" id="adCostPerOrder" step="any" min="0" value="17">
-                </div>
-                <div class="input-group tax-group" style="--order: 7;">
-                    <label><i class="fas fa-tax"></i> ضريبة 14%</label>
-                    <div class="tax-toggle">
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="applyTax" checked>
-                            <span class="slider"></span>
-                        </label>
-                        <span id="taxStatus"><span class="status-dot active"></span> <span id="taxText">مفعل</span></span>
-                    </div>
-                </div>
-            </div>
-        </div>
+.result-card.bg-blue-50 {
+    grid-column: 1 / -1;
+    background: #e6fffa;
+    padding: 0.5rem;
+}
 
-        <!-- Decorative Line -->
-        <div class="decorative-line"></div>
+.dark-mode .result-card.bg-blue-50 {
+    background: #2d4a6a;
+}
 
-        <!-- Results Section -->
-        <div class="results-section">
-            <div class="results-container" id="results">
-                <div class="result-card" style="--order: 1;">
-                    <p><i class="fas fa-coins"></i> ربح الطلب</p>
-                    <p id="netProfitPerOrder" class="result-value"></p>
-                </div>
-                <div class="result-card" style="--order: 2;">
-                    <p><i class="fas fa-chart-line"></i> هامش الربح</p>
-                    <p id="profitMargin" class="result-value"></p>
-                </div>
-                <div class="result-card" style="--order: 3;">
-                    <p><i class="fas fa-truck-loading"></i> الأوردرات المسلمة</p>
-                    <p id="deliveredOrders" class="result-value"></p>
-                </div>
-                <div class="result-card hidden" id="profitBeforeAdsCard" style="--order: 4;">
-                    <p><i class="fas fa-money-bill-wave"></i> الربح قبل الإنفاق</p>
-                    <p id="profitBeforeAds" class="result-value"></p>
-                </div>
-                <div class="result-card hidden" id="totalAdSpendCard" style="--order: 5;">
-                    <p><i class="fas fa-bullhorn"></i> إنفاق الإعلانات</p>
-                    <p id="totalAdSpend" class="result-value"></p>
-                </div>
-                <div class="result-card hidden" id="adSpendWithTaxCard" style="--order: 6;">
-                    <p><i class="fas fa-calculator"></i> الإنفاق بعد الضريبة</p>
-                    <p id="adSpendWithTax" class="result-value"></p>
-                </div>
-                <div class="result-card bg-blue-50" style="--order: 7;">
-                    <p><i class="fas fa-wallet"></i> صافي الربح</p>
-                    <div class="profit-indicators">
-                        <p id="netProfitAfterAds" class="result-value"></p>
-                        <i id="profitIndicator" class="fas fa-arrow-up profit-indicator up" style="display: none;"></i>
-                        <i id="trendIndicator" class="fas fa-arrow-up trend-indicator up-trend" style="display: none;"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="buttons-container">
-                <button class="reset-btn" onclick="resetValues()">محو البيانات</button>
-                <button class="show-more-btn" id="showMoreBtn" onclick="showMoreResults()">إظهار المزيد</button>
-            </div>
-        </div>
-    </div>
+.result-card.bg-blue-50 p:last-child {
+    font-size: 1.8rem; /* تقليل حجم صافي الربح */
+}
 
-    <script>
-        let previousProfit = 0;
-        const currencySymbols = { EGP: 'ج.م', LYD: 'د.ل', SAR: 'ر.س', AED: 'د.إ' };
-        const getCurrencySymbol = () => currencySymbols[document.getElementById('currency').value];
+/* Responsive Adjustments */
+@media (min-width: 768px) {
+    .container { padding: 1rem; max-width: 800px; margin: 0 auto; }
+    .header { padding: 0.75rem; }
+    .profile-pic { width: 90px; height: 90px; }
+    .profile-name { font-size: 1.5rem; }
+    .creator-name { font-size: 1rem; }
+    .social-links a { font-size: 1.2rem; padding: 0.5rem; }
+    .custom-dropdown { width: 110px; }
+    .dropdown-selected { font-size: 0.9rem; }
+    .dropdown-option { font-size: 0.9rem; }
+    .inputs-section, .results-section { padding: 1rem; }
+    .input-group label { font-size: 1rem; }
+    .input-group input { padding: 0.5rem; font-size: 1.1rem; }
+    .result-card p:first-child { font-size: 1rem; }
+    .result-card p:last-child { font-size: 1.5rem; }
+    .result-card.bg-blue-50 p:last-child { font-size: 2.5rem; }
+    .show-more-btn, .reset-btn { max-width: 150px; font-size: 1rem; }
+}
 
-        const calculateResults = () => {
-            const productPrice = parseFloat(document.getElementById('productPrice').value) || 0;
-            const sellingPrice = parseFloat(document.getElementById('sellingPrice').value) || 0;
-            const shippingCost = parseFloat(document.getElementById('shippingCost').value) || 0;
-            const targetOrders = parseFloat(document.getElementById('targetOrders').value) || 0;
-            const deliveryRate = parseFloat(document.getElementById('deliveryRate').value) || 0;
-            const adCostPerOrder = parseFloat(document.getElementById('adCostPerOrder').value) || 0;
-            const applyTax = document.getElementById('applyTax').checked;
-            const currencySymbol = getCurrencySymbol();
-
-            const netProfitPerOrder = sellingPrice - productPrice - shippingCost;
-            const profitMargin = sellingPrice ? (netProfitPerOrder / sellingPrice) * 100 : 0;
-            const deliveredOrders = (targetOrders * deliveryRate) / 100;
-            const profitBeforeAds = deliveredOrders * netProfitPerOrder;
-            const totalAdSpend = targetOrders * adCostPerOrder;
-            const adSpendWithTax = applyTax ? totalAdSpend * 1.14 : totalAdSpend;
-            const netProfitAfterAds = profitBeforeAds - adSpendWithTax;
-
-            const updateElement = (id, value, isPercentage = false, isNumberOnly = false) => {
-                const element = document.getElementById(id);
-                const oldValue = parseFloat(element.textContent.replace(/[^\d.-]/g, '')) || 0;
-                element.textContent = isPercentage ? `${value.toFixed(2)}%` : (isNumberOnly ? value.toFixed(0) : `${currencySymbol} ${value.toFixed(2)}`);
-                element.classList.remove('text-red-600', 'text-green-600', 'text-gray-600');
-                if (value > 0) element.classList.add('text-green-600', 'glow');
-                else if (value < 0) element.classList.add('text-red-600', 'glow');
-                else element.classList.add('text-gray-600');
-                if (value !== oldValue) {
-                    element.style.animation = 'scaleUp 0.5s ease';
-                    setTimeout(() => element.style.animation = '', 500);
-                }
-            };
-
-            updateElement('netProfitPerOrder', netProfitPerOrder);
-            updateElement('profitMargin', profitMargin, true);
-            updateElement('deliveredOrders', deliveredOrders, false, true);
-            updateElement('profitBeforeAds', profitBeforeAds);
-            updateElement('totalAdSpend', totalAdSpend);
-            updateElement('adSpendWithTax', adSpendWithTax);
-            updateElement('netProfitAfterAds', netProfitAfterAds);
-
-            const indicator = document.getElementById('profitIndicator');
-            indicator.style.display = netProfitAfterAds !== 0 ? 'inline' : 'none';
-            indicator.classList.remove('fa-arrow-up', 'fa-arrow-down', 'up', 'down');
-            indicator.classList.add(netProfitAfterAds > 0 ? 'fa-arrow-up' : 'fa-arrow-down', netProfitAfterAds > 0 ? 'up' : 'down');
-
-            const trendIndicator = document.getElementById('trendIndicator');
-            if (netProfitAfterAds !== previousProfit) {
-                trendIndicator.style.display = 'inline';
-                trendIndicator.classList.remove('fa-arrow-up', 'fa-arrow-down', 'up-trend', 'down-trend');
-                trendIndicator.classList.add(netProfitAfterAds > previousProfit ? 'fa-arrow-up' : 'fa-arrow-down', netProfitAfterAds > previousProfit ? 'up-trend' : 'down-trend');
-                setTimeout(() => trendIndicator.style.display = 'none', 2000);
-            }
-            previousProfit = netProfitAfterAds;
-        };
-
-        const updateTaxStatus = () => {
-            const applyTax = document.getElementById('applyTax').checked;
-            document.getElementById('taxText').textContent = applyTax ? 'مفعل' : 'غير مفعل';
-            document.querySelector('.status-dot').classList.toggle('active', applyTax);
-            document.querySelector('.status-dot').classList.toggle('inactive', !applyTax);
-        };
-
-        const showMoreResults = () => {
-            const hiddenCards = document.querySelectorAll('.result-card.hidden');
-            hiddenCards.forEach((card, index) => {
-                card.classList.remove('hidden');
-                card.style.display = 'flex';
-                setTimeout(() => card.classList.add('visible'), index * 100);
-            });
-            const showMoreBtn = document.getElementById('showMoreBtn');
-            showMoreBtn.style.display = 'none';
-        };
-
-        document.getElementById('darkModeToggle').addEventListener('change', () => {
-            document.body.classList.toggle('light-mode', !document.getElementById('darkModeToggle').checked);
-            document.body.classList.toggle('dark-mode', document.getElementById('darkModeToggle').checked);
-            document.getElementById('modeLabel').textContent = document.getElementById('darkModeToggle').checked ? 'ليل' : 'نهار';
-            document.querySelector('.light-mode-icon').style.display = document.getElementById('darkModeToggle').checked ? 'none' : 'inline';
-            document.querySelector('.dark-mode-icon').style.display = document.getElementById('darkModeToggle').checked ? 'inline' : 'none';
-        });
-
-        const dropdownSelected = document.getElementById('dropdownSelected');
-        const dropdownOptions = document.getElementById('dropdownOptions');
-        const currencyInput = document.getElementById('currency');
-        document.querySelectorAll('.dropdown-option').forEach(option => {
-            option.addEventListener('click', () => {
-                const value = option.getAttribute('data-value');
-                dropdownSelected.innerHTML = `<span class="${option.querySelector('span').className}"></span> ${value} <i class="fas fa-chevron-down"></i>`;
-                currencyInput.value = value;
-                dropdownOptions.classList.remove('active');
-                calculateResults();
-            });
-        });
-        dropdownSelected.addEventListener('click', () => dropdownOptions.classList.toggle('active'));
-        document.addEventListener('click', (e) => {
-            if (!dropdownSelected.contains(e.target) && !dropdownOptions.contains(e.target)) {
-                dropdownOptions.classList.remove('active');
-            }
-        });
-
-        function resetValues() {
-            document.getElementById('productPrice').value = 0;
-            document.getElementById('sellingPrice').value = 0;
-            document.getElementById('shippingCost').value = 0;
-            document.getElementById('targetOrders').value = 0;
-            document.getElementById('deliveryRate').value = 0;
-            document.getElementById('adCostPerOrder').value = 0;
-            document.getElementById('applyTax').checked = false;
-            calculateResults();
-            updateTaxStatus();
-            const hiddenCards = document.querySelectorAll('.result-card.hidden');
-            hiddenCards.forEach(card => {
-                card.classList.add('hidden');
-                card.style.display = 'none';
-            });
-            document.getElementById('showMoreBtn').style.display = 'block';
-        }
-
-        document.querySelectorAll('input, #currency, #applyTax').forEach(input => {
-            input.addEventListener('input', () => {
-                calculateResults();
-                updateTaxStatus();
-            });
-        });
-
-        calculateResults();
-        updateTaxStatus();
-
-        /* Dynamic Shadow on Scroll */
-        window.addEventListener('scroll', () => {
-            const cards = document.querySelectorAll('.result-card, .profile-card');
-            cards.forEach(card => {
-                const rect = card.getBoundingClientRect();
-                if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
-                    card.classList.add('visible');
-                } else {
-                    card.classList.remove('visible');
-                }
-            });
-        });
-    </script>
-</body>
-</html>
+/* تعديلات لشاشات الموبايل الصغيرة */
+@media (max-width: 480px) {
+    .result-card p:first-child {
+        font-size: 0.7rem; /* تقليل حجم العنوان أكثر على الموبايل */
+    }
+    .result-card p:last-child {
+        font-size: 1rem; /* تقليل حجم الأرقام العادية */
+    }
+    .result-card.bg-blue-50 p:last-child {
+        font-size: 1.5rem; /* تقليل حجم صافي الربح أكثر */
+    }
+    .result-card {
+        padding: 0.3rem; /* تقليل الحشوة لتوفير مساحة */
+    }
+    .inputs-container {
+        grid-template-columns: 1fr; /* جعل المدخلات في عمود واحد على شاشات صغيرة */
+    }
+}
