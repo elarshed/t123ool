@@ -12,7 +12,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Tajawal', sans-serif;
-            background: linear-gradient(135deg, #e6f0fa 0%, #f0f4f8 100%);
+            background: linear-gradient(135deg, #e6fffa 0%, #e2e8f0 100%);
             color: #1a202c;
             min-height: 100vh;
             padding: 0.5rem;
@@ -20,66 +20,81 @@
             flex-direction: column;
             overflow-x: hidden;
         }
-        .light-mode { background: linear-gradient(135deg, #e6f0fa 0%, #f0f4f8 100%); }
-        .dark-mode { background: linear-gradient(135deg, #1a2a44 0%, #2d3748 100%); }
+        .light-mode { background: linear-gradient(135deg, #e6fffa 0%, #e2e8f0 100%); color: #1a202c; }
+        .dark-mode { background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%); color: #ffffff; }
         .container {
-            background: linear-gradient(135deg, #ffffff 0%, #f7fafc 100%);
+            background: #ffffff;
             border-radius: 0.75rem;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-            padding: 0.3rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem;
             max-width: 100%;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            gap: 0.25rem;
+            gap: 0.5rem;
+            position: relative;
         }
-        .dark-mode .container { background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%); }
+        .dark-mode .container { background: #2d3748; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); }
 
         /* Header */
         .header {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.2rem;
-            padding: 0.3rem;
-            background: rgba(255, 255, 255, 0.9);
+            gap: 0.3rem;
+            padding: 0.5rem;
+            background: linear-gradient(90deg, #f7fafc 0%, #e6fffa 100%);
             border-radius: 0.5rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
         }
-        .dark-mode .header { background: rgba(45, 55, 72, 0.9); }
+        .dark-mode .header { background: linear-gradient(90deg, #4a5568 0%, #1a2a44 100%); }
         .profile-card {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 0.5rem;
             width: 100%;
-            padding: 0.2rem;
         }
         .profile-pic {
             width: 50px;
             height: 50px;
             border-radius: 50%;
             border: 3px solid #2b6cb0;
-            box-shadow: 0 2px 8px rgba(43, 108, 176, 0.3);
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
         }
-        .dark-mode .profile-pic { border-color: #48bb78; box-shadow: 0 2px 8px rgba(72, 187, 120, 0.3); }
-        .profile-pic:hover { transform: scale(1.1); box-shadow: 0 4px 15px rgba(43, 108, 176, 0.5); }
+        .dark-mode .profile-pic { border-color: #48bb78; }
+        .profile-pic:hover { transform: scale(1.05); }
         .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
         .profile-info { display: flex; flex-direction: column; gap: 0.1rem; flex: 1; }
-        .profile-name { font-size: 1.1rem; font-weight: 900; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
-        .light-mode .profile-name { color: #2b6cb0; }
-        .dark-mode .profile-name { color: #48bb78; }
-        .social-links { display: flex; gap: 0.2rem; }
-        .social-links a { font-size: 0.7rem; color: #ffffff; padding: 0.2rem; border-radius: 50%; transition: transform 0.3s ease; }
-        .social-links a:hover { transform: translateY(-2px); }
+        .profile-name {
+            font-size: 1.2rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, #2b6cb0, #48bb78);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .social-links { display: flex; gap: 0.3rem; }
+        .social-links a {
+            font-size: 0.8rem;
+            color: #ffffff;
+            padding: 0.3rem;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+        .social-links a:hover { transform: translateY(-3px); }
         .social-links .facebook { background: #1877F2; }
         .social-links .whatsapp { background: #25D366; }
         .social-links .instagram { background: #E1306C; }
         .social-links .tiktok { background: #000000; }
         .social-links .linkedin { background: #0077B5; }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
 
         /* Controls */
         .controls {
@@ -87,17 +102,17 @@
             justify-content: space-between;
             align-items: center;
             width: 100%;
-            gap: 0.2rem;
+            gap: 0.3rem;
         }
         .mode-toggle {
             display: flex;
             align-items: center;
-            gap: 0.15rem;
+            gap: 0.2rem;
         }
         .toggle-switch {
             position: relative;
-            width: 34px;
-            height: 16px;
+            width: 36px;
+            height: 18px;
         }
         .toggle-switch input { opacity: 0; width: 0; height: 0; }
         .slider {
@@ -107,15 +122,15 @@
             right: 0;
             bottom: 0;
             background: #a0aec0;
-            border-radius: 16px;
+            border-radius: 18px;
             border: 1px solid #2b6cb0;
             transition: 0.3s;
         }
         .slider:before {
             position: absolute;
             content: "";
-            height: 12px;
-            width: 12px;
+            height: 14px;
+            width: 14px;
             left: 2px;
             bottom: 2px;
             background: #ffffff;
@@ -124,7 +139,7 @@
         }
         input:checked + .slider { background: #48bb78; }
         input:checked + .slider:before { transform: translateX(16px); }
-        .mode-toggle i { font-size: 0.7rem; }
+        .mode-toggle i { font-size: 0.8rem; }
         .light-mode .mode-toggle i.fa-sun { color: #f6ad55; }
         .dark-mode .mode-toggle i.fa-moon { color: #a0aec0; }
         .mode-toggle span { font-size: 0.7rem; font-weight: 700; }
@@ -133,23 +148,23 @@
 
         .custom-dropdown {
             position: relative;
-            width: 90px;
+            width: 100px;
         }
         .dropdown-selected {
             display: flex;
             align-items: center;
-            padding: 0.25rem 0.4rem;
+            padding: 0.3rem 0.5rem;
             border: 1px solid #2b6cb0;
             border-radius: 0.5rem;
             font-size: 0.7rem;
             font-weight: 700;
-            background: rgba(240, 244, 248, 0.9);
+            background: #f0f4f8;
             cursor: pointer;
             transition: background 0.3s ease;
         }
-        .dark-mode .dropdown-selected { background: rgba(74, 85, 104, 0.9); border-color: #48bb78; }
-        .dropdown-selected:hover { background: rgba(224, 232, 240, 0.9); }
-        .dark-mode .dropdown-selected:hover { background: rgba(60, 70, 88, 0.9); }
+        .dark-mode .dropdown-selected { background: #4a5568; border-color: #48bb78; }
+        .dropdown-selected:hover { background: #e2e8f0; }
+        .dark-mode .dropdown-selected:hover { background: #5a6980; }
         .dropdown-selected i { margin-left: 0.2rem; font-size: 0.6rem; }
         .dropdown-options {
             position: absolute;
@@ -169,10 +184,9 @@
         .dropdown-option {
             display: flex;
             align-items: center;
-            padding: 0.25rem 0.4rem;
+            padding: 0.3rem 0.5rem;
             font-size: 0.7rem;
             cursor: pointer;
-            transition: background 0.3s ease;
         }
         .light-mode .dropdown-option { color: #1a202c; }
         .dark-mode .dropdown-option { color: #ffffff; }
@@ -183,13 +197,14 @@
         /* Inputs & Results */
         .inputs-container, .results-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 0.25rem;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.3rem;
         }
         .input-group, .result-card {
             display: flex;
             flex-direction: column;
-            gap: 0.15rem;
+            gap: 0.2rem;
+            position: relative;
         }
         .input-group label, .result-card p:first-child {
             font-size: 0.85rem;
@@ -197,58 +212,60 @@
             display: flex;
             align-items: center;
             gap: 0.2rem;
-            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
         }
         .light-mode .input-group label, .light-mode .result-card p:first-child { color: #1a202c; }
-        .dark-mode .input-group label, .dark-mode .result-card p:first-child { color: #e2e8f0; }
-        .input-group i, .result-card i { font-size: 0.8rem; }
+        .dark-mode .input-group label, .dark-mode .result-card p:first-child { color: #ffffff; }
+        .input-group i, .result-card i { font-size: 0.8rem; animation: pulse 2s infinite; }
         .light-mode .input-group i, .light-mode .result-card i { color: #2b6cb0; }
         .dark-mode .input-group i, .dark-mode .result-card i { color: #48bb78; }
         .input-group input {
             width: 100%;
             padding: 0.3rem;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
+            font-weight: 700;
             border: 1px solid #2b6cb0;
             border-radius: 0.5rem;
-            background: rgba(247, 250, 252, 0.9);
-            transition: border-color 0.3s ease;
+            background: #f7fafc;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
-        .dark-mode .input-group input { background: rgba(74, 85, 104, 0.9); color: #ffffff; border-color: #48bb78; }
-        .input-group input:focus { border-color: #3182ce; outline: none; }
-        .dark-mode .input-group input:focus { border-color: #38a169; }
+        .input-group input:focus {
+            border-color: #48bb78;
+            box-shadow: 0 0 8px rgba(72, 187, 120, 0.3);
+            outline: none;
+        }
+        .dark-mode .input-group input { background: #4a5568; color: #ffffff; border-color: #48bb78; }
         .result-card {
-            background: rgba(255, 255, 255, 0.95);
+            background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
             border: 1px solid #2b6cb0;
             border-radius: 0.5rem;
-            padding: 0.3rem;
+            padding: 0.4rem;
             text-align: center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease;
         }
-        .dark-mode .result-card { background: rgba(45, 55, 72, 0.95); border-color: #48bb78; }
+        .dark-mode .result-card { background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%); border-color: #48bb78; }
         .result-card:hover { transform: translateY(-2px); }
-        .result-card p:last-child { font-size: 0.9rem; font-weight: 900; }
-        .result-card.bg-blue-50 { grid-column: 1 / -1; background: rgba(230, 255, 250, 0.95); border-color: #2b6cb0; }
-        .dark-mode .result-card.bg-blue-50 { background: rgba(26, 42, 68, 0.95); border-color: #48bb78; }
-        #netProfitAfterAds { font-size: 1.1rem; font-weight: 900; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
-        .profit-indicators { display: flex; justify-content: center; align-items: center; gap: 0.25rem; }
-        #profitIndicator, #trendIndicator { font-size: 0.7rem; }
+        .result-card p:last-child {
+            font-size: 1rem;
+            font-weight: 900;
+            transition: color 0.3s ease;
+        }
+        .result-card.bg-blue-50 { grid-column: 1 / -1; background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%); }
+        .dark-mode .result-card.bg-blue-50 { background: linear-gradient(135deg, #1a2a44 0%, #2d3748 100%); }
+        #netProfitAfterAds { font-size: 1.2rem; font-weight: 900; }
+        .profit-indicators { display: flex; justify-content: center; align-items: center; gap: 0.3rem; }
+        #profitIndicator, #trendIndicator { font-size: 0.8rem; }
         .up, .up-trend { color: #48bb78; }
         .down, .down-trend { color: #e53e3e; }
         .progress-bar {
-            width: 60px;
+            width: 100%;
             height: 6px;
             background: #e2e8f0;
-            border-radius: 50px;
+            border-radius: 3px;
             overflow: hidden;
-            margin: 0.2rem auto;
-            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+            margin-top: 0.2rem;
         }
-        .progress {
-            height: 100%;
-            transition: width 0.5s ease;
-            border-radius: 50px;
-        }
+        .progress { height: 100%; transition: width 0.5s ease; }
         .light-mode .progress { background: #2b6cb0; }
         .dark-mode .progress { background: #48bb78; }
         .negative { background: #e53e3e; }
@@ -259,14 +276,14 @@
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
-            padding: 0.3rem;
+            padding: 0.4rem;
             border: 1px solid #2b6cb0;
             border-radius: 0.5rem;
-            background: rgba(247, 250, 252, 0.9);
+            background: #f7fafc;
         }
-        .dark-mode .input-group.tax-group { border-color: #48bb78; background: rgba(74, 85, 104, 0.9); }
-        .tax-toggle { display: flex; align-items: center; gap: 0.15rem; }
-        #taxStatus { font-size: 0.85rem; display: flex; align-items: center; gap: 0.15rem; }
+        .dark-mode .input-group.tax-group { border-color: #48bb78; background: #4a5568; }
+        .tax-toggle { display: flex; align-items: center; gap: 0.2rem; }
+        #taxStatus { font-size: 0.8rem; display: flex; align-items: center; gap: 0.2rem; }
         .status-dot {
             width: 8px;
             height: 8px;
@@ -277,38 +294,60 @@
         .dark-mode .status-dot.active { background: #48bb78; }
         .dark-mode .status-dot.inactive { background: #e53e3e; }
 
-        /* Reset Button */
-        .reset-btn {
+        /* Show More Button */
+        .show-more-btn {
             width: 100%;
-            max-width: 110px;
-            margin: 0.2rem auto;
-            padding: 0.3rem 0.8rem;
-            background: linear-gradient(90deg, #2b6cb0 0%, #3182ce 100%);
+            max-width: 120px;
+            margin: 0.3rem auto;
+            padding: 0.4rem 1rem;
+            background: #2b6cb0;
             color: #ffffff;
             border-radius: 0.5rem;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 700;
             text-align: center;
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .dark-mode .reset-btn { background: linear-gradient(90deg, #48bb78 0%, #38a169 100%); }
-        .reset-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(43, 108, 176, 0.3); }
+        .dark-mode .show-more-btn { background: #48bb78; }
+        .show-more-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); }
+
+        /* Floating Reset Button */
+        .reset-btn {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            width: 50px;
+            height: 50px;
+            background: #2b6cb0;
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .dark-mode .reset-btn { background: #48bb78; }
+        .reset-btn:hover { transform: scale(1.1); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2); }
 
         /* Responsive Adjustments */
         @media (min-width: 768px) {
-            .container { padding: 0.8rem; max-width: 800px; margin: 0 auto; }
-            .header { padding: 0.6rem; }
+            .container { padding: 1rem; max-width: 800px; margin: 0 auto; }
+            .header { padding: 0.75rem; }
             .profile-pic { width: 60px; height: 60px; }
-            .profile-name { font-size: 1.3rem; }
-            .social-links a { font-size: 0.8rem; padding: 0.3rem; }
+            .profile-name { font-size: 1.5rem; }
+            .social-links a { font-size: 0.9rem; padding: 0.4rem; }
             .inputs-container, .results-container { gap: 0.5rem; }
             .input-group label, .result-card p:first-child { font-size: 0.9rem; }
-            .input-group input { padding: 0.4rem; font-size: 0.9rem; }
-            .result-card { padding: 0.4rem; }
+            .input-group input { padding: 0.5rem; font-size: 0.9rem; }
+            .result-card { padding: 0.5rem; }
             .result-card p:last-child { font-size: 1rem; }
-            #netProfitAfterAds { font-size: 1.3rem; }
-            .reset-btn { max-width: 140px; font-size: 0.9rem; padding: 0.4rem 1rem; }
+            #netProfitAfterAds { font-size: 1.5rem; }
+            .show-more-btn { max-width: 150px; font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -317,6 +356,9 @@
         <!-- Header -->
         <header class="header">
             <div class="profile-card">
+                <div class="profile-pic">
+                    <img src="https://scontent.faly1-2.fna.fbcdn.net/v/t39.30808-6/478724180_2012750999223754_4950667810291165018_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHGVoV1nv_uBT6VDiUmkTUBt9Lm4gk8hxC30ubiCTyHECTpTi2wl8gfRfMESNTozonQZKpDfqy38PE-slzWn9Ck&_nc_ohc=v_k1rOPK2F0Q7kNvgFLv1QA&_nc_oc=AdhvcaU_nFdQ4Z3Kg3E9swCkPRk7JtChJHFOQT9zYUpJ2idA5GZBKG6zFFvqxVjJidw&_nc_zt=23&_nc_ht=scontent.faly1-2.fna&_nc_gid=A_mUbigqD8_rNyd4OoHW9AM&oh=00_AYFDdgaYR159DtFUSCb60jQqfWAmWMrG9davjLCYD83ONw&oe=67D0AAED" alt="Ahmed Muhammed Abdeslam">
+                </div>
                 <div class="profile-info">
                     <span class="profile-name">Ahmed Muhammed Abdeslam</span>
                     <div class="social-links">
@@ -326,9 +368,6 @@
                         <a href="https://tiktok.com/@elarshedok" target="_blank" class="tiktok"><i class="fab fa-tiktok"></i></a>
                         <a href="https://linkedin.com/in/elarshedok" target="_blank" class="linkedin"><i class="fab fa-linkedin"></i></a>
                     </div>
-                </div>
-                <div class="profile-pic">
-                    <img src="https://scontent.faly1-2.fna.fbcdn.net/v/t39.30808-6/478724180_2012750999223754_4950667810291165018_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHGVoV1nv_uBT6VDiUmkTUBt9Lm4gk8hxC30ubiCTyHECTpTi2wl8gfRfMESNTozonQZKpDfqy38PE-slzWn9Ck&_nc_ohc=v_k1rOPK2F0Q7kNvgFLv1QA&_nc_oc=AdhvcaU_nFdQ4Z3Kg3E9swCkPRk7JtChJHFOQT9zYUpJ2idA5GZBKG6zFFvqxVjJidw&_nc_zt=23&_nc_ht=scontent.faly1-2.fna&_nc_gid=A_mUbigqD8_rNyd4OoHW9AM&oh=00_AYFDdgaYR159DtFUSCb60jQqfWAmWMrG9davjLCYD83ONw&oe=67D0AAED" alt="Ahmed Muhammed Abdeslam">
                 </div>
             </div>
             <div class="controls">
@@ -404,20 +443,32 @@
         <div class="results-container" id="results">
             <div class="result-card">
                 <p><i class="fas fa-coins"></i> ربح الطلب</p>
-                <p id="netProfitPerOrder"></p>
+                <p id="netProfitPerOrder" class="result-value"></p>
             </div>
             <div class="result-card">
                 <p><i class="fas fa-chart-line"></i> هامش الربح</p>
-                <p id="profitMargin"></p>
+                <p id="profitMargin" class="result-value"></p>
             </div>
             <div class="result-card">
                 <p><i class="fas fa-truck-loading"></i> الأوردرات المسلمة</p>
-                <p id="deliveredOrders"></p>
+                <p id="deliveredOrders" class="result-value"></p>
+            </div>
+            <div class="result-card hidden" id="profitBeforeAdsCard">
+                <p><i class="fas fa-money-bill-wave"></i> الربح قبل الإنفاق</p>
+                <p id="profitBeforeAds" class="result-value"></p>
+            </div>
+            <div class="result-card hidden" id="totalAdSpendCard">
+                <p><i class="fas fa-bullhorn"></i> إنفاق الإعلانات</p>
+                <p id="totalAdSpend" class="result-value"></p>
+            </div>
+            <div class="result-card hidden" id="adSpendWithTaxCard">
+                <p><i class="fas fa-calculator"></i> الإنفاق بعد الضريبة</p>
+                <p id="adSpendWithTax" class="result-value"></p>
             </div>
             <div class="result-card bg-blue-50">
                 <p><i class="fas fa-wallet"></i> صافي الربح</p>
                 <div class="profit-indicators">
-                    <p id="netProfitAfterAds"></p>
+                    <p id="netProfitAfterAds" class="result-value"></p>
                     <i id="profitIndicator" class="fas fa-arrow-up profit-indicator up" style="display: none;"></i>
                     <i id="trendIndicator" class="fas fa-arrow-up trend-indicator up-trend" style="display: none;"></i>
                 </div>
@@ -427,8 +478,13 @@
             </div>
         </div>
 
-        <!-- Reset Button -->
-        <button class="reset-btn" onclick="resetValues()">إعادة</button>
+        <!-- Show More Button -->
+        <button class="show-more-btn" onclick="toggleMoreResults()">إظهار المزيد</button>
+
+        <!-- Floating Reset Button -->
+        <div class="reset-btn" onclick="resetValues()">
+            <i class="fas fa-sync-alt"></i>
+        </div>
     </div>
 
     <script>
@@ -458,16 +514,23 @@
 
             const updateElement = (id, value, isPercentage = false, isNumberOnly = false) => {
                 const element = document.getElementById(id);
+                const oldValue = parseFloat(element.textContent) || 0;
                 element.textContent = isPercentage ? `${value.toFixed(2)}%` : (isNumberOnly ? value.toFixed(0) : `${currencySymbol} ${value.toFixed(2)}`);
                 element.classList.remove('text-red-600', 'text-green-600', 'text-gray-600');
                 if (value > 0) element.classList.add('text-green-600');
                 else if (value < 0) element.classList.add('text-red-600');
                 else element.classList.add('text-gray-600');
+                if (value !== oldValue) {
+                    element.classList.add('animate-value');
+                }
             };
 
             updateElement('netProfitPerOrder', netProfitPerOrder);
             updateElement('profitMargin', profitMargin, true);
             updateElement('deliveredOrders', deliveredOrders, false, true);
+            updateElement('profitBeforeAds', profitBeforeAds);
+            updateElement('totalAdSpend', totalAdSpend);
+            updateElement('adSpendWithTax', adSpendWithTax);
             updateElement('netProfitAfterAds', netProfitAfterAds);
 
             const progress = document.getElementById('profitProgress');
@@ -494,6 +557,13 @@
             document.getElementById('taxText').textContent = applyTax ? 'مفعل' : 'غير مفعل';
             document.querySelector('.status-dot').classList.toggle('active', applyTax);
             document.querySelector('.status-dot').classList.toggle('inactive', !applyTax);
+        };
+
+        const toggleMoreResults = () => {
+            const hiddenCards = document.querySelectorAll('.result-card.hidden');
+            hiddenCards.forEach(card => card.classList.toggle('hidden'));
+            const showMoreBtn = document.querySelector('.show-more-btn');
+            showMoreBtn.textContent = showMoreBtn.textContent === 'إظهار المزيد' ? 'إخفاء التفاصيل' : 'إظهار المزيد';
         };
 
         document.getElementById('darkModeToggle').addEventListener('change', () => {
@@ -533,6 +603,9 @@
             document.getElementById('applyTax').checked = false;
             calculateResults();
             updateTaxStatus();
+            const hiddenCards = document.querySelectorAll('.result-card.hidden');
+            hiddenCards.forEach(card => card.classList.add('hidden'));
+            document.querySelector('.show-more-btn').textContent = 'إظهار المزيد';
         }
 
         document.querySelectorAll('input, #currency, #applyTax').forEach(input => {
@@ -544,6 +617,21 @@
 
         calculateResults();
         updateTaxStatus();
+
+        /* Animate Value Change */
+        const style = document.createElement('style');
+        style.innerHTML = `
+            .animate-value {
+                animation: valueChange 0.5s ease;
+            }
+            @keyframes valueChange {
+                0% { transform: scale(1); opacity: 0.5; }
+                50% { transform: scale(1.1); opacity: 1; }
+                100% { transform: scale(1); opacity: 1; }
+            }
+            .hidden { display: none; }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
