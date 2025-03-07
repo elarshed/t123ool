@@ -7,26 +7,25 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Tajawal', sans-serif;
-            background: linear-gradient(135deg, #e6fffa 0%, #e2e8f0 100%);
+            font-family: 'Cairo', sans-serif;
+            background: #f0f4f8;
             color: #1a202c;
             min-height: 100vh;
             padding: 0.5rem;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
+            position: relative;
             transition: background 0.3s ease;
-            background-attachment: fixed;
-            background-size: cover;
         }
-        .light-mode { background: linear-gradient(135deg, #e6fffa 0%, #e2e8f0 100%); color: #1a202c; }
-        .dark-mode { background: #2d3748; color: #ffffff; }
+        .light-mode { background: #f0f4f8; color: #1a202c; }
+        .dark-mode { background: #1a202c; color: #ffffff; }
         .container {
-            background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
+            background: #ffffff;
             border-radius: 0.75rem;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             padding: 0.5rem;
@@ -37,6 +36,7 @@
             gap: 0.5rem;
             position: relative;
             animation: fadeIn 0.5s ease;
+            z-index: 2;
         }
         .dark-mode .container { background: #2d3748; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); }
 
@@ -55,6 +55,16 @@
             100% { text-shadow: 0 0 5px rgba(43, 108, 176, 0.7); }
         }
 
+        /* Particles Background */
+        #particles-js {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
         /* Header */
         .header {
             display: flex;
@@ -62,7 +72,7 @@
             align-items: center;
             gap: 0.3rem;
             padding: 0.5rem;
-            background: linear-gradient(90deg, #f7fafc 0%, #e6fffa 100%);
+            background: #f7fafc;
             border-radius: 0.5rem;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
         }
@@ -82,28 +92,30 @@
             overflow: hidden;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
-        .dark-mode .profile-pic { border-color: #48bb78; }
+        .dark-mode .profile-pic { border-color: #4a90e2; }
         .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
         .profile-info { display: flex; flex-direction: column; gap: 0.1rem; flex: 1; }
         .profile-name {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 900;
             color: #2b6cb0;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        .dark-mode .profile-name { color: #48bb78; }
+        .dark-mode .profile-name { color: #4a90e2; }
         .social-links { display: flex; gap: 0.3rem; }
         .social-links a {
             font-size: 1rem;
-            color: #ffffff;
             padding: 0.4rem;
             border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: linear-gradient(45deg, #2b6cb0, #48bb78);
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
-        .dark-mode .social-links a { background: linear-gradient(45deg, #48bb78, #2b6cb0); }
+        .social-links .facebook { color: #1877F2; }
+        .social-links .whatsapp { color: #25D366; }
+        .social-links .instagram { color: #E1306C; }
+        .social-links .tiktok { color: #000000; }
+        .social-links .linkedin { color: #0077B5; }
 
         /* Controls */
         .controls {
@@ -146,7 +158,7 @@
             border-radius: 50%;
             transition: 0.3s;
         }
-        input:checked + .slider { background: #48bb78; }
+        input:checked + .slider { background: #4a90e2; }
         input:checked + .slider:before { transform: translateX(16px); }
         .mode-toggle i { font-size: 0.8rem; }
         .light-mode .mode-toggle i.fa-sun { color: #f6ad55; }
@@ -171,7 +183,7 @@
             cursor: pointer;
             transition: background 0.3s ease;
         }
-        .dark-mode .dropdown-selected { background: #3d4a5a; border-color: #48bb78; }
+        .dark-mode .dropdown-selected { background: #3d4a5a; border-color: #4a90e2; }
         .dropdown-selected:hover { background: #e2e8f0; }
         .dark-mode .dropdown-selected:hover { background: #4a5b6d; }
         .dropdown-selected i { margin-left: 0.2rem; font-size: 0.6rem; }
@@ -226,9 +238,9 @@
         }
         .light-mode .input-group label, .light-mode .result-card p:first-child { color: #1a202c; }
         .dark-mode .input-group label, .dark-mode .result-card p:first-child { color: #e2e8f0; }
-        .input-group i, .result-card i { font-size: 0.9rem; animation: pulse 2s infinite; }
+        .input-group i, .result-card i { font-size: 0.9rem; }
         .light-mode .input-group i, .light-mode .result-card i { color: #2b6cb0; }
-        .dark-mode .input-group i, .dark-mode .result-card i { color: #48bb78; }
+        .dark-mode .input-group i, .dark-mode .result-card i { color: #4a90e2; }
         .input-group input {
             width: 100%;
             padding: 0.3rem;
@@ -240,80 +252,36 @@
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
         .input-group input:focus {
-            border-color: #48bb78;
-            box-shadow: 0 0 8px rgba(72, 187, 120, 0.3);
+            border-color: #4a90e2;
+            box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
             outline: none;
         }
-        .dark-mode .input-group input { background: #3d4a5a; color: #ffffff; border-color: #48bb78; }
+        .dark-mode .input-group input { background: #3d4a5a; color: #ffffff; border-color: #4a90e2; }
         .result-card {
-            background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
-            border: 1px solid #d4af37;
+            background: #ffffff;
+            border: 1px solid #2b6cb0;
             border-radius: 0.5rem;
             padding: 0.4rem;
             text-align: center;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, opacity 0.3s ease;
+            transition: box-shadow 0.3s ease;
         }
-        .dark-mode .result-card { background: #3d4a5a; border-color: #c0c0c0; }
-        .result-card:hover { transform: translateY(-2px); }
+        .dark-mode .result-card { background: #3d4a5a; border-color: #4a90e2; }
+        .result-card.visible { box-shadow: 0 4px 16px rgba(43, 108, 176, 0.2); }
+        .result-card.hidden { display: none; }
         .result-card p:last-child {
             font-size: 1.1rem;
             font-weight: 900;
             transition: color 0.3s ease;
         }
-        .result-card.bg-blue-50 { grid-column: 1 / -1; background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%); }
+        .result-card.bg-blue-50 { grid-column: 1 / -1; background: #e6fffa; }
         .dark-mode .result-card.bg-blue-50 { background: #2d4a6a; }
         #netProfitAfterAds { font-size: 1.2rem; font-weight: 900; }
         .profit-indicators { display: flex; justify-content: center; align-items: center; gap: 0.3rem; }
         #profitIndicator, #trendIndicator { font-size: 0.9rem; }
-        .up, .up-trend { color: #48bb78; }
+        .up, .up-trend { color: #2b6cb0; }
+        .dark-mode .up, .dark-mode .up-trend { color: #4a90e2; }
         .down, .down-trend { color: #e53e3e; }
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: #e2e8f0;
-            border-radius: 3px;
-            overflow: hidden;
-            margin-top: 0.2rem;
-        }
-        .progress { height: 100%; transition: width 0.5s ease; }
-        .light-mode .progress { background: #2b6cb0; }
-        .dark-mode .progress { background: #48bb78; }
-        .negative { background: #e53e3e; }
-
-        /* Circular Progress Bar */
-        .circular-progress {
-            position: relative;
-            width: 60px;
-            height: 60px;
-            margin: 0 auto;
-        }
-        .circular-progress svg {
-            width: 100%;
-            height: 100%;
-            transform: rotate(-90deg);
-        }
-        .circular-progress .progress-circle {
-            fill: none;
-            stroke: #e2e8f0;
-            stroke-width: 6;
-        }
-        .circular-progress .progress-fill {
-            fill: none;
-            stroke: #2b6cb0;
-            stroke-width: 6;
-            stroke-linecap: round;
-            transition: stroke-dasharray 0.5s ease;
-        }
-        .dark-mode .circular-progress .progress-fill { stroke: #48bb78; }
-        .circular-progress .progress-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 0.8rem;
-            font-weight: 700;
-        }
 
         /* Tax Toggle */
         .input-group.tax-group {
@@ -326,7 +294,7 @@
             border-radius: 0.5rem;
             background: #f7fafc;
         }
-        .dark-mode .input-group.tax-group { border-color: #48bb78; background: #3d4a5a; }
+        .dark-mode .input-group.tax-group { border-color: #4a90e2; background: #3d4a5a; }
         .tax-toggle { display: flex; align-items: center; gap: 0.2rem; }
         #taxStatus { font-size: 0.9rem; display: flex; align-items: center; gap: 0.2rem; }
         .status-dot {
@@ -334,10 +302,28 @@
             height: 8px;
             border-radius: 50%;
         }
-        .light-mode .status-dot.active { background: #48bb78; }
+        .light-mode .status-dot.active { background: #2b6cb0; }
         .light-mode .status-dot.inactive { background: #e53e3e; }
-        .dark-mode .status-dot.active { background: #48bb78; }
+        .dark-mode .status-dot.active { background: #4a90e2; }
         .dark-mode .status-dot.inactive { background: #e53e3e; }
+
+        /* Show More Button */
+        .show-more-btn {
+            width: 100%;
+            max-width: 120px;
+            margin: 0.3rem auto;
+            padding: 0.4rem 1rem;
+            background: #2b6cb0;
+            color: #ffffff;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-align: center;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+        .dark-mode .show-more-btn { background: #4a90e2; }
+        .show-more-btn:hover { opacity: 0.9; }
 
         /* Floating Reset Button */
         .reset-btn {
@@ -346,7 +332,7 @@
             right: 1rem;
             width: 50px;
             height: 50px;
-            background: linear-gradient(90deg, #2b6cb0, #48bb78);
+            background: #2b6cb0;
             color: #ffffff;
             border-radius: 50%;
             display: flex;
@@ -358,7 +344,7 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .dark-mode .reset-btn { background: linear-gradient(90deg, #48bb78, #2b6cb0); }
+        .dark-mode .reset-btn { background: #4a90e2; }
         .reset-btn:hover { transform: scale(1.1); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2); }
 
         /* Responsive Adjustments */
@@ -366,7 +352,7 @@
             .container { padding: 1rem; max-width: 800px; margin: 0 auto; }
             .header { padding: 0.75rem; }
             .profile-pic { width: 80px; height: 80px; }
-            .profile-name { font-size: 1.2rem; }
+            .profile-name { font-size: 1.3rem; }
             .social-links a { font-size: 1.2rem; padding: 0.5rem; }
             .inputs-container, .results-container { gap: 0.5rem; }
             .input-group label, .result-card p:first-child { font-size: 1.1rem; }
@@ -374,18 +360,18 @@
             .result-card { padding: 0.5rem; }
             .result-card p:last-child { font-size: 1.2rem; }
             #netProfitAfterAds { font-size: 1.5rem; }
-            .circular-progress { width: 80px; height: 80px; }
-            .circular-progress .progress-text { font-size: 1rem; }
+            .show-more-btn { max-width: 150px; font-size: 1rem; }
         }
     </style>
 </head>
 <body class="light-mode">
+    <div id="particles-js"></div>
     <div class="container">
         <!-- Header -->
         <header class="header">
             <div class="profile-card">
                 <div class="profile-pic">
-                    <img src="https://scontent.faly1-2.fna.fbcdn.net/v/t39.30808-6/478724180_2012750999223754_4950667810291165018_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHGVoV1nv_uBT6VDiUmkTUBt9Lm4gk8hxC30ubiCTyHECTpTi2wl8gfRfMESNTozonQZKpDfqy38PE-slzWn9Ck&_nc_ohc=v_k1rOPK2F0Q7kNvgFLv1QA&_nc_oc=AdhvcaU_nFdQ4Z3Kg3E9swCkPRk7JtChJHFOQT9zYUpJ2idA5GZBKG6zFFvqxVjJidw&_nc_zt=23&_nc_ht=scontent.faly1-2.fna&_nc_gid=A_mUbigqD8_rNyd4OoHW9AM&oh=00_AYFDdgaYR159DtFUSCb60jQqfWAmWMrG9davjLCYD83ONw&oe=67D0AAED" alt="Ahmed Muhammed Abdeslam">
+                    <img src="https://scontent.faly1-2.fna.fbcdn.net/v/t39.30808-6/478724180_2012750999223754_4950667810291165018_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHGVoV1nv_uBT6VDiUmkTUBt9Lm4gk8hxC30ubiCTyHECTpTi2wl8gfRfMESNTozonQZKpDfqy38PE-slzWn9Ck&_nc_ohc=v_k1rOPK2F0Q7kNvgFLv1QA&_nc_oc=AdhvcaU_nFdQ4Z3Kg3E9swCkPRk7JtChJHFOQT9zYUpJ2idA5GZBKG6zFFvqxVjJidw&_nc_zt=23&_nc_ht=scontent.faly1-2.fna&_nc_gid=A_mUbigqD8_rNyd4OoHW9AM&oh=00_AYFDdgaYR159DtFUSCb60jQqfWAmWMrG9davjLCYD83ONw&oe=67D0AAED" alt="Aff Price">
                 </div>
                 <div class="profile-info">
                     <span class="profile-name">Aff Price</span>
@@ -481,15 +467,15 @@
                 <p><i class="fas fa-truck-loading"></i> الأوردرات المسلمة</p>
                 <p id="deliveredOrders" class="result-value"></p>
             </div>
-            <div class="result-card" style="--order: 4;">
+            <div class="result-card hidden" id="profitBeforeAdsCard" style="--order: 4;">
                 <p><i class="fas fa-money-bill-wave"></i> الربح قبل الإنفاق</p>
                 <p id="profitBeforeAds" class="result-value"></p>
             </div>
-            <div class="result-card" style="--order: 5;">
+            <div class="result-card hidden" id="totalAdSpendCard" style="--order: 5;">
                 <p><i class="fas fa-bullhorn"></i> إنفاق الإعلانات</p>
                 <p id="totalAdSpend" class="result-value"></p>
             </div>
-            <div class="result-card" style="--order: 6;">
+            <div class="result-card hidden" id="adSpendWithTaxCard" style="--order: 6;">
                 <p><i class="fas fa-calculator"></i> الإنفاق بعد الضريبة</p>
                 <p id="adSpendWithTax" class="result-value"></p>
             </div>
@@ -500,15 +486,11 @@
                     <i id="profitIndicator" class="fas fa-arrow-up profit-indicator up" style="display: none;"></i>
                     <i id="trendIndicator" class="fas fa-arrow-up trend-indicator up-trend" style="display: none;"></i>
                 </div>
-                <div class="circular-progress">
-                    <svg>
-                        <circle class="progress-circle" cx="30" cy="30" r="26" />
-                        <circle class="progress-fill" cx="30" cy="30" r="26" />
-                    </svg>
-                    <span class="progress-text" id="profitPercentage">0%</span>
-                </div>
             </div>
         </div>
+
+        <!-- Show More Button -->
+        <button class="show-more-btn" id="showMoreBtn" onclick="showMoreResults()">إظهار المزيد</button>
 
         <!-- Floating Reset Button -->
         <div class="reset-btn" onclick="resetValues()">
@@ -516,6 +498,7 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script>
         let previousProfit = 0;
         const currencySymbols = { EGP: 'ج.م', USD: '$', SAR: 'ر.س', AED: 'د.إ', KWD: 'د.ك', QAR: 'ر.ق', JOD: 'د.أ', BHD: 'د.ب', LYD: 'د.ل' };
@@ -538,15 +521,13 @@
             const totalAdSpend = targetOrders * adCostPerOrder;
             const adSpendWithTax = applyTax ? totalAdSpend * 1.14 : totalAdSpend;
             const netProfitAfterAds = profitBeforeAds - adSpendWithTax;
-            const totalInvestment = totalAdSpend + adSpendWithTax + (productPrice + shippingCost) * deliveredOrders;
-            const profitPercentage = totalInvestment > 0 ? (netProfitAfterAds / totalInvestment) * 100 : 0;
 
             const updateElement = (id, value, isPercentage = false, isNumberOnly = false) => {
                 const element = document.getElementById(id);
                 const oldValue = parseFloat(element.textContent.replace(/[^\d.-]/g, '')) || 0;
                 element.textContent = isPercentage ? `${value.toFixed(2)}%` : (isNumberOnly ? value.toFixed(0) : `${currencySymbol} ${value.toFixed(2)}`);
-                element.classList.remove('text-red-600', 'text-green-600', 'text-gray-600');
-                if (value > 0) element.classList.add('text-green-600');
+                element.classList.remove('text-red-600', 'text-blue-600', 'text-gray-600');
+                if (value > 0) element.classList.add('text-blue-600');
                 else if (value < 0) element.classList.add('text-red-600');
                 else element.classList.add('text-gray-600');
                 if (value !== oldValue) {
@@ -562,18 +543,6 @@
             updateElement('totalAdSpend', totalAdSpend);
             updateElement('adSpendWithTax', adSpendWithTax);
             updateElement('netProfitAfterAds', netProfitAfterAds);
-
-            const progress = document.getElementById('profitProgress');
-            progress.style.width = `${Math.min(Math.abs(profitPercentage), 100)}%`;
-            progress.classList.toggle('negative', netProfitAfterAds < 0);
-
-            const circularProgress = document.querySelector('.circular-progress .progress-fill');
-            const radius = 26;
-            const circumference = 2 * Math.PI * radius;
-            const offset = circumference - (profitPercentage / 100) * circumference;
-            circularProgress.style.strokeDasharray = `${circumference} ${circumference}`;
-            circularProgress.style.strokeDashoffset = offset;
-            document.getElementById('profitPercentage').textContent = `${Math.min(Math.abs(profitPercentage), 100).toFixed(1)}%`;
 
             const indicator = document.getElementById('profitIndicator');
             indicator.style.display = netProfitAfterAds !== 0 ? 'inline' : 'none';
@@ -595,6 +564,17 @@
             document.getElementById('taxText').textContent = applyTax ? 'مفعل' : 'غير مفعل';
             document.querySelector('.status-dot').classList.toggle('active', applyTax);
             document.querySelector('.status-dot').classList.toggle('inactive', !applyTax);
+        };
+
+        const showMoreResults = () => {
+            const hiddenCards = document.querySelectorAll('.result-card.hidden');
+            hiddenCards.forEach((card, index) => {
+                card.classList.remove('hidden');
+                card.style.display = 'flex';
+                setTimeout(() => card.classList.add('visible'), index * 100);
+            });
+            const showMoreBtn = document.getElementById('showMoreBtn');
+            showMoreBtn.style.display = 'none';
         };
 
         document.getElementById('darkModeToggle').addEventListener('change', () => {
@@ -634,6 +614,12 @@
             document.getElementById('applyTax').checked = false;
             calculateResults();
             updateTaxStatus();
+            const hiddenCards = document.querySelectorAll('.result-card.hidden');
+            hiddenCards.forEach(card => {
+                card.classList.add('hidden');
+                card.style.display = 'none';
+            });
+            document.getElementById('showMoreBtn').style.display = 'block';
         }
 
         document.querySelectorAll('input, #currency, #applyTax').forEach(input => {
@@ -645,6 +631,25 @@
 
         calculateResults();
         updateTaxStatus();
+
+        /* Particles.js Initialization */
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: '#2b6cb0' },
+                shape: { type: 'circle' },
+                opacity: { value: 0.5, random: false },
+                size: { value: 3, random: true },
+                line_linked: { enable: true, distance: 150, color: '#2b6cb0', opacity: 0.4, width: 1 },
+                move: { enable: true, speed: 2, direction: 'none', random: false, straight: false, out_mode: 'out', bounce: false }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' }, resize: true },
+                modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
+            },
+            retina_detect: true
+        });
 
         /* Animate Value Change */
         const style = document.createElement('style');
@@ -664,8 +669,21 @@
                 opacity: 1;
                 transition: opacity 0.3s ease;
             }
+            .text-blue-600 { color: #2b6cb0; }
+            .dark-mode .text-blue-600 { color: #4a90e2; }
         `;
         document.head.appendChild(style);
+
+        /* Dynamic Shadow on Scroll */
+        window.addEventListener('scroll', () => {
+            const cards = document.querySelectorAll('.result-card');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
+                    card.classList.add('visible');
+                }
+            });
+        });
     </script>
 </body>
 </html>
