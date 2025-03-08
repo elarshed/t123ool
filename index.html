@@ -342,7 +342,7 @@
         .dark-mode .result-card p:first-child { color: #a0aec0; }
         .result-card i { font-size: 0.9rem; }
         .result-card p:last-child {
-            font-size: 1rem; /* Smaller and consistent with inputs */
+            font-size: 0.8rem; /* Smaller for other outputs */
             font-weight: 900;
             transition: color 0.3s ease, transform 0.3s ease;
             margin-top: 0.2rem;
@@ -354,7 +354,7 @@
         }
         .dark-mode .result-card.bg-blue-50 { background: #2d4a6a; }
         .result-card.bg-blue-50 p:last-child {
-            font-size: 2rem; /* Larger for net profit */
+            font-size: 2.5rem; /* Significantly larger for net profit */
         }
         .result-value {
             animation: scaleUp 0.5s ease;
@@ -422,8 +422,8 @@
             .input-group label { font-size: 1rem; }
             .input-group input { padding: 0.5rem; font-size: 1.1rem; }
             .result-card p:first-child { font-size: 1rem; }
-            .result-card p:last-child { font-size: 1.2rem; } /* Slightly larger for desktop */
-            .result-card.bg-blue-50 p:last-child { font-size: 2.5rem; } /* Larger net profit for desktop */
+            .result-card p:last-child { font-size: 1rem; } /* Slightly larger for desktop */
+            .result-card.bg-blue-50 p:last-child { font-size: 3rem; } /* Even larger net profit for desktop */
             .show-more-btn, .reset-btn { max-width: 150px; font-size: 1rem; }
         }
     </style>
@@ -690,6 +690,9 @@
             });
         });
 
+        // Set initial net profit value to "ج.م 2746.26" for demonstration
+        document.getElementById('netProfitAfterAds').textContent = 'ج.م 2746.26';
+        document.getElementById('netProfitAfterAds').classList.add('text-green-600', 'glow');
         calculateResults();
         updateTaxStatus();
 
