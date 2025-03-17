@@ -301,13 +301,6 @@
             outline: none;
         }
         .dark-mode .input-group input { background: #2d3748; color: #e2e8f0; border-color: #718096; }
-        /* Dynamic Input Colors */
-        .input-profit-up { border-color: #48bb78; background: #f0fff4; }
-        .dark-mode .input-profit-up { border-color: #68d391; background: #2f855a; }
-        .input-profit-down { border-color: #f56565; background: #fff5f5; }
-        .dark-mode .input-profit-down { border-color: #fc8181; background: #c53030; }
-        .input-neutral { border-color: #cbd5e0; background: #f7fafc; }
-        .dark-mode .input-neutral { border-color: #718096; background: #2d3748; }
         .input-group.tax-group {
             grid-column: span 2;
             flex-direction: row;
@@ -718,7 +711,7 @@
         <div class="notification-content">
             <span class="close-notification" onclick="closeNotification()">×</span>
             <h2>🎉 تحديث جديد 🎉</h2>
-            <p id="notificationMessage">تم إضافة نظام إشعارات جديد لإعلامك بالتحديثات!</p>
+            <p id="notificationMessage">دلوقتي حتى لو عملت ريفريش أو خرجت ورجعت بياناتك هتفضل محفوظة ومش هتضيع<br>اضغط "تمام" علشان تقفل الإشعار ✅</p>
             <button class="notification-btn" onclick="closeNotification()">تمام ✅</button>
         </div>
     </div>
@@ -727,41 +720,6 @@
         let previousProfit = 0;
         const currencySymbols = { EGP: 'ج.م', LYD: 'د.ل', SAR: 'ر.س', AED: 'د.إ' };
         const getCurrencySymbol = () => currencySymbols[document.getElementById('currency').value];
-
-        // دالة لحساب الربح مع قيم معدلة لحقل معين
-        const calculateProfitWithModifiedValue = (fieldId, newValue) => {
-            const inputs = {
-                productPrice: parseFloat(document.getElementById('productPrice').value) || 0,
-                sellingPrice: parseFloat(document.getElementById('sellingPrice').value) || 0,
-                shippingCost: parseFloat(document.getElementById('shippingCost').value) || 0,
-                targetOrders: parseFloat(document.getElementById('targetOrders').value) || 0,
-                deliveryRate: parseFloat(document.getElementById('deliveryRate').value) || 0,
-                adCostPerOrder: parseFloat(document.getElementById('adCostPerOrder').value) || 0,
-                returnCost: parseFloat(document.getElementById('returnCost').value) || 0,
-                packagingCost: parseFloat(document.getElementById('packagingCost').value) || 0,
-                salaries: parseFloat(document.getElementById('salaries').value) || 0,
-                subscriptions: parseFloat(document.getElementById('subscriptions').value) || 0,
-                applyTax: document.getElementById('applyTax').checked
-            };
-
-            // تعديل القيمة للحقل المحدد
-            inputs[fieldId] = newValue;
-
-            const deliveredOrders = Math.round((inputs.targetOrders * inputs.deliveryRate) / 100);
-            const returnedOrders = inputs.targetOrders - deliveredOrders;
-            const totalFixedCosts = inputs.salaries + inputs.subscriptions;
-            const variableCostPerOrder = inputs.productPrice + inputs.shippingCost + inputs.packagingCost;
-            const adCostWithTaxPerOrder = inputs.applyTax ? inputs.adCostPerOrder * 1.14 : inputs.adCostPerOrder;
-            const totalAdSpend = inputs.targetOrders * inputs.adCostPerOrder;
-            const adSpendWithTax = inputs.applyTax ? totalAdSpend * 1.14 : totalAdSpend;
-            const totalPackagingCost = inputs.targetOrders * inputs.packagingCost;
-            const totalReturnCost = returnedOrders * inputs.returnCost;
-
-            const totalRevenue = deliveredOrders * inputs.sellingPrice;
-            const totalVariableCosts = deliveredOrders * (inputs.productPrice + inputs.shippingCost);
-            const totalCosts = totalVariableCosts + totalPackagingCost + adSpendWithTax + totalReturnCost + totalFixedCosts;
-            return totalRevenue - totalCosts; // صافي الربح
-        };
 
         const calculateResults = () => {
             const productPrice = parseFloat(document.getElementById('productPrice').value) || 0;
@@ -888,47 +846,6 @@
             } else {
                 suggestions.innerHTML = '';
             }
-
-            // تلوين الحقول بناءً على تأثيرها على الربح
-            const updateInputColor = (fieldId, currentValue) => {
-                const input = document.getElementById(fieldId);
-                if (!input || !currentValue) {
-                    input.classList.remove('input-profit-up', 'input-profit-down', 'input-neutral');
-                    input.classList.add('input-neutral');
-                    return;
-                }
-
-                const originalProfit = netProfitAfterAds;
-                let modifiedProfit;
-
-                if (fieldId === 'sellingPrice') {
-                    modifiedProfit = calculateProfitWithModifiedValue(fieldId, currentValue * 0.9); // تقليل القيمة بنسبة 10%
-                } else if (fieldId === 'deliveryRate') {
-                    modifiedProfit = calculateProfitWithModifiedValue(fieldId, Math.min(currentValue - 10, 100)); // تقليل النسبة
-                } else if (fieldId === 'targetOrders') {
-                    modifiedProfit = calculateProfitWithModifiedValue(fieldId, currentValue * 0.9); // تقليل العدد
-                } else {
-                    modifiedProfit = calculateProfitWithModifiedValue(fieldId, currentValue * 1.1); // زيادة التكلفة بنسبة 10%
-                }
-
-                input.classList.remove('input-profit-up', 'input-profit-down', 'input-neutral');
-                if (fieldId === 'sellingPrice' || fieldId === 'deliveryRate' || fieldId === 'targetOrders') {
-                    input.classList.add(modifiedProfit < originalProfit ? 'input-profit-up' : modifiedProfit > originalProfit ? 'input-profit-down' : 'input-neutral');
-                } else {
-                    input.classList.add(modifiedProfit > originalProfit ? 'input-profit-up' : modifiedProfit < originalProfit ? 'input-profit-down' : 'input-neutral');
-                }
-            };
-
-            updateInputColor('productPrice', productPrice);
-            updateInputColor('sellingPrice', sellingPrice);
-            updateInputColor('shippingCost', shippingCost);
-            updateInputColor('targetOrders', targetOrders);
-            updateInputColor('deliveryRate', deliveryRate);
-            updateInputColor('adCostPerOrder', adCostPerOrder);
-            updateInputColor('returnCost', returnCost);
-            updateInputColor('packagingCost', packagingCost);
-            updateInputColor('salaries', salaries);
-            updateInputColor('subscriptions', subscriptions);
         };
 
         const updateTaxStatus = () => {
@@ -1016,12 +933,12 @@
 
         // Notification Logic with Version Control
         const currentVersion = "1.0";
-        const notificationMessage = "تم إضافة نظام إشعارات جديد لإعلامك بالتحديثات!";
+        const notificationMessage = "دلوقتي حتى لو عملت ريفريش أو خرجت ورجعت بياناتك هتفضل محفوظة ومش هتضيع\nاضغط \"تمام\" علشان تقفل الإشعار ✅";
 
         const showNotification = () => {
             const lastSeenVersion = localStorage.getItem('lastSeenVersion');
             if (lastSeenVersion !== currentVersion) {
-                document.getElementById('notificationMessage').textContent = notificationMessage;
+                document.getElementById('notificationMessage').innerHTML = notificationMessage.replace(/\n/g, '<br>');
                 document.getElementById('updateNotification').classList.add('active');
             }
         };
