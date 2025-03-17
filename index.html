@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
-    <!-- مكتبة exceljs لتصدير Excel -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
+    <!-- مكتبة ExcelJS لتصدير Excel -->
+    <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -852,8 +852,8 @@
             <input type="text" id="productNameInput" placeholder="مثال">
         </div>
         <div>
-            <button class="export-btn" onclick="exportToExcel()">تصدير</button>
-            <button class="skip-btn" onclick="exportWithDefaultName()">تخطي</button>
+            <button class="export-btn" onclick="exportToExcel(); closeExportPrompt();">تصدير</button>
+            <button class="skip-btn" onclick="exportWithDefaultName(); closeExportPrompt();">تخطي</button>
             <button class="cancel-btn" onclick="closeExportPrompt()">إلغاء</button>
         </div>
     </div>
@@ -1093,7 +1093,6 @@
             const currentDate = new Date().toLocaleDateString('ar-EG', { day: '2-digit', month: '2-digit', year: 'numeric' });
             const defaultFileName = `SellRight_تقرير_${currentDate}.xlsx`;
             exportToExcel(defaultFileName, true);
-            closeExportPrompt();
         };
 
         const exportToExcel = async (fileName = null, isDefault = false) => {
@@ -1112,8 +1111,6 @@
             if (!isDefault) {
                 productName = productName.replace(/ /g, '_');
             }
-
-            closeExportPrompt();
 
             const currencySymbol = getCurrencySymbol();
 
@@ -1210,14 +1207,6 @@
                         };
                     });
                 }
-            });
-
-            // ضبط محاذاة النصوص
-            worksheet.eachRow((row) => {
-                row.eachCell((cell) => {
-                    cell.alignment = { vertical: 'middle', horizontal: 'center' };
-                    cell.font = { name: 'Cairo', size: 12 };
-                });
             });
 
             // إضافة قسم الملخص
