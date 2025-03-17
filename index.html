@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aff Price - Ahmed Muhammed Abdeslam</title>
+    <title>SELL RIGHT</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
@@ -12,136 +12,195 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Cairo', sans-serif;
-            background: #f0f4f8;
-            color: #1a202c;
+            background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+            color: #2d3748;
             min-height: 100vh;
-            padding: 0.5rem;
+            padding: 0;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
         }
-        .light-mode { background: #f0f4f8; color: #1a202c; }
-        .dark-mode { background: #1a202c; color: #ffffff; }
-        .container {
-            background: #ffffff;
-            border-radius: 0.75rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        .light-mode { background: linear-gradient(135deg, #f0f4f8, #d9e2ec); color: #2d3748; }
+        .dark-mode { background: linear-gradient(135deg, #1a202c, #2d3748); color: #e2e8f0; }
+        .app-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
             padding: 0.5rem;
             max-width: 100%;
+            margin: 0.5rem auto;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
-            position: relative;
-            animation: fadeIn 0.5s ease;
-            z-index: 2;
+            animation: slideUp 0.5s ease;
+            backdrop-filter: blur(8px);
         }
-        .dark-mode .container { background: #2d3748; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); }
+        .dark-mode .app-container { background: rgba(45, 55, 72, 0.95); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); }
 
         /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes glow {
-            0% { text-shadow: 0 0 5px rgba(56, 161, 105, 0.7); }
-            50% { text-shadow: 0 0 10px rgba(56, 161, 105, 1), 0 0 20px rgba(56, 161, 105, 0.7); }
-            100% { text-shadow: 0 0 5px rgba(56, 161, 105, 0.7); }
-        }
-        @keyframes scaleUp {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
 
-        /* Header */
-        .header {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.3rem;
+        /* App Bar */
+        .app-bar {
+            background: linear-gradient(90deg, #4a90e2, #63b3ed);
             padding: 0.5rem;
-            border-radius: 0.5rem;
-        }
-        .dark-mode .header { background: #2d3748; }
-        .profile-card {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .dark-mode .app-bar { background: linear-gradient(90deg, #2a69ac, #4dabf7); }
+        .app-bar .app-title {
+            font-size: 1rem;
+            font-weight: 900;
+            color: #fff;
+            display: flex;
             align-items: center;
             gap: 0.5rem;
-            width: 100%;
-            padding: 0.75rem;
-            background: #f7fafc;
-            border-radius: 1rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transition: transform 0.5s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease;
         }
-        .profile-card.visible { transform: translateY(0); box-shadow: 0 6px 16px rgba(43, 108, 176, 0.2); }
-        .dark-mode .profile-card { background: #3d4a5a; }
-        .profile-pic {
+        .app-bar .app-title:hover { transform: scale(1.05); }
+        .app-bar .app-title i { 
+            font-size: 1rem;
+            animation: pulse 2s infinite; 
+        }
+        .social-links {
+            display: flex;
+            gap: 0.4rem;
+            align-items: center;
+        }
+        .social-links a {
+            font-size: 0.8rem;
+            padding: 0.3rem;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+        .dark-mode .social-links a { background: rgba(45, 55, 72, 0.9); }
+        .social-links a:hover {
+            transform: scale(1.2);
+            background: #4a90e2;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .social-links .facebook { color: #1877f2; }
+        .social-links .whatsapp { color: #25d366; }
+        .social-links .instagram { color: #e1306c; }
+        .social-links .tiktok { color: #000; }
+        .social-links .linkedin { color: #0077b5; }
+        .profile-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .developer-info {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .view-profile-btn {
+            background: rgba(255, 255, 255, 0.9);
+            color: #4a90e2;
+            padding: 0.3rem 0.6rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+        }
+        .view-profile-btn i { font-size: 0.8rem; }
+        .view-profile-btn:hover {
+            background: #fff;
+            color: #63b3ed;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        .dark-mode .view-profile-btn {
+            background: rgba(45, 55, 72, 0.9);
+            color: #63b3ed;
+        }
+        .dark-mode .view-profile-btn:hover {
+            background: #4a5568;
+            color: #a0aec0;
+        }
+        .profile-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            flex-direction: column;
+            gap: 0.5rem;
+            max-width: 90%;
+            width: 280px;
+            text-align: center;
+        }
+        .dark-mode .profile-modal { background: rgba(45, 55, 72, 0.95); color: #e2e8f0; }
+        .profile-modal.active { display: flex; }
+        .profile-modal .close-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: #4a90e2;
+            transition: color 0.3s ease;
+        }
+        .profile-modal .close-btn:hover { color: #63b3ed; }
+        .profile-modal .profile-pic {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            border: 4px solid #2b6cb0;
+            border: 3px solid #4a90e2;
             overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            margin: 0 auto;
+            transition: transform 0.3s ease;
         }
-        .dark-mode .profile-pic { border-color: #a0aec0; }
-        .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
-        .profile-info { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; }
-        .profile-name {
-            font-size: 1.3rem;
-            font-weight: 900;
-            color: #2b6cb0;
+        .profile-modal .profile-pic:hover { transform: scale(1.1); }
+        .profile-modal .bio {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        .profile-modal .bio span {
             display: flex;
             align-items: center;
             gap: 0.3rem;
+            justify-content: center;
         }
-        .dark-mode .profile-name { color: #a0aec0; }
-        .profile-name i { font-size: 1rem; animation: bounce 2s infinite; }
-        .creator-name {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: #4a5568;
-        }
-        .dark-mode .creator-name { color: #a0aec0; }
-        .social-links { display: flex; gap: 0.3rem; margin-top: 0.3rem; }
-        .social-links a {
-            font-size: 1rem;
-            padding: 0.4rem;
-            border-radius: 50%;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        .social-links .facebook { color: #1877F2; }
-        .social-links .whatsapp { color: #25D366; }
-        .social-links .instagram { color: #E1306C; }
-        .social-links .tiktok { color: #000000; }
-        .social-links .linkedin { color: #0077B5; }
 
         /* Controls */
         .controls {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: 100%;
-            gap: 0.3rem;
-            padding: 0 0.5rem;
+            padding: 0.3rem 0.5rem;
+            background: #edf2f7;
+            border-radius: 8px;
         }
-        .mode-toggle {
-            display: flex;
-            align-items: center;
-            gap: 0.2rem;
-        }
-        .toggle-switch {
-            position: relative;
-            width: 36px;
-            height: 18px;
-        }
+        .dark-mode .controls { background: #4a5568; }
+        .mode-toggle { display: flex; align-items: center; gap: 0.3rem; }
+        .toggle-switch { position: relative; width: 36px; height: 18px; }
         .toggle-switch input { opacity: 0; width: 0; height: 0; }
         .slider {
             position: absolute;
@@ -151,10 +210,8 @@
             bottom: 0;
             background: #a0aec0;
             border-radius: 18px;
-            border: 1px solid #2b6cb0;
             transition: 0.3s;
         }
-        .dark-mode .slider { border-color: #a0aec0; }
         .slider:before {
             position: absolute;
             content: "";
@@ -162,346 +219,428 @@
             width: 14px;
             left: 2px;
             bottom: 2px;
-            background: #ffffff;
+            background: #fff;
             border-radius: 50%;
             transition: 0.3s;
         }
-        input:checked + .slider { background: #a0aec0; }
-        input:checked + .slider:before { transform: translateX(16px); }
-        .mode-toggle i { font-size: 0.8rem; }
+        input:checked + .slider { background: #4a90e2; }
+        input:checked + .slider:before { transform: translateX(18px); }
+        .mode-toggle i { font-size: 0.9rem; }
         .light-mode .mode-toggle i.fa-sun { color: #f6ad55; }
         .dark-mode .mode-toggle i.fa-moon { color: #a0aec0; }
         .mode-toggle span { font-size: 0.7rem; font-weight: 700; }
-        .light-mode .mode-toggle span { color: #1a202c; }
-        .dark-mode .mode-toggle span { color: #ffffff; }
-
-        /* Currency Dropdown */
-        .custom-dropdown {
-            width: 90px;
-            position: relative;
-        }
+        .custom-dropdown { width: 90px; position: relative; }
         .dropdown-selected {
             display: flex;
             align-items: center;
-            justify-content: center;
-            padding: 0.3rem 0.5rem;
-            border: 1px solid #2b6cb0;
-            border-radius: 0.5rem;
-            font-size: 0.8rem;
+            justify-content: space-between;
+            padding: 0.3rem;
+            border: 1px solid #4a90e2;
+            border-radius: 6px;
+            font-size: 0.7rem;
             font-weight: 700;
-            background: #f7fafc;
+            background: #fff;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
         }
-        .dark-mode .dropdown-selected { background: #3d4a5a; border-color: #a0aec0; }
-        .dropdown-selected:hover { background: #e2e8f0; }
-        .dark-mode .dropdown-selected:hover { background: #4a5b6d; }
-        .dropdown-selected i { margin-left: 0.3rem; font-size: 0.7rem; }
+        .dark-mode .dropdown-selected { background: #4a5568; border-color: #a0aec0; }
+        .dropdown-selected:hover { background: #e9ecef; }
         .dropdown-options {
             position: absolute;
             top: 100%;
             right: 0;
             width: 90px;
-            background: #ffffff;
-            border-radius: 0.5rem;
+            background: #fff;
+            border-radius: 6px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             display: none;
             z-index: 10;
-            max-height: 150px;
-            overflow-y: auto;
         }
-        .dark-mode .dropdown-options { background: #3d4a5a; }
+        .dark-mode .dropdown-options { background: #4a5568; }
         .dropdown-options.active { display: block; }
-        .dropdown-option {
-            display: flex;
-            align-items: center;
-            padding: 0.3rem 0.5rem;
-            font-size: 0.8rem;
-            cursor: pointer;
-        }
-        .light-mode .dropdown-option { color: #1a202c; }
-        .dark-mode .dropdown-option { color: #ffffff; }
-        .dropdown-option:hover { background: #e2e8f0; }
-        .dark-mode .dropdown-option:hover { background: #4a5b6d; }
-        .dropdown-option span { margin: 0 0.3rem; }
+        .dropdown-option { padding: 0.3rem; font-size: 0.7rem; cursor: pointer; }
+        .dropdown-option:hover { background: #e9ecef; }
+        .dark-mode .dropdown-option:hover { background: #718096; }
 
         /* Inputs Section */
-        .inputs-section {
-            background: #e6f0fa;
-            border-radius: 0.75rem;
-            padding: 0.5rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            animation: slideIn 0.5s ease;
-            margin-bottom: 0.5rem;
-        }
-        .dark-mode .inputs-section { background: #2d4a6a; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); }
+        .inputs-section { padding: 0.5rem; }
         .inputs-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 0.3rem;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.5rem;
         }
         .input-group {
             display: flex;
             flex-direction: column;
             gap: 0.2rem;
-            position: relative;
-            animation: slideIn 0.5s ease backwards;
-            animation-delay: calc(var(--order) * 0.1s);
+            animation: fadeIn 0.5s ease;
         }
         .input-group label {
-            font-size: 0.9rem;
+            font-size: 0.75rem;
             font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 0.2rem;
-            color: #2b6cb0;
+            gap: 0.3rem;
+            color: #4a90e2;
         }
-        .dark-mode .input-group label { color: #a0aec0; }
-        .input-group i { font-size: 0.9rem; }
-        .light-mode .input-group i { color: #2b6cb0; }
-        .dark-mode .input-group i { color: #a0aec0; }
+        .dark-mode .input-group label { color: #63b3ed; }
+        .input-group i { font-size: 0.8rem; }
         .input-group input {
             width: 100%;
-            padding: 0.3rem;
-            font-size: 1rem;
-            font-weight: 700;
-            border: 1px solid #2b6cb0;
-            border-radius: 0.5rem;
-            background: #ffffff;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            padding: 0.4rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            background: #f7fafc;
+            transition: all 0.3s ease;
         }
         .input-group input:focus {
-            border-color: #a0aec0;
-            box-shadow: 0 0 8px rgba(160, 174, 192, 0.3);
+            border-color: #4a90e2;
+            box-shadow: 0 0 6px rgba(74, 144, 226, 0.2);
             outline: none;
         }
-        .dark-mode .input-group input { background: #3d4a5a; color: #ffffff; border-color: #a0aec0; }
+        .dark-mode .input-group input { background: #2d3748; color: #e2e8f0; border-color: #718096; }
+        /* Dynamic Input Colors */
+        .input-profit-up { border-color: #48bb78; background: #f0fff4; }
+        .dark-mode .input-profit-up { border-color: #68d391; background: #2f855a; }
+        .input-profit-down { border-color: #f56565; background: #fff5f5; }
+        .dark-mode .input-profit-down { border-color: #fc8181; background: #c53030; }
+        .input-neutral { border-color: #cbd5e0; background: #f7fafc; }
+        .dark-mode .input-neutral { border-color: #718096; background: #2d3748; }
         .input-group.tax-group {
-            grid-column: 1 / -1;
+            grid-column: span 2;
             flex-direction: row;
-            align-items: center;
             justify-content: space-between;
-            padding: 0.4rem;
-            border: 1px solid #2b6cb0;
-            border-radius: 0.5rem;
-            background: #ffffff;
+            padding: 0.5rem;
+            background: #edf2f7;
+            border-radius: 8px;
         }
-        .dark-mode .input-group.tax-group { border-color: #a0aec0; background: #3d4a5a; }
-        .tax-toggle { display: flex; align-items: center; gap: 0.2rem; }
-        #taxStatus { font-size: 0.9rem; display: flex; align-items: center; gap: 0.2rem; }
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
+        .dark-mode .input-group.tax-group { background: #4a5568; }
+        .tax-toggle { display: flex; align-items: center; gap: 0.3rem; }
+        #taxStatus { font-size: 0.75rem; display: flex; align-items: center; gap: 0.1rem; }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; }
+        .light-mode .status-dot.active { background: #48bb78; }
+        .light-mode .status-dot.inactive { background: #f56565; }
+        .dark-mode .status-dot.active { background: #68d391; }
+        .dark-mode .status-dot.inactive { background: #fc8181; }
+        .input-hint {
+            font-size: 0.65rem;
+            color: #718096;
+            margin-top: 0.1rem;
         }
-        .light-mode .status-dot.active { background: #2b6cb0; }
-        .light-mode .status-dot.inactive { background: #e53e3e; }
-        .dark-mode .status-dot.active { background: #a0aec0; }
-        .dark-mode .status-dot.inactive { background: #e53e3e; }
-
-        /* Decorative Line */
-        .decorative-line {
-            height: 2px;
-            background: linear-gradient(to right, transparent, #2b6cb0, transparent);
-            margin: 0.5rem 0;
-            border-radius: 1rem;
-        }
-        .dark-mode .decorative-line { background: linear-gradient(to right, transparent, #a0aec0, transparent); }
+        .dark-mode .input-hint { color: #a0aec0; }
 
         /* Results Section */
-        .results-section {
-            padding: 0.5rem;
-            animation: slideIn 0.5s ease 0.2s backwards;
-        }
+        .results-section { padding: 0.5rem; }
         .results-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 0.3rem;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.5rem;
         }
         .result-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 0.5rem;
-            padding: 0.4rem;
+            background: #fff;
+            border-radius: 8px;
+            padding: 0.5rem;
             text-align: center;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-            transition: box-shadow 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
         }
-        .dark-mode .result-card { background: #3d4a5a; border-color: #a0aec0; }
-        .result-card.visible { box-shadow: 0 4px 16px rgba(43, 108, 176, 0.2); }
+        .dark-mode .result-card { background: #4a5568; }
+        .result-card:hover { transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
         .result-card.hidden { display: none; }
         .result-card p:first-child {
-            font-size: 0.9rem; /* Consistent with input labels */
+            font-size: 0.75rem;
             font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.2rem;
-            color: #2b6cb0;
+            gap: 0.3rem;
+            color: #4a90e2;
         }
-        .dark-mode .result-card p:first-child { color: #a0aec0; }
-        .result-card i { font-size: 0.9rem; }
-        .result-card p:last-child {
-            font-size: 0.8rem; /* Smaller for other outputs */
-            font-weight: 900;
-            transition: color 0.3s ease, transform 0.3s ease;
-            margin-top: 0.2rem;
-        }
-        .result-card.bg-blue-50 {
-            grid-column: 1 / -1;
-            background: #e6fffa;
-            padding: 0.5rem;
-        }
-        .dark-mode .result-card.bg-blue-50 { background: #2d4a6a; }
-        .result-card.bg-blue-50 p:last-child {
-            font-size: 2.5rem; /* Significantly larger for net profit */
-        }
-        .result-value {
-            animation: scaleUp 0.5s ease;
-        }
-        .text-green-600 { color: #38a169; }
-        .dark-mode .text-green-600 { color: #48bb78; }
-        .text-red-600 { color: #e53e3e; }
+        .dark-mode .result-card p:first-child { color: #63b3ed; }
+        .result-card i { font-size: 0.8rem; }
+        .result-card p:last-child { font-size: 0.7rem; font-weight: 900; margin-top: 0.1rem; }
+        .result-card.bg-blue-50 { grid-column: span 2; background: #e9ecef; padding: 0.6rem; }
+        .dark-mode .result-card.bg-blue-50 { background: #2a69ac; }
+        .result-card.bg-blue-50 p:last-child { font-size: 1rem; }
+        .text-green-600 { color: #48bb78; }
+        .dark-mode .text-green-600 { color: #68d391; }
+        .text-red-600 { color: #f56565; }
+        .dark-mode .text-red-600 { color: #fc8181; }
         .text-gray-600 { color: #718096; }
         .dark-mode .text-gray-600 { color: #a0aec0; }
         .profit-indicators { display: flex; justify-content: center; align-items: center; gap: 0.3rem; }
-        #profitIndicator, #trendIndicator { font-size: 1rem; }
-        .up, .up-trend { color: #38a169; }
-        .dark-mode .up, .dark-mode .up-trend { color: #48bb78; }
-        .down, .down-trend { color: #e53e3e; }
+        #profitIndicator, #trendIndicator { font-size: 0.9rem; }
+        #suggestions { font-size: 0.7rem; margin-top: 0.3rem; line-height: 1.3; }
+        .suggestion-price { color: #4a90e2; font-weight: bold; }
+        .suggestion-rate { color: #48bb78; font-weight: bold; }
+        .suggestion-orders { color: #ed8936; font-weight: bold; }
+        .dark-mode .suggestion-price { color: #63b3ed; }
+        .dark-mode .suggestion-rate { color: #68d391; }
+        .dark-mode .suggestion-orders { color: #f6ad55; }
 
-        /* Show More and Reset Buttons */
-        .buttons-container {
+        /* Bottom Action Bar */
+        .bottom-bar {
+            position: sticky;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0.3rem 0.5rem;
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
             align-items: center;
-            padding: 0.5rem 0;
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+            border-radius: 15px 15px 0 0;
+            backdrop-filter: blur(8px);
         }
-        .show-more-btn {
+        .dark-mode .bottom-bar { background: rgba(45, 55, 72, 0.95); }
+        .action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.1rem;
+            padding: 0.4rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 6px;
+        }
+        .action-btn:hover { transform: scale(1.1); color: #4a90e2; background: #e9ecef; }
+        .dark-mode .action-btn:hover { color: #63b3ed; background: #2d3748; }
+        .action-btn i { font-size: 1rem; }
+        .action-btn span { font-size: 0.6rem; font-weight: 700; }
+
+        /* Notification Modal */
+        .notification-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 120px;
-            padding: 0.4rem 1rem;
-            background: #2b6cb0;
-            color: #ffffff;
-            border-radius: 0.5rem;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.5s ease;
+        }
+        .notification-modal.active {
+            display: flex;
+        }
+        .notification-content {
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 90%;
+            width: 350px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            animation: slideUp 0.5s ease;
+            border: 2px solid #4a90e2;
+            background: linear-gradient(135deg, #f0f4f8, #e2e8f0);
+        }
+        .dark-mode .notification-content {
+            background: linear-gradient(135deg, #2d3748, #4a5568);
+            color: #e2e8f0;
+            border-color: #63b3ed;
+        }
+        .notification-content h2 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #4a90e2;
+            margin-bottom: 0.5rem;
+        }
+        .dark-mode .notification-content h2 {
+            color: #63b3ed;
+        }
+        .notification-content p {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+        .dark-mode .notification-content p {
+            color: #e2e8f0;
+        }
+        .notification-btn {
+            background: #4a90e2;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 10px;
             font-size: 0.9rem;
             font-weight: 700;
-            text-align: center;
             cursor: pointer;
-            transition: opacity 0.3s ease;
+            transition: all 0.3s ease;
         }
-        .dark-mode .show-more-btn { background: #a0aec0; }
-        .show-more-btn:hover { opacity: 0.9; }
-        .reset-btn {
-            width: 100%;
-            max-width: 120px;
-            padding: 0.4rem 1rem;
-            background: #e53e3e;
-            color: #ffffff;
-            border-radius: 0.5rem;
-            font-size: 0.9rem;
-            font-weight: 700;
-            text-align: center;
+        .notification-btn:hover {
+            background: #63b3ed;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .close-notification {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            font-size: 1.5rem;
+            color: #4a90e2;
             cursor: pointer;
-            transition: opacity 0.3s ease;
+            transition: color 0.3s ease;
         }
-        .reset-btn:hover { opacity: 0.9; }
+        .close-notification:hover {
+            color: #63b3ed;
+        }
 
         /* Responsive Adjustments */
-        @media (min-width: 768px) {
-            .container { padding: 1rem; max-width: 800px; margin: 0 auto; }
-            .header { padding: 0.75rem; }
-            .profile-pic { width: 90px; height: 90px; }
-            .profile-name { font-size: 1.5rem; }
-            .creator-name { font-size: 1rem; }
-            .social-links a { font-size: 1.2rem; padding: 0.5rem; }
-            .custom-dropdown { width: 110px; }
-            .dropdown-selected { font-size: 0.9rem; }
-            .dropdown-option { font-size: 0.9rem; }
-            .inputs-section, .results-section { padding: 1rem; }
-            .input-group label { font-size: 1rem; }
-            .input-group input { padding: 0.5rem; font-size: 1.1rem; }
-            .result-card p:first-child { font-size: 1rem; }
-            .result-card p:last-child { font-size: 1rem; } /* Slightly larger for desktop */
-            .result-card.bg-blue-50 p:last-child { font-size: 3rem; } /* Even larger net profit for desktop */
-            .show-more-btn, .reset-btn { max-width: 150px; font-size: 1rem; }
+        @media (min-width: 640px) {
+            .app-container { max-width: 640px; }
+            .inputs-container, .results-container { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (min-width: 1024px) {
+            .app-container { max-width: 900px; }
+            .inputs-container, .results-container { grid-template-columns: repeat(3, 1fr); }
+            .input-group.tax-group, .result-card.bg-blue-50 { grid-column: span 3; }
         }
     </style>
 </head>
 <body class="light-mode">
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="profile-card">
-                <div class="profile-pic">
-                    <img src="https://scontent.faly1-2.fna.fbcdn.net/v/t39.30808-6/478724180_2012750999223754_4950667810291165018_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHGVoV1nv_uBT6VDiUmkTUBt9Lm4gk8hxC30ubiCTyHECTpTi2wl8gfRfMESNTozonQZKpDfqy38PE-slzWn9Ck&_nc_ohc=v_k1rOPK2F0Q7kNvgFLv1QA&_nc_oc=AdhvcaU_nFdQ4Z3Kg3E9swCkPRk7JtChJHFOQT9zYUpJ2idA5GZBKG6zFFvqxVjJidw&_nc_zt=23&_nc_ht=scontent.faly1-2.fna&_nc_gid=A_mUbigqD8_rNyd4OoHW9AM&oh=00_AYFDdgaYR159DtFUSCb60jQqfWAmWMrG9davjLCYD83ONw&oe=67D0AAED" alt="Ahmed Muhammed Abdeslam">
+    <script>
+        // التحقق من الكود ومعرف الجهاز عند تحميل الصفحة
+        function checkActivationCode() {
+            const storedDataStr = localStorage.getItem('activationCode');
+            const currentDeviceId = localStorage.getItem('deviceId');
+
+            if (!storedDataStr || !currentDeviceId) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const storedData = JSON.parse(storedDataStr);
+            const { code, deviceId: storedDeviceId } = storedData;
+
+            if (!code || !storedDeviceId || currentDeviceId !== storedDeviceId) {
+                localStorage.removeItem('activationCode');
+                window.location.href = 'login.html';
+            }
+        }
+
+        window.onload = function() {
+            checkActivationCode();
+            loadInputsFromLocalStorage();
+            calculateResults();
+            updateTaxStatus();
+            showNotification();
+        };
+    </script>
+
+    <div class="app-container">
+        <!-- App Bar -->
+        <div class="app-bar">
+            <span class="app-title">
+                <i class="fas fa-calculator"></i>
+                SELL RIGHT
+            </span>
+            <div class="profile-container">
+                <div class="developer-info">
+                    <span class="view-profile-btn" onclick="toggleProfileModal()">
+                        <i class="fas fa-user"></i> View Info
+                    </span>
                 </div>
-                <div class="profile-info">
-                    <span class="profile-name">Aff Price <i class="fas fa-calculator"></i></span>
-                    <span class="creator-name">Ahmed Muhammed Abdeslam</span>
-                    <div class="social-links">
-                        <a href="https://web.facebook.com/ahmed10az" target="_blank" class="facebook"><i class="fab fa-facebook"></i></a>
-                        <a href="https://wa.me/201282512082" target="_blank" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
-                        <a href="https://instagram.com/ahmed10az" target="_blank" class="instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="https://tiktok.com/@elarshedok" target="_blank" class="tiktok"><i class="fab fa-tiktok"></i></a>
-                        <a href="https://linkedin.com/in/elarshedok" target="_blank" class="linkedin"><i class="fab fa-linkedin"></i></a>
-                    </div>
+                <div class="social-links">
+                    <a href="https://web.facebook.com/ahmed10az" target="_blank" class="facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="https://wa.me/201282512082" target="_blank" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://instagram.com/ahmed10az" target="_blank" class="instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://tiktok.com/@elarshedok" target="_blank" class="tiktok"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://linkedin.com/in/elarshedok" target="_blank" class="linkedin"><i class="fab fa-linkedin"></i></a>
                 </div>
             </div>
-            <div class="controls">
-                <div class="mode-toggle">
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="darkModeToggle">
-                        <span class="slider"></span>
-                    </label>
-                    <i class="fas fa-sun mode-icon light-mode-icon"></i>
-                    <i class="fas fa-moon mode-icon dark-mode-icon" style="display: none;"></i>
-                    <span id="modeLabel">نهار</span>
-                </div>
-                <div class="custom-dropdown">
-                    <div class="dropdown-selected" id="dropdownSelected">
-                        <span class="flag-icon flag-icon-eg"></span> EGP
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="dropdown-options" id="dropdownOptions">
-                        <div class="dropdown-option" data-value="EGP"><span class="flag-icon flag-icon-eg"></span> EGP</div>
-                        <div class="dropdown-option" data-value="LYD"><span class="flag-icon flag-icon-ly"></span> LYD</div>
-                        <div class="dropdown-option" data-value="SAR"><span class="flag-icon flag-icon-sa"></span> SAR</div>
-                        <div class="dropdown-option" data-value="AED"><span class="flag-icon flag-icon-ae"></span> AED</div>
-                    </div>
-                    <input type="hidden" id="currency" value="EGP">
-                </div>
+        </div>
+
+        <!-- Profile Modal -->
+        <div class="profile-modal" id="profileModal">
+            <span class="close-btn" onclick="toggleProfileModal()">×</span>
+            <div class="profile-pic">
+                <img src="https://imgg.io/images/2025/03/12/d1f425f5f81f9df07b5909ee5de09238.jpg" alt="Profile Picture of Ahmed">
             </div>
-        </header>
+            <div class="bio">
+                <span>Ahmed Muhammed Abdeslam</span>
+                <span><i class="fas fa-globe"></i> 🌐 Digital Marketing Specialist</span>
+                <span><i class="fas fa-shopping-cart"></i> 🛒 E-Commerce Expert</span>
+                <span><i class="fas fa-chart-line"></i> 📊 Driving Brand Growth with Data-Driven Strategies</span>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <div class="mode-toggle">
+                <label class="toggle-switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider"></span>
+                </label>
+                <i class="fas fa-sun mode-icon light-mode-icon"></i>
+                <i class="fas fa-moon mode-icon dark-mode-icon" style="display: none;"></i>
+                <span id="modeLabel">نهار</span>
+            </div>
+            <div class="custom-dropdown">
+                <div class="dropdown-selected" id="dropdownSelected">
+                    <span class="flag-icon flag-icon-eg"></span> EGP
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="dropdown-options" id="dropdownOptions">
+                    <div class="dropdown-option" data-value="EGP"><span class="flag-icon flag-icon-eg"></span> EGP</div>
+                    <div class="dropdown-option" data-value="LYD"><span class="flag-icon flag-icon-ly"></span> LYD</div>
+                    <div class="dropdown-option" data-value="SAR"><span class="flag-icon flag-icon-sa"></span> SAR</div>
+                    <div class="dropdown-option" data-value="AED"><span class="flag-icon flag-icon-ae"></span> AED</div>
+                </div>
+                <input type="hidden" id="currency" value="EGP">
+            </div>
+        </div>
 
         <!-- Inputs Section -->
         <div class="inputs-section">
             <div class="inputs-container">
-                <div class="input-group" style="--order: 1;">
+                <div class="input-group">
                     <label><i class="fas fa-dollar-sign"></i> سعر الجملة</label>
-                    <input type="number" id="productPrice" step="any" min="0" value="324">
+                    <input type="number" id="productPrice" step="any" min="0" placeholder="أدخل السعر">
                 </div>
-                <div class="input-group" style="--order: 2;">
-                    <label><i class="fas fa-shopping-cart"></i> سعر البيع بالشحن</label>
-                    <input type="number" id="sellingPrice" step="any" min="0" value="550">
+                <div class="input-group">
+                    <label><i class="fas fa-dollar-sign"></i> سعر البيع بالشحن</label>
+                    <input type="number" id="sellingPrice" step="any" min="0" placeholder="أدخل السعر">
                 </div>
-                <div class="input-group" style="--order: 3;">
+                <div class="input-group">
                     <label><i class="fas fa-truck"></i> تكلفة الشحن</label>
-                    <input type="number" id="shippingCost" step="any" min="0" value="55">
+                    <input type="number" id="shippingCost" step="any" min="0" placeholder="أدخل التكلفة">
                 </div>
-                <div class="input-group" style="--order: 4;">
-                    <label><i class="fas fa-boxes"></i> الأوردرات</label>
-                    <input type="number" id="targetOrders" step="1" min="0" value="438">
+                <div class="input-group">
+                    <label><i class="fas fa-boxes"></i> عدد الأوردرات</label>
+                    <input type="number" id="targetOrders" step="1" min="0" placeholder="أدخل العدد">
                 </div>
-                <div class="input-group" style="--order: 5;">
-                    <label><i class="fas fa-percentage"></i> نسبة التسليم</label>
-                    <input type="number" id="deliveryRate" step="any" min="0" max="100" value="15">
+                <div class="input-group">
+                    <label><i class="fas fa-percentage"></i> نسبة التسليمات</label>
+                    <input type="number" id="deliveryRate" step="any" min="0" max="100" placeholder="أدخل النسبة">
                 </div>
-                <div class="input-group" style="--order: 6;">
-                    <label><i class="fas fa-ad"></i> تكلفة الأوردر</label>
-                    <input type="number" id="adCostPerOrder" step="any" min="0" value="17">
+                <div class="input-group">
+                    <label><i class="fas fa-ad"></i> سعر الأوردر</label>
+                    <input type="number" id="adCostPerOrder" step="any" min="0" placeholder="أدخل التكلفة">
                 </div>
-                <div class="input-group tax-group" style="--order: 7;">
+                <div class="input-group">
+                    <label><i class="fas fa-undo"></i> المرتجع</label>
+                    <input type="number" id="returnCost" step="any" min="0" placeholder="أدخل التكلفة">
+                </div>
+                <div class="input-group">
+                    <label><i class="fas fa-box"></i> تغليف الأوردر</label>
+                    <input type="number" id="packagingCost" step="any" min="0" placeholder="أدخل التكلفة">
+                </div>
+                <div class="input-group">
+                    <label><i class="fas fa-users"></i> المرتبات</label>
+                    <input type="number" id="salaries" step="any" min="0" placeholder="أدخل المبلغ">
+                </div>
+                <div class="input-group">
+                    <label><i class="fas fa-tools"></i> مصروفات تشغيلية</label>
+                    <input type="number" id="subscriptions" step="any" min="0" placeholder="أدخل المبلغ">
+                    <span class="input-hint">Easy Orders, Shopify</span>
+                </div>
+                <div class="input-group tax-group">
                     <label><i class="fas fa-tax"></i> ضريبة 14%</label>
                     <div class="tax-toggle">
                         <label class="toggle-switch">
@@ -514,49 +653,73 @@
             </div>
         </div>
 
-        <!-- Decorative Line -->
-        <div class="decorative-line"></div>
-
         <!-- Results Section -->
         <div class="results-section">
             <div class="results-container" id="results">
-                <div class="result-card" style="--order: 1;">
+                <div class="result-card">
                     <p><i class="fas fa-coins"></i> ربح الأوردر</p>
                     <p id="netProfitPerOrder" class="result-value"></p>
                 </div>
-                <div class="result-card" style="--order: 2;">
+                <div class="result-card">
                     <p><i class="fas fa-chart-line"></i> هامش الربح</p>
                     <p id="profitMargin" class="result-value"></p>
                 </div>
-                <div class="result-card" style="--order: 3;">
-                    <p><i class="fas fa-truck-loading"></i> الأوردرات المسلمة</p>
+                <div class="result-card">
+                    <p><i class="fas fa-truck-loading"></i> أوردرات مسلمة</p>
                     <p id="deliveredOrders" class="result-value"></p>
                 </div>
-                <div class="result-card hidden" id="profitBeforeAdsCard" style="--order: 4;">
-                    <p><i class="fas fa-money-bill-wave"></i> الربح قبل الإنفاق</p>
+                <div class="result-card hidden" id="profitBeforeAdsCard">
+                    <p><i class="fas fa-money-bill-wave"></i> الربح قبل الإعلان</p>
                     <p id="profitBeforeAds" class="result-value"></p>
                 </div>
-                <div class="result-card hidden" id="totalAdSpendCard" style="--order: 5;">
+                <div class="result-card hidden" id="totalAdSpendCard">
                     <p><i class="fas fa-bullhorn"></i> إنفاق الإعلانات</p>
                     <p id="totalAdSpend" class="result-value"></p>
                 </div>
-                <div class="result-card hidden" id="adSpendWithTaxCard" style="--order: 6;">
-                    <p><i class="fas fa-calculator"></i> الإنفاق شامل الضريبة</p>
+                <div class="result-card hidden" id="adSpendWithTaxCard">
+                    <p><i class="fas fa-calculator"></i> الإنفاق مع الضريبة</p>
                     <p id="adSpendWithTax" class="result-value"></p>
                 </div>
-                <div class="result-card bg-blue-50" style="--order: 7;">
+                <div class="result-card">
+                    <p><i class="fas fa-percentage"></i> نسبة المرتجعات</p>
+                    <p id="returnRate" class="result-value"></p>
+                </div>
+                <div class="result-card">
+                    <p><i class="fas fa-money-bill-wave"></i> تكلفة المرتجعات</p>
+                    <p id="totalReturnCost" class="result-value"></p>
+                </div>
+                <div class="result-card bg-blue-50">
                     <p><i class="fas fa-wallet"></i> صافي الربح</p>
                     <div class="profit-indicators">
                         <p id="netProfitAfterAds" class="result-value"></p>
-                        <i id="profitIndicator" class="fas fa-arrow-up profit-indicator up" style="display: none;"></i>
-                        <i id="trendIndicator" class="fas fa-arrow-up trend-indicator up-trend" style="display: none;"></i>
+                        <i id="profitIndicator" class="fas fa-arrow-up profit-indicator" style="display: none;"></i>
+                        <i id="trendIndicator" class="fas fa-arrow-up trend-indicator" style="display: none;"></i>
                     </div>
+                    <div id="suggestions"></div>
                 </div>
             </div>
-            <div class="buttons-container">
-                <button class="reset-btn" onclick="resetValues()">محو البيانات</button>
-                <button class="show-more-btn" id="showMoreBtn" onclick="showMoreResults()">إظهار المزيد</button>
+        </div>
+
+        <!-- Bottom Action Bar -->
+        <div class="bottom-bar">
+            <div class="action-btn" id="showMoreBtn" onclick="showMoreResults()">
+                <i class="fas fa-eye"></i>
+                <span>عرض المزيد</span>
             </div>
+            <div class="action-btn" onclick="resetValues()">
+                <i class="fas fa-trash"></i>
+                <span>محو</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Modal -->
+    <div class="notification-modal" id="updateNotification">
+        <div class="notification-content">
+            <span class="close-notification" onclick="closeNotification()">×</span>
+            <h2>🎉 تحديث جديد 🎉</h2>
+            <p id="notificationMessage">تم إضافة نظام إشعارات جديد لإعلامك بالتحديثات!</p>
+            <button class="notification-btn" onclick="closeNotification()">تمام ✅</button>
         </div>
     </div>
 
@@ -565,6 +728,41 @@
         const currencySymbols = { EGP: 'ج.م', LYD: 'د.ل', SAR: 'ر.س', AED: 'د.إ' };
         const getCurrencySymbol = () => currencySymbols[document.getElementById('currency').value];
 
+        // دالة لحساب الربح مع قيم معدلة لحقل معين
+        const calculateProfitWithModifiedValue = (fieldId, newValue) => {
+            const inputs = {
+                productPrice: parseFloat(document.getElementById('productPrice').value) || 0,
+                sellingPrice: parseFloat(document.getElementById('sellingPrice').value) || 0,
+                shippingCost: parseFloat(document.getElementById('shippingCost').value) || 0,
+                targetOrders: parseFloat(document.getElementById('targetOrders').value) || 0,
+                deliveryRate: parseFloat(document.getElementById('deliveryRate').value) || 0,
+                adCostPerOrder: parseFloat(document.getElementById('adCostPerOrder').value) || 0,
+                returnCost: parseFloat(document.getElementById('returnCost').value) || 0,
+                packagingCost: parseFloat(document.getElementById('packagingCost').value) || 0,
+                salaries: parseFloat(document.getElementById('salaries').value) || 0,
+                subscriptions: parseFloat(document.getElementById('subscriptions').value) || 0,
+                applyTax: document.getElementById('applyTax').checked
+            };
+
+            // تعديل القيمة للحقل المحدد
+            inputs[fieldId] = newValue;
+
+            const deliveredOrders = Math.round((inputs.targetOrders * inputs.deliveryRate) / 100);
+            const returnedOrders = inputs.targetOrders - deliveredOrders;
+            const totalFixedCosts = inputs.salaries + inputs.subscriptions;
+            const variableCostPerOrder = inputs.productPrice + inputs.shippingCost + inputs.packagingCost;
+            const adCostWithTaxPerOrder = inputs.applyTax ? inputs.adCostPerOrder * 1.14 : inputs.adCostPerOrder;
+            const totalAdSpend = inputs.targetOrders * inputs.adCostPerOrder;
+            const adSpendWithTax = inputs.applyTax ? totalAdSpend * 1.14 : totalAdSpend;
+            const totalPackagingCost = inputs.targetOrders * inputs.packagingCost;
+            const totalReturnCost = returnedOrders * inputs.returnCost;
+
+            const totalRevenue = deliveredOrders * inputs.sellingPrice;
+            const totalVariableCosts = deliveredOrders * (inputs.productPrice + inputs.shippingCost);
+            const totalCosts = totalVariableCosts + totalPackagingCost + adSpendWithTax + totalReturnCost + totalFixedCosts;
+            return totalRevenue - totalCosts; // صافي الربح
+        };
+
         const calculateResults = () => {
             const productPrice = parseFloat(document.getElementById('productPrice').value) || 0;
             const sellingPrice = parseFloat(document.getElementById('sellingPrice').value) || 0;
@@ -572,52 +770,165 @@
             const targetOrders = parseFloat(document.getElementById('targetOrders').value) || 0;
             const deliveryRate = parseFloat(document.getElementById('deliveryRate').value) || 0;
             const adCostPerOrder = parseFloat(document.getElementById('adCostPerOrder').value) || 0;
+            const returnCost = parseFloat(document.getElementById('returnCost').value) || 0;
+            const packagingCost = parseFloat(document.getElementById('packagingCost').value) || 0;
+            const salaries = parseFloat(document.getElementById('salaries').value) || 0;
+            const subscriptions = parseFloat(document.getElementById('subscriptions').value) || 0;
             const applyTax = document.getElementById('applyTax').checked;
             const currencySymbol = getCurrencySymbol();
 
-            const netProfitPerOrder = sellingPrice - productPrice - shippingCost;
-            const profitMargin = sellingPrice ? (netProfitPerOrder / sellingPrice) * 100 : 0;
-            const deliveredOrders = (targetOrders * deliveryRate) / 100;
-            const profitBeforeAds = deliveredOrders * netProfitPerOrder;
+            if (deliveryRate > 100) {
+                alert('نسبة التسليمات لا يمكن أن تكون أكثر من 100%');
+                return;
+            }
+
+            const deliveredOrders = Math.round((targetOrders * deliveryRate) / 100);
+            const returnedOrders = targetOrders - deliveredOrders;
+            const totalFixedCosts = salaries + subscriptions;
+            const variableCostPerOrder = productPrice + shippingCost + packagingCost;
+            const adCostWithTaxPerOrder = applyTax ? adCostPerOrder * 1.14 : adCostPerOrder;
             const totalAdSpend = targetOrders * adCostPerOrder;
             const adSpendWithTax = applyTax ? totalAdSpend * 1.14 : totalAdSpend;
-            const netProfitAfterAds = profitBeforeAds - adSpendWithTax;
+            const totalPackagingCost = targetOrders * packagingCost;
+            const totalReturnCost = returnedOrders * returnCost;
+
+            const netProfitPerOrder = sellingPrice - variableCostPerOrder;
+
+            const totalRevenue = deliveredOrders * sellingPrice;
+            const totalVariableCosts = deliveredOrders * (productPrice + shippingCost);
+            const totalCosts = totalVariableCosts + totalPackagingCost + adSpendWithTax + totalReturnCost + totalFixedCosts;
+            const netProfitAfterAds = totalRevenue - totalCosts;
+
+            const profitMargin = sellingPrice ? (netProfitPerOrder / sellingPrice) * 100 : 0;
+
+            const contributionMarginPerOrder = sellingPrice - (productPrice + shippingCost) - (returnCost * (1 - deliveryRate / 100));
+            const fixedCostsPlusAdAndReturns = totalFixedCosts + adSpendWithTax + (targetOrders * returnCost * (1 - deliveryRate / 100)) + totalPackagingCost;
+
+            const breakEvenSellingPrice = deliveredOrders ? (totalCosts) / deliveredOrders : sellingPrice;
+            const breakEvenDeliveredOrders = contributionMarginPerOrder ? fixedCostsPlusAdAndReturns / contributionMarginPerOrder : 0;
+            const breakEvenDeliveryRate = targetOrders ? (breakEvenDeliveredOrders / targetOrders) * 100 : 0;
+
+            const targetProfitIncrease = 1000;
+            const profitIncreaseSellingPrice = deliveredOrders ? (totalCosts + targetProfitIncrease) / deliveredOrders : sellingPrice;
+            const profitIncreaseDeliveredOrders = contributionMarginPerOrder ? (fixedCostsPlusAdAndReturns + targetProfitIncrease) / contributionMarginPerOrder : 0;
+            const profitIncreaseDeliveryRate = targetOrders ? (profitIncreaseDeliveredOrders / targetOrders) * 100 : 0;
+
+            const returnRate = targetOrders ? (returnedOrders / targetOrders) * 100 : 0;
 
             const updateElement = (id, value, isPercentage = false, isNumberOnly = false) => {
                 const element = document.getElementById(id);
+                if (!element) return;
                 const oldValue = parseFloat(element.textContent.replace(/[^\d.-]/g, '')) || 0;
-                element.textContent = isPercentage ? `${value.toFixed(2)}%` : (isNumberOnly ? value.toFixed(0) : `${currencySymbol} ${value.toFixed(2)}`);
-                element.classList.remove('text-red-600', 'text-green-600', 'text-gray-600');
-                if (value > 0) element.classList.add('text-green-600', 'glow');
-                else if (value < 0) element.classList.add('text-red-600', 'glow');
-                else element.classList.add('text-gray-600');
-                if (value !== oldValue) {
-                    element.style.animation = 'scaleUp 0.5s ease';
-                    setTimeout(() => element.style.animation = '', 500);
+                if (isFinite(value) && !isNaN(value)) {
+                    element.textContent = isPercentage ? `${value.toFixed(2)}%` : (isNumberOnly ? value.toFixed(0) : `${currencySymbol} ${value.toFixed(2)}`);
+                    element.classList.remove('text-red-600', 'text-green-600', 'text-gray-600');
+                    element.classList.add(value > 0 ? 'text-green-600' : value < 0 ? 'text-red-600' : 'text-gray-600');
+                    if (value !== oldValue) {
+                        element.style.animation = 'pulse 0.5s ease';
+                        setTimeout(() => element.style.animation = '', 500);
+                    }
+                } else {
+                    element.textContent = '';
+                    element.classList.remove('text-red-600', 'text-green-600', 'text-gray-600');
                 }
             };
 
             updateElement('netProfitPerOrder', netProfitPerOrder);
             updateElement('profitMargin', profitMargin, true);
             updateElement('deliveredOrders', deliveredOrders, false, true);
-            updateElement('profitBeforeAds', profitBeforeAds);
+            updateElement('profitBeforeAds', deliveredOrders * netProfitPerOrder);
             updateElement('totalAdSpend', totalAdSpend);
             updateElement('adSpendWithTax', adSpendWithTax);
+            updateElement('returnRate', returnRate, true);
+            updateElement('totalReturnCost', totalReturnCost);
             updateElement('netProfitAfterAds', netProfitAfterAds);
 
             const indicator = document.getElementById('profitIndicator');
-            indicator.style.display = netProfitAfterAds !== 0 ? 'inline' : 'none';
-            indicator.classList.remove('fa-arrow-up', 'fa-arrow-down', 'up', 'down');
-            indicator.classList.add(netProfitAfterAds > 0 ? 'fa-arrow-up' : 'fa-arrow-down', netProfitAfterAds > 0 ? 'up' : 'down');
+            if (indicator) {
+                indicator.style.display = netProfitAfterAds !== 0 ? 'inline' : 'none';
+                indicator.classList.remove('fa-arrow-up', 'fa-arrow-down');
+                indicator.classList.add(netProfitAfterAds > 0 ? 'fa-arrow-up' : 'fa-arrow-down');
+            }
 
             const trendIndicator = document.getElementById('trendIndicator');
-            if (netProfitAfterAds !== previousProfit) {
-                trendIndicator.style.display = 'inline';
-                trendIndicator.classList.remove('fa-arrow-up', 'fa-arrow-down', 'up-trend', 'down-trend');
-                trendIndicator.classList.add(netProfitAfterAds > previousProfit ? 'fa-arrow-up' : 'fa-arrow-down', netProfitAfterAds > previousProfit ? 'up-trend' : 'down-trend');
-                setTimeout(() => trendIndicator.style.display = 'none', 2000);
+            if (trendIndicator) {
+                if (netProfitAfterAds !== previousProfit) {
+                    trendIndicator.style.display = 'inline';
+                    trendIndicator.classList.remove('fa-arrow-up', 'fa-arrow-down');
+                    trendIndicator.classList.add(netProfitAfterAds > previousProfit ? 'fa-arrow-up' : 'fa-arrow-down');
+                    setTimeout(() => trendIndicator.style.display = 'none', 2000);
+                }
             }
             previousProfit = netProfitAfterAds;
+
+            const suggestions = document.getElementById('suggestions');
+            if (!suggestions) return;
+            suggestions.innerHTML = '';
+
+            const hasInputs = productPrice !== 0 || sellingPrice !== 0 || shippingCost !== 0 || targetOrders !== 0 || 
+                             deliveryRate !== 0 || adCostPerOrder !== 0 || returnCost !== 0 || packagingCost !== 0 || 
+                             salaries !== 0 || subscriptions !== 0;
+
+            if (!hasInputs) {
+                suggestions.innerHTML = '';
+            } else if (netProfitAfterAds === 0) {
+                suggestions.innerHTML = 'أنت عند نقطة التعادل.';
+            } else if (netProfitAfterAds < 0) {
+                suggestions.innerHTML = `
+                    <strong>للخروج من الخسارة:</strong><br>
+                    1. ارفع سعر البيع إلى <span class="suggestion-price">${currencySymbol} ${breakEvenSellingPrice.toFixed(2)}</span> اقتراح.<br>
+                    2. أو ارفع نسبة التسليمات إلى <span class="suggestion-rate">${breakEvenDeliveryRate.toFixed(2)}%</span> اقتراح.
+                `;
+            } else if (netProfitAfterAds > 0 && netProfitAfterAds < 1000) {
+                suggestions.innerHTML = `
+                    <strong>لزيادة الربح إلى ${currencySymbol} 1000 على الأقل:</strong><br>
+                    1. ارفع سعر البيع إلى <span class="suggestion-price">${currencySymbol} ${profitIncreaseSellingPrice.toFixed(2)}</span> اقتراح.<br>
+                    2. أو ارفع نسبة التسليمات إلى <span class="suggestion-rate">${profitIncreaseDeliveryRate.toFixed(2)}%</span> اقتراح.
+                `;
+            } else {
+                suggestions.innerHTML = '';
+            }
+
+            // تلوين الحقول بناءً على تأثيرها على الربح
+            const updateInputColor = (fieldId, currentValue) => {
+                const input = document.getElementById(fieldId);
+                if (!input || !currentValue) {
+                    input.classList.remove('input-profit-up', 'input-profit-down', 'input-neutral');
+                    input.classList.add('input-neutral');
+                    return;
+                }
+
+                const originalProfit = netProfitAfterAds;
+                let modifiedProfit;
+
+                if (fieldId === 'sellingPrice') {
+                    modifiedProfit = calculateProfitWithModifiedValue(fieldId, currentValue * 0.9); // تقليل القيمة بنسبة 10%
+                } else if (fieldId === 'deliveryRate') {
+                    modifiedProfit = calculateProfitWithModifiedValue(fieldId, Math.min(currentValue - 10, 100)); // تقليل النسبة
+                } else if (fieldId === 'targetOrders') {
+                    modifiedProfit = calculateProfitWithModifiedValue(fieldId, currentValue * 0.9); // تقليل العدد
+                } else {
+                    modifiedProfit = calculateProfitWithModifiedValue(fieldId, currentValue * 1.1); // زيادة التكلفة بنسبة 10%
+                }
+
+                input.classList.remove('input-profit-up', 'input-profit-down', 'input-neutral');
+                if (fieldId === 'sellingPrice' || fieldId === 'deliveryRate' || fieldId === 'targetOrders') {
+                    input.classList.add(modifiedProfit < originalProfit ? 'input-profit-up' : modifiedProfit > originalProfit ? 'input-profit-down' : 'input-neutral');
+                } else {
+                    input.classList.add(modifiedProfit > originalProfit ? 'input-profit-up' : modifiedProfit < originalProfit ? 'input-profit-down' : 'input-neutral');
+                }
+            };
+
+            updateInputColor('productPrice', productPrice);
+            updateInputColor('sellingPrice', sellingPrice);
+            updateInputColor('shippingCost', shippingCost);
+            updateInputColor('targetOrders', targetOrders);
+            updateInputColor('deliveryRate', deliveryRate);
+            updateInputColor('adCostPerOrder', adCostPerOrder);
+            updateInputColor('returnCost', returnCost);
+            updateInputColor('packagingCost', packagingCost);
+            updateInputColor('salaries', salaries);
+            updateInputColor('subscriptions', subscriptions);
         };
 
         const updateTaxStatus = () => {
@@ -628,14 +939,96 @@
         };
 
         const showMoreResults = () => {
-            const hiddenCards = document.querySelectorAll('.result-card.hidden');
-            hiddenCards.forEach((card, index) => {
-                card.classList.remove('hidden');
-                card.style.display = 'flex';
-                setTimeout(() => card.classList.add('visible'), index * 100);
+            document.querySelectorAll('.result-card.hidden').forEach(card => card.classList.remove('hidden'));
+            document.getElementById('showMoreBtn').style.display = 'none';
+        };
+
+        const resetValues = () => {
+            document.querySelectorAll('input').forEach(input => input.value = '');
+            document.getElementById('applyTax').checked = false;
+            localStorage.removeItem('sellRightInputs');
+            previousProfit = 0;
+            calculateResults();
+            updateTaxStatus();
+            document.querySelectorAll('.result-card:not(.bg-blue-50)').forEach(card => card.classList.add('hidden'));
+            document.getElementById('showMoreBtn').style.display = 'flex';
+
+            const indicator = document.getElementById('profitIndicator');
+            if (indicator) indicator.style.display = 'none';
+            const trendIndicator = document.getElementById('trendIndicator');
+            if (trendIndicator) trendIndicator.style.display = 'none';
+
+            document.querySelectorAll('.result-value').forEach(element => {
+                element.textContent = '';
+                element.classList.remove('text-red-600', 'text-green-600', 'text-gray-600');
             });
-            const showMoreBtn = document.getElementById('showMoreBtn');
-            showMoreBtn.style.display = 'none';
+
+            const suggestions = document.getElementById('suggestions');
+            if (suggestions) suggestions.innerHTML = '';
+        };
+
+        const toggleProfileModal = () => {
+            const modal = document.getElementById('profileModal');
+            modal.classList.toggle('active');
+        };
+
+        const saveInputsToLocalStorage = () => {
+            const inputs = {
+                productPrice: document.getElementById('productPrice').value,
+                sellingPrice: document.getElementById('sellingPrice').value,
+                shippingCost: document.getElementById('shippingCost').value,
+                targetOrders: document.getElementById('targetOrders').value,
+                deliveryRate: document.getElementById('deliveryRate').value,
+                adCostPerOrder: document.getElementById('adCostPerOrder').value,
+                returnCost: document.getElementById('returnCost').value,
+                packagingCost: document.getElementById('packagingCost').value,
+                salaries: document.getElementById('salaries').value,
+                subscriptions: document.getElementById('subscriptions').value,
+                applyTax: document.getElementById('applyTax').checked,
+                currency: document.getElementById('currency').value
+            };
+            localStorage.setItem('sellRightInputs', JSON.stringify(inputs));
+        };
+
+        const loadInputsFromLocalStorage = () => {
+            const savedInputs = localStorage.getItem('sellRightInputs');
+            if (savedInputs) {
+                const inputs = JSON.parse(savedInputs);
+
+                document.getElementById('productPrice').value = inputs.productPrice || '';
+                document.getElementById('sellingPrice').value = inputs.sellingPrice || '';
+                document.getElementById('shippingCost').value = inputs.shippingCost || '';
+                document.getElementById('targetOrders').value = inputs.targetOrders || '';
+                document.getElementById('deliveryRate').value = inputs.deliveryRate || '';
+                document.getElementById('adCostPerOrder').value = inputs.adCostPerOrder || '';
+                document.getElementById('returnCost').value = inputs.returnCost || '';
+                document.getElementById('packagingCost').value = inputs.packagingCost || '';
+                document.getElementById('salaries').value = inputs.salaries || '';
+                document.getElementById('subscriptions').value = inputs.subscriptions || '';
+                document.getElementById('applyTax').checked = inputs.applyTax !== undefined ? inputs.applyTax : true;
+                document.getElementById('currency').value = inputs.currency || 'EGP';
+
+                const dropdownSelected = document.getElementById('dropdownSelected');
+                const flagClass = `flag-icon flag-icon-${inputs.currency === 'EGP' ? 'eg' : inputs.currency === 'LYD' ? 'ly' : inputs.currency === 'SAR' ? 'sa' : 'ae'}`;
+                dropdownSelected.innerHTML = `<span class="${flagClass}"></span> ${inputs.currency || 'EGP'} <i class="fas fa-chevron-down"></i>`;
+            }
+        };
+
+        // Notification Logic with Version Control
+        const currentVersion = "1.0";
+        const notificationMessage = "تم إضافة نظام إشعارات جديد لإعلامك بالتحديثات!";
+
+        const showNotification = () => {
+            const lastSeenVersion = localStorage.getItem('lastSeenVersion');
+            if (lastSeenVersion !== currentVersion) {
+                document.getElementById('notificationMessage').textContent = notificationMessage;
+                document.getElementById('updateNotification').classList.add('active');
+            }
+        };
+
+        const closeNotification = () => {
+            document.getElementById('updateNotification').classList.remove('active');
+            localStorage.setItem('lastSeenVersion', currentVersion);
         };
 
         document.getElementById('darkModeToggle').addEventListener('change', () => {
@@ -656,6 +1049,7 @@
                 currencyInput.value = value;
                 dropdownOptions.classList.remove('active');
                 calculateResults();
+                saveInputsToLocalStorage();
             });
         });
         dropdownSelected.addEventListener('click', () => dropdownOptions.classList.toggle('active'));
@@ -665,49 +1059,14 @@
             }
         });
 
-        function resetValues() {
-            document.getElementById('productPrice').value = 0;
-            document.getElementById('sellingPrice').value = 0;
-            document.getElementById('shippingCost').value = 0;
-            document.getElementById('targetOrders').value = 0;
-            document.getElementById('deliveryRate').value = 0;
-            document.getElementById('adCostPerOrder').value = 0;
-            document.getElementById('applyTax').checked = false;
-            calculateResults();
-            updateTaxStatus();
-            const hiddenCards = document.querySelectorAll('.result-card.hidden');
-            hiddenCards.forEach(card => {
-                card.classList.add('hidden');
-                card.style.display = 'none';
-            });
-            document.getElementById('showMoreBtn').style.display = 'block';
-        }
-
         document.querySelectorAll('input, #currency, #applyTax').forEach(input => {
             input.addEventListener('input', () => {
                 calculateResults();
                 updateTaxStatus();
-            });
-        });
-
-        // Set initial net profit value to "ج.م 2746.26" for demonstration
-        document.getElementById('netProfitAfterAds').textContent = 'ج.م 2746.26';
-        document.getElementById('netProfitAfterAds').classList.add('text-green-600', 'glow');
-        calculateResults();
-        updateTaxStatus();
-
-        /* Dynamic Shadow on Scroll */
-        window.addEventListener('scroll', () => {
-            const cards = document.querySelectorAll('.result-card, .profile-card');
-            cards.forEach(card => {
-                const rect = card.getBoundingClientRect();
-                if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
-                    card.classList.add('visible');
-                } else {
-                    card.classList.remove('visible');
-                }
+                saveInputsToLocalStorage();
             });
         });
     </script>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'921c2c869dd9bd3a',t:'MTc0MjIxMTE5MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>
