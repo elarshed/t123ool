@@ -706,7 +706,7 @@
                 <span>محو</span>
             </div>
             <div class="action-btn" onclick="exportToExcel()">
-                <i class="fas fa-file-excel"></i>
+                <i class="fas fa-file-export"></i>
                 <span>تصدير</span>
             </div>
         </div>
@@ -725,17 +725,7 @@
     <script>
         let previousProfit = 0;
         const currencySymbols = { EGP: 'ج.م', LYD: 'د.ل', SAR: 'ر.س', AED: 'د.إ' };
-        const getCurrencySymbol = () => currencySymbols[document.getElementById('currency').value] || 'ج.م';
-
-        // دالة فتح وإغلاق الـ Profile Modal
-        function toggleProfileModal() {
-            const modal = document.getElementById('profileModal');
-            if (modal) {
-                modal.classList.toggle('active');
-            } else {
-                console.error('Profile Modal not found!');
-            }
-        }
+        const getCurrencySymbol = () => currencySymbols[document.getElementById('currency').value];
 
         const calculateResults = () => {
             const productPrice = parseFloat(document.getElementById('productPrice').value) || 0;
@@ -900,6 +890,11 @@
             if (suggestions) suggestions.innerHTML = '';
         };
 
+        const toggleProfileModal = () => {
+            const modal = document.getElementById('profileModal');
+            modal.classList.toggle('active');
+        };
+
         const saveInputsToLocalStorage = () => {
             const inputs = {
                 productPrice: document.getElementById('productPrice').value,
@@ -942,37 +937,51 @@
             }
         };
 
-        // دالة تصدير النتائج كملف Excel
+        // دالة تصدير النتائج إلى Excel
         const exportToExcel = () => {
             const currencySymbol = getCurrencySymbol();
-            const results = [
-                ["البيان", "القيمة"],
-                ["سعر الجملة", `${currencySymbol} ${parseFloat(document.getElementById('productPrice').value || 0).toFixed(2)}`],
-                ["سعر البيع بالشحن", `${currencySymbol} ${parseFloat(document.getElementById('sellingPrice').value || 0).toFixed(2)}`],
-                ["تكلفة الشحن", `${currencySymbol} ${parseFloat(document.getElementById('shippingCost').value || 0).toFixed(2)}`],
-                ["عدد الأوردرات", document.getElementById('targetOrders').value || '0'],
-                ["نسبة التسليمات", `${parseFloat(document.getElementById('deliveryRate').value || 0).toFixed(2)}%`],
-                ["سعر الأوردر (إعلانات)", `${currencySymbol} ${parseFloat(document.getElementById('adCostPerOrder').value || 0).toFixed(2)}`],
-                ["تكلفة المرتجع", `${currencySymbol} ${parseFloat(document.getElementById('returnCost').value || 0).toFixed(2)}`],
-                ["تغليف الأوردر", `${currencySymbol} ${parseFloat(document.getElementById('packagingCost').value || 0).toFixed(2)}`],
-                ["المرتبات", `${currencySymbol} ${parseFloat(document.getElementById('salaries').value || 0).toFixed(2)}`],
-                ["مصروفات تشغيلية", `${currencySymbol} ${parseFloat(document.getElementById('subscriptions').value || 0).toFixed(2)}`],
-                ["ضريبة 14%", document.getElementById('applyTax').checked ? 'مفعل' : 'غير مفعل'],
-                ["ربح الأوردر", document.getElementById('netProfitPerOrder').textContent || ''],
-                ["هامش الربح", document.getElementById('profitMargin').textContent || ''],
-                ["أوردرات مسلمة", document.getElementById('deliveredOrders').textContent || ''],
-                ["الربح قبل الإعلان", document.getElementById('profitBeforeAds').textContent || ''],
-                ["إنفاق الإعلانات", document.getElementById('totalAdSpend').textContent || ''],
-                ["الإنفاق مع الضريبة", document.getElementById('adSpendWithTax').textContent || ''],
-                ["نسبة المرتجعات", document.getElementById('returnRate').textContent || ''],
-                ["تكلفة المرتجعات", document.getElementById('totalReturnCost').textContent || ''],
-                ["صافي الربح", document.getElementById('netProfitAfterAds').textContent || '']
+
+            const inputs = {
+                'سعر الجملة': `${currencySymbol} ${parseFloat(document.getElementById('productPrice').value) || 0}`,
+                'سعر البيع بالشحن': `${currencySymbol} ${parseFloat(document.getElementById('sellingPrice').value) || 0}`,
+                'تكلفة الشحن': `${currencySymbol} ${parseFloat(document.getElementById('shippingCost').value) || 0}`,
+                'عدد الأوردرات': `${parseFloat(document.getElementById('targetOrders').value) || 0}`,
+                'نسبة التسليمات': `${parseFloat(document.getElementById('deliveryRate').value) || 0}%`,
+                'سعر الأوردر (إعلانات)': `${currencySymbol} ${parseFloat(document.getElementById('adCostPerOrder').value) || 0}`,
+                'تكلفة المرتجع': `${currencySymbol} ${parseFloat(document.getElementById('returnCost').value) || 0}`,
+                'تغليف الأوردر': `${currencySymbol} ${parseFloat(document.getElementById('packagingCost').value) || 0}`,
+                'المرتبات': `${currencySymbol} ${parseFloat(document.getElementById('salaries').value) || 0}`,
+                'مصروفات تشغيلية': `${currencySymbol} ${parseFloat(document.getElementById('subscriptions').value) || 0}`,
+                'ضريبة 14%': document.getElementById('applyTax').checked ? 'مفعل' : 'غير مفعل'
+            };
+
+            const results = {
+                'ربح الأوردر': document.getElementById('netProfitPerOrder').textContent || `${currencySymbol} 0`,
+                'هامش الربح': document.getElementById('profitMargin').textContent || '0%',
+                'أوردرات مسلمة': document.getElementById('deliveredOrders').textContent || '0',
+                'الربح قبل الإعلان': document.getElementById('profitBeforeAds').textContent || `${currencySymbol} 0`,
+                'إنفاق الإعلانات': document.getElementById('totalAdSpend').textContent || `${currencySymbol} 0`,
+                'الإنفاق مع الضريبة': document.getElementById('adSpendWithTax').textContent || `${currencySymbol} 0`,
+                'نسبة المرتجعات': document.getElementById('returnRate').textContent || '0%',
+                'تكلفة المرتجعات': document.getElementById('totalReturnCost').textContent || `${currencySymbol} 0`,
+                'صافي الربح': document.getElementById('netProfitAfterAds').textContent || `${currencySymbol} 0`
+            };
+
+            // دمج البيانات في مصفوفة للتصدير
+            const data = [
+                ['البيان', 'القيمة'],
+                ...Object.entries(inputs),
+                ['', ''], // فاصل بين المدخلات والنتائج
+                ...Object.entries(results)
             ];
 
+            // إنشاء ورقة عمل Excel
+            const ws = XLSX.utils.aoa_to_sheet(data);
             const wb = XLSX.utils.book_new();
-            const ws = XLSX.utils.aoa_to_sheet(results);
-            XLSX.utils.book_append_sheet(wb, ws, "Results");
-            XLSX.writeFile(wb, "SellRight_Results.xlsx");
+            XLSX.utils.book_append_sheet(wb, ws, 'نتائج Sell Right');
+
+            // تصدير الملف
+            XLSX.writeFile(wb, 'SellRight_Results.xlsx');
         };
 
         // Notification Logic with Version Control
@@ -992,7 +1001,6 @@
             localStorage.setItem('lastSeenVersion', currentVersion);
         };
 
-        // Event Listeners
         document.getElementById('darkModeToggle').addEventListener('change', () => {
             document.body.classList.toggle('light-mode', !document.getElementById('darkModeToggle').checked);
             document.body.classList.toggle('dark-mode', document.getElementById('darkModeToggle').checked);
@@ -1029,5 +1037,6 @@
             });
         });
     </script>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'921c2c869dd9bd3a',t:'MTc0MjIxMTE5MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>
