@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- إضافة مكتبة SheetJS لتصدير Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -153,7 +155,7 @@
             text-align: center;
         }
         .dark-mode .profile-modal { background: rgba(45, 55, 72, 0.95); color: #e2e8f0; }
-        .profile-modal.active { display: flex; }
+        .profile-modal.active Wrote: { display: flex; }
         .profile-modal .close-btn {
             position: absolute;
             top: 0.5rem;
@@ -703,6 +705,10 @@
                 <i class="fas fa-trash"></i>
                 <span>محو</span>
             </div>
+            <div class="action-btn" onclick="exportToExcel()">
+                <i class="fas fa-file-excel"></i>
+                <span>تصدير</span>
+            </div>
         </div>
     </div>
 
@@ -711,7 +717,7 @@
         <div class="notification-content">
             <span class="close-notification" onclick="closeNotification()">×</span>
             <h2>🎉 تحديث جديد 🎉</h2>
-            <p id="notificationMessage">دلوقتي حتى لو عملت ريفريش أو خرجت ورجعت بياناتك هتفضل محفوظة ومش هتضيع<br>اضغط "تمام" علشان تقفل الإشعار ✅</p>
+            <p id="notificationMessage">دلوقتي حتى لو عملت ريفريش أو خرجت ورجعت بياناتك هتفضل محفوظة ومش هتضيع</p>
             <button class="notification-btn" onclick="closeNotification()">تمام ✅</button>
         </div>
     </div>
@@ -931,9 +937,42 @@
             }
         };
 
+        // دالة تصدير النتائج كملف Excel
+        const exportToExcel = () => {
+            const currencySymbol = getCurrencySymbol();
+            const results = [
+                ["البيان", "القيمة"],
+                ["سعر الجملة", `${currencySymbol} ${parseFloat(document.getElementById('productPrice').value || 0).toFixed(2)}`],
+                ["سعر البيع بالشحن", `${currencySymbol} ${parseFloat(document.getElementById('sellingPrice').value || 0).toFixed(2)}`],
+                ["تكلفة الشحن", `${currencySymbol} ${parseFloat(document.getElementById('shippingCost').value || 0).toFixed(2)}`],
+                ["عدد الأوردرات", document.getElementById('targetOrders').value || '0'],
+                ["نسبة التسليمات", `${parseFloat(document.getElementById('deliveryRate').value || 0).toFixed(2)}%`],
+                ["سعر الأوردر (إعلانات)", `${currencySymbol} ${parseFloat(document.getElementById('adCostPerOrder').value || 0).toFixed(2)}`],
+                ["تكلفة المرتجع", `${currencySymbol} ${parseFloat(document.getElementById('returnCost').value || 0).toFixed(2)}`],
+                ["تغليف الأوردر", `${currencySymbol} ${parseFloat(document.getElementById('packagingCost').value || 0).toFixed(2)}`],
+                ["المرتبات", `${currencySymbol} ${parseFloat(document.getElementById('salaries').value || 0).toFixed(2)}`],
+                ["مصروفات تشغيلية", `${currencySymbol} ${parseFloat(document.getElementById('subscriptions').value || 0).toFixed(2)}`],
+                ["ضريبة 14%", document.getElementById('applyTax').checked ? 'مفعل' : 'غير مفعل'],
+                ["ربح الأوردر", document.getElementById('netProfitPerOrder').textContent || ''],
+                ["هامش الربح", document.getElementById('profitMargin').textContent || ''],
+                ["أوردرات مسلمة", document.getElementById('deliveredOrders').textContent || ''],
+                ["الربح قبل الإعلان", document.getElementById('profitBeforeAds').textContent || ''],
+                ["إنفاق الإعلانات", document.getElementById('totalAdSpend').textContent || ''],
+                ["الإنفاق مع الضريبة", document.getElementById('adSpendWithTax').textContent || ''],
+                ["نسبة المرتجعات", document.getElementById('returnRate').textContent || ''],
+                ["تكلفة المرتجعات", document.getElementById('totalReturnCost').textContent || ''],
+                ["صافي الربح", document.getElementById('netProfitAfterAds').textContent || '']
+            ];
+
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.aoa_to_sheet(results);
+            XLSX.utils.book_append_sheet(wb, ws, "Results");
+            XLSX.writeFile(wb, "SellRight_Results.xlsx");
+        };
+
         // Notification Logic with Version Control
         const currentVersion = "1.0";
-        const notificationMessage = "دلوقتي حتى لو عملت ريفريش أو خرجت ورجعت بياناتك هتفضل محفوظة ومش هتضيع\nاضغط \"تمام\" علشان تقفل الإشعار ✅";
+        const notificationMessage = "دلوقتي حتى لو عملت ريفريش أو خرجت ورجعت بياناتك هتفضل محفوظة ومش هتضيع";
 
         const showNotification = () => {
             const lastSeenVersion = localStorage.getItem('lastSeenVersion');
