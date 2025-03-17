@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SELL RIGHT</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- استخدام نسخة مصغرة من TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com/3.3.3"></script>
+    <!-- استخدام نسخة مصغرة من FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- مكتبة exceljs لتصدير Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -42,6 +46,7 @@
         /* Animations */
         @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
 
         /* App Bar */
@@ -367,10 +372,10 @@
         #profitIndicator, #trendIndicator { font-size: 0.9rem; }
         #suggestions { font-size: 0.7rem; margin-top: 0.3rem; line-height: 1.3; }
         .suggestion-price { color: #4a90e2; font-weight: bold; }
-        .suggestion-rate { color: #48bb78; font-weight: bold; }
-        .suggestion-orders { color: #ed8936; font-weight: bold; }
         .dark-mode .suggestion-price { color: #63b3ed; }
+        .suggestion-rate { color: #48bb78; font-weight: bold; }
         .dark-mode .suggestion-rate { color: #68d391; }
+        .suggestion-orders { color: #ed8936; font-weight: bold; }
         .dark-mode .suggestion-orders { color: #f6ad55; }
 
         /* Bottom Action Bar */
@@ -482,6 +487,125 @@
         }
         .close-notification:hover {
             color: #63b3ed;
+        }
+
+        /* Export Prompt Modal */
+        .export-prompt {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            z-index: 2000;
+            width: 300px;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border: 2px solid #4a90e2;
+            background: linear-gradient(135deg, #f0f4f8, #e2e8f0);
+        }
+        .export-prompt.active {
+            display: block;
+            opacity: 1;
+        }
+        .export-prompt.leaving {
+            opacity: 0;
+        }
+        .dark-mode .export-prompt {
+            background: linear-gradient(135deg, #2d3748, #4a5568);
+            color: #e2e8f0;
+            border-color: #63b3ed;
+        }
+        .export-prompt h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #4a90e2;
+            margin-bottom: 1rem;
+        }
+        .dark-mode .export-prompt h3 {
+            color: #63b3ed;
+        }
+        .export-prompt .input-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .export-prompt input {
+            width: 80%;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #4a90e2;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            background: #fff;
+            font-family: 'Cairo', sans-serif;
+        }
+        .dark-mode .export-prompt input {
+            background: #2d3748;
+            color: #e2e8f0;
+            border-color: #63b3ed;
+        }
+        .export-prompt .export-btn {
+            background: #4a90e2;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .export-prompt .export-btn:hover {
+            background: #63b3ed;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .export-prompt .skip-btn {
+            background: #ed8936;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 0.5rem;
+        }
+        .dark-mode .export-prompt .skip-btn {
+            background: #f6ad55;
+        }
+        .export-prompt .skip-btn:hover {
+            background: #dd6b20;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .export-prompt .cancel-btn {
+            background: #f56565;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 0.5rem;
+        }
+        .dark-mode .export-prompt .cancel-btn {
+            background: #fc8181;
+        }
+        .export-prompt .cancel-btn:hover {
+            background: #e53e3e;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         /* Responsive Adjustments */
@@ -703,6 +827,10 @@
                 <i class="fas fa-trash"></i>
                 <span>محو</span>
             </div>
+            <div class="action-btn" onclick="showExportPrompt()">
+                <i class="fas fa-file-export"></i>
+                <span>تصدير</span>
+            </div>
         </div>
     </div>
 
@@ -713,6 +841,20 @@
             <h2>🎉 تحديث جديد 🎉</h2>
             <p id="notificationMessage">دلوقتي حتى لو عملت ريفريش أو خرجت ورجعت بياناتك هتفضل محفوظة ومش هتضيع</p>
             <button class="notification-btn" onclick="closeNotification()">تمام ✅</button>
+        </div>
+    </div>
+
+    <!-- Export Prompt Modal -->
+    <div class="export-prompt" id="exportPrompt">
+        <h3>أدخل تفاصيل التقرير</h3>
+        <div class="input-group">
+            <i class="fas fa-tag" style="font-size: 1.2rem; color: #4a90e2;"></i>
+            <input type="text" id="productNameInput" placeholder="اسم المنتج (مثال: قميص أحمر)">
+        </div>
+        <div>
+            <button class="export-btn" onclick="exportToExcel()">تصدير</button>
+            <button class="skip-btn" onclick="exportWithDefaultName()">تخطي</button>
+            <button class="cancel-btn" onclick="closeExportPrompt()">إلغاء</button>
         </div>
     </div>
 
@@ -931,21 +1073,155 @@
             }
         };
 
-        // Notification Logic with Version Control
-        const currentVersion = "1.0";
-        const notificationMessage = "دلوقتي حتى لو عملت ريفريش أو خرجت ورجعت بياناتك هتفضل محفوظة ومش هتضيع";
+        const showExportPrompt = () => {
+            const exportPrompt = document.getElementById('exportPrompt');
+            exportPrompt.classList.add('active');
+            document.getElementById('productNameInput').value = ''; // مسح الحقل عند فتح النافذة
+            exportPrompt.classList.remove('leaving');
+        };
+
+        const closeExportPrompt = () => {
+            const exportPrompt = document.getElementById('exportPrompt');
+            exportPrompt.classList.add('leaving');
+            setTimeout(() => {
+                exportPrompt.classList.remove('active', 'leaving');
+            }, 300); // يتطابق مع مدة الانتقال (transition)
+        };
+
+        const exportWithDefaultName = () => {
+            const currentDate = new Date().toLocaleDateString('ar-EG', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            const defaultFileName = `SellRight_تقرير_${currentDate}.xlsx`;
+            exportToExcel(defaultFileName, true);
+            closeExportPrompt();
+        };
+
+        const exportToExcel = async (fileName = null, isDefault = false) => {
+            let productName = document.getElementById('productNameInput').value.trim();
+            if (!isDefault && !productName) {
+                alert('من فضلك، أدخل اسم المنتج أو اضغط "تخطي"!');
+                return;
+            }
+
+            const invalidChars = /[\/:*?"<>|]/g;
+            if (!isDefault && productName.match(invalidChars)) {
+                alert('اسم المنتج يحتوي على أحرف غير مسموح بها! (مثل / أو * أو :)');
+                return;
+            }
+
+            if (!isDefault) {
+                productName = productName.replace(/ /g, '_');
+            }
+
+            closeExportPrompt();
+
+            const currencySymbol = getCurrencySymbol();
+
+            const inputs = [
+                ['سعر الجملة', `${currencySymbol} ${parseFloat(document.getElementById('productPrice').value) || 0}`],
+                ['سعر البيع بالشحن', `${currencySymbol} ${parseFloat(document.getElementById('sellingPrice').value) || 0}`],
+                ['تكلفة الشحن', `${currencySymbol} ${parseFloat(document.getElementById('shippingCost').value) || 0}`],
+                ['عدد الأوردرات', `${parseFloat(document.getElementById('targetOrders').value) || 0}`],
+                ['نسبة التسليمات', `${parseFloat(document.getElementById('deliveryRate').value) || 0}%`],
+                ['سعر الأوردر (إعلانات)', `${currencySymbol} ${parseFloat(document.getElementById('adCostPerOrder').value) || 0}`],
+                ['تكلفة المرتجع', `${currencySymbol} ${parseFloat(document.getElementById('returnCost').value) || 0}`],
+                ['تغليف الأوردر', `${currencySymbol} ${parseFloat(document.getElementById('packagingCost').value) || 0}`],
+                ['المرتبات', `${currencySymbol} ${parseFloat(document.getElementById('salaries').value) || 0}`],
+                ['مصروفات تشغيلية', `${currencySymbol} ${parseFloat(document.getElementById('subscriptions').value) || 0}`],
+                ['ضريبة 14%', document.getElementById('applyTax').checked ? 'مفعل' : 'غير مفعل']
+            ];
+
+            const results = [
+                ['ربح الأوردر', document.getElementById('netProfitPerOrder').textContent || `${currencySymbol} 0`],
+                ['هامش الربح', document.getElementById('profitMargin').textContent || '0%'],
+                ['أوردرات مسلمة', document.getElementById('deliveredOrders').textContent || '0'],
+                ['الربح قبل الإعلان', document.getElementById('profitBeforeAds').textContent || `${currencySymbol} 0`],
+                ['إنفاق الإعلانات', document.getElementById('totalAdSpend').textContent || `${currencySymbol} 0`],
+                ['الإنفاق مع الضريبة', document.getElementById('adSpendWithTax').textContent || `${currencySymbol} 0`],
+                ['نسبة المرتجعات', document.getElementById('returnRate').textContent || '0%'],
+                ['تكلفة المرتجعات', document.getElementById('totalReturnCost').textContent || `${currencySymbol} 0`],
+                ['صافي الربح', document.getElementById('netProfitAfterAds').textContent || `${currencySymbol} 0`]
+            ];
+
+            const allData = [...inputs, ...results];
+
+            const workbook = new ExcelJS.Workbook();
+            const worksheet = workbook.addWorksheet('نتائج Sell Right');
+
+            const currentDate = new Date().toLocaleDateString('ar-EG', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            const title = isDefault ? `تقرير Sell Right - ${currentDate}` : `تقرير Sell Right - ${productName} - ${currentDate}`;
+            worksheet.addRow([title]);
+            worksheet.mergeCells(1, 1, 1, allData.length);
+            worksheet.getCell('A1').alignment = { vertical: 'middle', horizontal: 'center' };
+            worksheet.getCell('A1').fill = {
+                type: 'pattern',
+                pattern: 'solid',
+                fgColor: { argb: 'FF4A90E2' }
+            };
+            worksheet.getCell('A1').font = { name: 'Cairo', size: 14, bold: true, color: { argb: 'FFFFFFFF' } };
+
+            worksheet.addRow([]);
+
+            const headers = allData.map(item => item[0]);
+            const values = allData.map(item => item[1]);
+            worksheet.addRow(headers);
+            worksheet.addRow(values);
+
+            worksheet.getRow(3).eachCell(cell => {
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'FFE9ECEF' }
+                };
+            });
+
+            worksheet.eachRow((row, rowNumber) => {
+                row.eachCell((cell) => {
+                    cell.font = { name: 'Cairo', size: 12 };
+                    cell.alignment = { vertical: 'middle', horizontal: 'center' };
+                    if (rowNumber >= 3) {
+                        cell.border = {
+                            top: { style: 'thin' },
+                            left: { style: 'thin' },
+                            bottom: { style: 'thin' },
+                            right: { style: 'thin' }
+                        };
+                    }
+                });
+            });
+
+            allData.forEach((item, index) => {
+                const colWidth = Math.max(item[0].length, item[1].toString().length) + 5;
+                worksheet.getColumn(index + 1).width = colWidth;
+            });
+
+            worksheet.addRow([]);
+            worksheet.addRow(['ملخص التقرير']);
+            worksheet.mergeCells(worksheet.lastRow.number, 1, worksheet.lastRow.number, 2);
+            worksheet.getCell(`A${worksheet.lastRow.number}`).font = { name: 'Cairo', size: 12, bold: true };
+            worksheet.getCell(`A${worksheet.lastRow.number}`).alignment = { vertical: 'middle', horizontal: 'center' };
+            worksheet.addRow(['صافي الربح', document.getElementById('netProfitAfterAds').textContent || `${currencySymbol} 0`]);
+            worksheet.addRow(['عدد الأوردرات المسلمة', document.getElementById('deliveredOrders').textContent || '0']);
+
+            const buffer = await workbook.xlsx.writeBuffer();
+            const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            const downloadFileName = fileName || (isDefault ? `SellRight_تقرير_${currentDate}.xlsx` : `SellRight_${productName}_${currentDate}.xlsx`);
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = downloadFileName;
+            link.click();
+        };
 
         const showNotification = () => {
             const lastSeenVersion = localStorage.getItem('lastSeenVersion');
-            if (lastSeenVersion !== currentVersion) {
-                document.getElementById('notificationMessage').innerHTML = notificationMessage.replace(/\n/g, '<br>');
+            if (lastSeenVersion !== "1.0") {
+                document.getElementById('notificationMessage').innerHTML = "دلوقتي حتى لو عملت ريفريش أو خرجت ورجعت بياناتك هتفضل محفوظة ومش هتضيع".replace(/\n/g, '<br>');
                 document.getElementById('updateNotification').classList.add('active');
             }
         };
 
         const closeNotification = () => {
             document.getElementById('updateNotification').classList.remove('active');
-            localStorage.setItem('lastSeenVersion', currentVersion);
+            localStorage.setItem('lastSeenVersion', "1.0");
         };
 
         document.getElementById('darkModeToggle').addEventListener('change', () => {
