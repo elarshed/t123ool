@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="تسجيل الدخول إلى أداة Sell Right">
+    <meta name="keywords" content="Sell Right, تسجيل الدخول, أحمد محمد عبدالسلام, التسويق الرقمي">
+    <meta name="author" content="Ahmed Muhammed Abdeslam">
+    <title>تسجيل الدخول - SELL RIGHT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            width: 100vw;
+            height: 100vh;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0a1a2f, #1a2a6c);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        .welcome-message {
+            position: absolute;
+            top: 1.5rem;
+            font-size: 1.2rem;
+            color: #f5f6fa;
+            font-weight: 600;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+            animation: fadeInWelcome 1s ease-out;
+            z-index: 1;
+            text-align: center;
+            width: 100%;
+        }
+        @keyframes fadeInWelcome {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .login-container {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2.5rem 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 380px;
+            min-width: 300px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            animation: fadeInContainer 1s ease-out;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(74, 144, 226, 0.2);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            margin: 0 auto;
+        }
+        .login-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+        }
+        @keyframes fadeInContainer {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .login-container h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 8px rgba(74, 144, 226, 0.5), 0 2px 4px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            position: relative;
+            animation: fadeInTitle 1s ease-out;
+        }
+        .login-container h1::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
+            z-index: -1;
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.4; }
+        }
+        @keyframes fadeInTitle {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .login-container h1 i {
+            font-size: 1.8rem;
+            color: #4a90e2;
+            animation: bounce 1s ease-in-out infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .input-group {
+            margin-bottom: 1.5rem;
+            text-align: right;
+            position: relative;
+            animation: fadeInInput 1.2s ease-out;
+        }
+        @keyframes fadeInInput {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .input-group label {
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #f5f6fa;
+            position: absolute;
+            top: 50%;
+            right: 1.2rem;
+            transform: translateY(-50%);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            pointer-events: none;
+            background: transparent;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        .input-group i {
+            font-size: 1.1rem;
+            color: #4a90e2;
+            transition: all 0.3s ease;
+        }
+        .input-group input:not(:placeholder-shown) + label i,
+        .input-group input:focus + label i {
+            transform: rotate(360deg);
+            color: #a3bffa;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border: 2px solid rgba(74, 144, 226, 0.5);
+            border-radius: 12px;
+            outline: none;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            color: #f5f6fa;
+            position: relative;
+        }
+        .input-group input:focus,
+        .input-group input:not(:placeholder-shown) {
+            border-color: #4a90e2;
+            box-shadow: 0 0 12px rgba(74, 144, 226, 0.5);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .input-group input:focus + label,
+        .input-group input:not(:placeholder-shown) + label {
+            top: -0.8rem;
+            right: 1.2rem;
+            font-size: 0.75rem;
+            color: #a3bffa;
+            background: transparent;
+            padding: 0 0.5rem;
+        }
+        .input-group input::placeholder { color: transparent; }
+        .input-group .wave {
+            position: absolute;
+            background: rgba(74, 144, 226, 0.2);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: waveEffect 1s ease-out;
+            pointer-events: none;
+        }
+        @keyframes waveEffect {
+            to { transform: scale(6); opacity: 0; }
+        }
+        .separator {
+            width: 50%;
+            height: 1px;
+            background: rgba(74, 144, 226, 0.3);
+            margin: 1rem auto;
+        }
+        .login-btn {
+            background: linear-gradient(90deg, #1a2a6c, #4a90e2);
+            color: #f5f6fa;
+            padding: 0.9rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            animation: fadeInButton 1.4s ease-out;
+        }
+        @keyframes fadeInButton {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .login-btn i {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+        .login-btn:hover {
+            background: linear-gradient(90deg, #4a90e2, #1a2a6c);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(74, 144, 226, 0.5);
+        }
+        .login-btn:hover i {
+            transform: scale(1.2);
+        }
+        .login-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 10px rgba(74, 144, 226, 0.2);
+        }
+        .login-btn::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: scale(0);
+            transition: transform 0.5s ease;
+        }
+        .login-btn:active::after {
+            transform: scale(2);
+            transition: transform 0s;
+        }
+        .login-btn.loading i.fa-sign-in-alt {
+            display: none;
+        }
+        .login-btn.loading::before {
+            content: '\f1ce';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            animation: spin 1s linear infinite;
+            font-size: 1.2rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .error-message {
+            color: #ff4d4d;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            display: none;
+            font-weight: 600;
+            background: rgba(255, 77, 77, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 77, 77, 0.3);
+            animation: shake 0.5s ease, fadeInError 1.6s ease-out;
+            box-shadow: 0 2px 8px rgba(255, 77, 77, 0.2);
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        }
+        @keyframes fadeInError {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .whatsapp-btn {
+            background: linear-gradient(90deg, #25d366, #1da851);
+            color: #f5f6fa;
+            padding: 0.9rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            animation: fadeInWhatsApp 2s ease-out;
+        }
+        @keyframes fadeInWhatsApp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .whatsapp-btn i {
+            font-size: 1.4rem;
+            transition: transform 0.3s ease;
+        }
+        .whatsapp-btn:hover {
+            background: linear-gradient(90deg, #1da851, #25d366);
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.5);
+        }
+        .whatsapp-btn:hover i {
+            transform: rotate(15deg) scale(1.2);
+        }
+        .whatsapp-btn span {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        .branding-footer {
+            position: fixed;
+            bottom: 0.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            color: #f5f6fa;
+            opacity: 0.7;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+            z-index: 1;
+            white-space: nowrap;
+        }
+        .branding-footer i {
+            font-size: 0.9rem;
+            color: #4a90e2;
+            transition: transform 0.3s ease;
+        }
+        .branding-footer:hover i {
+            transform: rotate(360deg);
+        }
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 2rem 1.2rem;
+                max-width: 90%;
+                min-width: 280px;
+            }
+            .login-container h1 {
+                font-size: 1.8rem;
+            }
+            .login-container h1 i {
+                font-size: 1.4rem;
+            }
+            .input-group input {
+                padding: 0.7rem 1rem;
+                font-size: 0.9rem;
+            }
+            .input-group label {
+                font-size: 0.8rem;
+                right: 1rem;
+            }
+            .input-group input:focus + label,
+            .input-group input:not(:placeholder-shown) + label {
+                font-size: 0.65rem;
+                right: 1rem;
+                top: -0.7rem;
+            }
+            .login-btn {
+                font-size: 0.95rem;
+                padding: 0.7rem 1.5rem;
+            }
+            .login-btn i {
+                font-size: 1rem;
+            }
+            .whatsapp-btn {
+                font-size: 0.95rem;
+                padding: 0.7rem 1.5rem;
+            }
+            .whatsapp-btn i {
+                font-size: 1.2rem;
+            }
+            .whatsapp-btn span {
+                font-size: 0.9rem;
+            }
+            .error-message {
+                font-size: 0.8rem;
+                padding: 0.5rem 1rem;
+            }
+            .welcome-message {
+                font-size: 0.9rem;
+                top: 1rem;
+            }
+            .branding-footer {
+                font-size: 0.7rem;
+            }
+        }
+        @media (max-width: 360px) {
+            .login-container {
+                padding: 1.5rem 1rem;
+                max-width: 92%;
+                min-width: 260px;
+            }
+            .login-container h1 {
+                font-size: 1.6rem;
+            }
+            .login-container h1 i {
+                font-size: 1.2rem;
+            }
+            .input-group input {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.85rem;
+            }
+            .input-group label {
+                font-size: 0.75rem;
+                right: 0.8rem;
+            }
+            .input-group input:focus + label,
+            .input-group input:not(:placeholder-shown) + label {
+                font-size: 0.6rem;
+                right: 0.8rem;
+                top: -0.65rem;
+            }
+            .login-btn {
+                font-size: 0.9rem;
+                padding: 0.6rem 1.2rem;
+            }
+            .login-btn i {
+                font-size: 0.95rem;
+            }
+            .whatsapp-btn {
+                font-size: 0.9rem;
+                padding: 0.6rem 1.2rem;
+            }
+            .whatsapp-btn i {
+                font-size: 1.1rem;
+            }
+            .whatsapp-btn span {
+                font-size: 0.85rem;
+            }
+            .error-message {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.8rem;
+            }
+            .welcome-message {
+                font-size: 0.8rem;
+                top: 0.8rem;
+            }
+            .separator {
+                margin: 0.8rem auto;
+            }
+            .branding-footer {
+                font-size: 0.65rem;
+            }
+        }
+        @media (max-width: 320px) {
+            .login-container {
+                padding: 1.2rem 0.8rem;
+                max-width: 95%;
+                min-width: 240px;
+            }
+            .login-container h1 {
+                font-size: 1.4rem;
+            }
+            .login-container h1 i {
+                font-size: 1rem;
+            }
+            .input-group input {
+                padding: 0.5rem 0.7rem;
+                font-size: 0.8rem;
+            }
+            .input-group label {
+                font-size: 0.7rem;
+                right: 0.7rem;
+            }
+            .input-group input:focus + label,
+            .input-group input:not(:placeholder-shown) + label {
+                font-size: 0.55rem;
+                right: 0.7rem;
+                top: -0.6rem;
+            }
+            .login-btn {
+                font-size: 0.85rem;
+                padding: 0.5rem 1rem;
+            }
+            .login-btn i {
+                font-size: 0.9rem;
+            }
+            .whatsapp-btn {
+                font-size: 0.85rem;
+                padding: 0.5rem 1rem;
+            }
+            .whatsapp-btn i {
+                font-size: 1rem;
+            }
+            .whatsapp-btn span {
+                font-size: 0.8rem;
+            }
+            .error-message {
+                font-size: 0.7rem;
+                padding: 0.4rem 0.7rem;
+            }
+            .welcome-message {
+                font-size: 0.75rem;
+                top: 0.5rem;
+            }
+            .branding-footer {
+                font-size: 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="starry-sky"></canvas>
+    <div class="login-container">
+        <h1>
+            <i class="fas fa-calculator"></i>
+            SELL RIGHT
+        </h1>
+        <div class="input-group">
+            <input type="text" id="activationCode" placeholder=" " required oninput="createWave(event)">
+            <label><i class="fas fa-key"></i> أدخل كود التفعيل</label>
+        </div>
+        <button class="login-btn" onclick="verifyCode()">
+            <i class="fas fa-sign-in-alt"></i> تفعيل الكود
+        </button>
+        <p id="errorMessage" class="error-message">الكود غير صحيح أو تم استخدامه من قبل</p>
+        <div class="separator"></div>
+        <a href="https://wa.me/201282512082" target="_blank" class="whatsapp-btn">
+            <i class="fab fa-whatsapp"></i>
+            <span>تواصل معنا لطلب الكود</span>
+        </a>
+    </div>
+    <div class="branding-footer">
+        <i class="fas fa-code"></i>
+        <span>By Ahmed Muhammed Abdeslam</span>
+    </div>
+
+    <script>
+        /* Starry Sky Background */
+        const canvas = document.getElementById('starry-sky');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function createStars() {
+            stars = [];
+            for (let i = 0; i < 100; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 1.5 + 0.5,
+                    opacity: Math.random(),
+                    speed: Math.random() * 0.02 + 0.01
+                });
+            }
+        }
+
+        function animateStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(star => {
+                star.opacity += star.speed;
+                if (star.opacity > 1 || star.opacity < 0) star.speed = -star.speed;
+
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(245, 246, 250, ${star.opacity})`;
+                ctx.fill();
+
+                for (let i = 0; i < stars.length; i++) {
+                    const otherStar = stars[i];
+                    const dx = star.x - otherStar.x;
+                    const dy = star.y - otherStar.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < 100) {
+                        ctx.beginPath();
+                        ctx.moveTo(star.x, star.y);
+                        ctx.lineTo(otherStar.x, otherStar.y);
+                        ctx.strokeStyle = `rgba(74, 144, 226, ${1 - distance / 100})`;
+                        ctx.stroke();
+                    }
+                }
+            });
+            requestAnimationFrame(animateStars);
+        }
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            createStars();
+        });
+
+        resizeCanvas();
+        createStars();
+        animateStars();
+
+        /* Wave Effect on Input */
+        function createWave(event) {
+            const input = event.target;
+            const rect = input.getBoundingClientRect();
+            const wave = document.createElement('span');
+            wave.classList.add('wave');
+            const size = Math.max(rect.width, rect.height);
+            wave.style.width = wave.style.height = `${size}px`;
+            wave.style.left = `${rect.width / 2 - size / 2}px`;
+            wave.style.top = `${rect.height / 2 - size / 2}px`;
+            input.appendChild(wave);
+            setTimeout(() => wave.remove(), 1000);
+        }
+
+        // دالة لتوليد معرف جهاز بسيط
+        function generateDeviceId() {
+            const randomId = Math.random().toString(36).substr(2, 9);
+            return `device_${randomId}_${Date.now()}`;
+        }
+
+        async function fetchCodesData() {
+            try {
+                const response = await fetch('data-config-xyz.json');
+                if (!response.ok) {
+                    throw new Error(`فشل في جلب البيانات: ${response.status} ${response.statusText}`);
+                }
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('خطأ في جلب البيانات:', error);
+                throw error;
+            }
+        }
+
+        // دالة التحقق من الكود
+        async function verifyCode() {
+            const codeInput = document.getElementById('activationCode').value.trim().toLowerCase();
+            const errorMessage = document.getElementById('errorMessage');
+            const loginBtn = document.querySelector('.login-btn');
+            let deviceId = localStorage.getItem('deviceId');
+
+            if (!deviceId) {
+                deviceId = generateDeviceId();
+                localStorage.setItem('deviceId', deviceId);
+            }
+
+            if (!codeInput) {
+                errorMessage.textContent = 'يرجى إدخال كود التفعيل أولاً';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            loginBtn.classList.add('loading');
+            loginBtn.disabled = true;
+
+            try {
+                const codesData = await fetchCodesData();
+
+                if (!codesData || codesData.length === 0) {
+                    errorMessage.textContent = 'البيانات غير متاحة';
+                    errorMessage.style.display = 'block';
+                    loginBtn.classList.remove('loading');
+                    loginBtn.disabled = false;
+                    return;
+                }
+
+                const codeEntry = codesData.find(row => row.Code.toLowerCase() === codeInput);
+
+                if (!codeEntry) {
+                    errorMessage.textContent = 'الكود غير صحيح';
+                    errorMessage.style.display = 'block';
+                    loginBtn.classList.remove('loading');
+                    loginBtn.disabled = false;
+                    return;
+                }
+
+                if (codeEntry.Used === 'TRUE') {
+                    errorMessage.textContent = 'الكود تم استخدامه من قبل';
+                    errorMessage.style.display = 'block';
+                    loginBtn.classList.remove('loading');
+                    loginBtn.disabled = false;
+                    return;
+                }
+
+                if (codeEntry.Active !== 'TRUE') {
+                    errorMessage.textContent = 'الكود غير مفعل';
+                    errorMessage.style.display = 'block';
+                    loginBtn.classList.remove('loading');
+                    loginBtn.disabled = false;
+                    return;
+                }
+
+                const storedDataStr = localStorage.getItem('activationCode');
+                if (storedDataStr) {
+                    const storedData = JSON.parse(storedDataStr);
+                    if (storedData.code.toLowerCase() === codeInput && storedData.deviceId !== deviceId) {
+                        errorMessage.textContent = 'الكود مستخدم على جهاز آخر';
+                        errorMessage.style.display = 'block';
+                        loginBtn.classList.remove('loading');
+                        loginBtn.disabled = false;
+                        return;
+                    }
+                    if (storedData.code.toLowerCase() === codeInput && storedData.deviceId === deviceId) {
+                        window.location.href = 'index.html';
+                        loginBtn.classList.remove('loading');
+                        loginBtn.disabled = false;
+                        return;
+                    }
+                }
+
+                localStorage.setItem('activationCode', JSON.stringify({
+                    code: codeInput,
+                    deviceId: deviceId
+                }));
+                window.location.href = 'index.html';
+
+            } catch (error) {
+                errorMessage.textContent = 'حدث خطأ أثناء جلب البيانات';
+                errorMessage.style.display = 'block';
+                console.error(error);
+            } finally {
+                loginBtn.classList.remove('loading');
+                loginBtn.disabled = false;
+            }
+        }
+
+        document.getElementById('activationCode').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') verifyCode();
+        });
+    </script>
+</body>
+</html>
