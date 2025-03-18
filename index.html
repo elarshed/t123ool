@@ -1293,7 +1293,7 @@ const exportToExcel = async (fileName = null, isDefault = false) => {
     const footerRowNumber = emptyRow.number + 1;
     worksheet.mergeCells(`A${footerRowNumber}:D${footerRowNumber}`);
     const footerCell = worksheet.getCell(`A${footerRowNumber}`);
-    footerCell.value = 'للدعم: support@sellright.com | تم إنشاء هذا التقرير بواسطة Sell Right';
+    footerCell.value = '</> Ahmed Muhammed Abdeslam ||  Sell Right تم إنشاء هذا التقرير بواسطة';
     footerCell.alignment = { vertical: 'middle', horizontal: 'center' };
     footerCell.font = { name: 'Cairo', size: 10, italic: true, color: { argb: 'FF444444' } };
     footerCell.fill = {
