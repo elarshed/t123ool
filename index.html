@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <!-- مكتبة ExcelJS لتصدير Excel -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -1097,6 +1097,13 @@
         };
 
         const exportToExcel = async (fileName = null, isDefault = false) => {
+            // التحقق من توفر مكتبة ExcelJS
+            if (typeof ExcelJS === 'undefined') {
+                alert('فشل تحميل مكتبة ExcelJS. تأكد من اتصالك بالإنترنت وحاول مرة أخرى.');
+                console.error('ExcelJS library not loaded');
+                return;
+            }
+
             let productName = document.getElementById('productNameInput').value.trim();
             if (!isDefault && !productName) {
                 alert('من فضلك، أدخل اسم المنتج أو اضغط "تخطي"!');
@@ -1253,9 +1260,9 @@
                 const link = document.createElement('a');
                 link.href = URL.createObjectURL(blob);
                 link.download = downloadFileName;
-                document.body.appendChild(link); // إضافة العنصر للـ DOM مؤقتًا
+                document.body.appendChild(link);
                 link.click();
-                document.body.removeChild(link); // إزالة العنصر بعد التنزيل
+                document.body.removeChild(link);
                 console.log('تم تصدير الملف بنجاح:', downloadFileName);
             } catch (error) {
                 console.error('خطأ أثناء التصدير:', error);
