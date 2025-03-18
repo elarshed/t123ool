@@ -859,56 +859,6 @@
     </div>
 
     <script>
-        // كائن عالمي لتخزين القيم الرقمية الخام
-        let reportData = {
-            productPrice: 0,
-            sellingPrice: 0,
-            shippingCost: 0,
-            targetOrders: 0,
-            deliveryRate: 0,
-            adCostPerOrder: 0,
-            returnCost: 0,
-            packagingCost: 0,
-            salaries: 0,
-            subscriptions: 0,
-            applyTax: false,
-            netProfitPerOrder: 0,
-            profitMargin: 0,
-            deliveredOrders: 0,
-            profitBeforeAds: 0,
-            totalAdSpend: 0,
-            adSpendWithTax: 0,
-            returnRate: 0,
-            totalReturnCost: 0,
-            netProfitAfterAds: 0
-        };
-
-        // دالة لتحديث القيم في reportData
-        function updateReportData() {
-            reportData = {
-                productPrice: parseFloat(document.getElementById('productPrice').value) || 0,
-                sellingPrice: parseFloat(document.getElementById('sellingPrice').value) || 0,
-                shippingCost: parseFloat(document.getElementById('shippingCost').value) || 0,
-                targetOrders: parseFloat(document.getElementById('targetOrders').value) || 0,
-                deliveryRate: parseFloat(document.getElementById('deliveryRate').value) || 0,
-                adCostPerOrder: parseFloat(document.getElementById('adCostPerOrder').value) || 0,
-                returnCost: parseFloat(document.getElementById('returnCost').value) || 0,
-                packagingCost: parseFloat(document.getElementById('packagingCost').value) || 0,
-                salaries: parseFloat(document.getElementById('salaries').value) || 0,
-                subscriptions: parseFloat(document.getElementById('subscriptions').value) || 0,
-                applyTax: document.getElementById('applyTax').checked,
-                netProfitPerOrder: parseFloat(document.getElementById('netProfitPerOrder').textContent.replace(/[^\d.-]/g, '')) || 0,
-                profitMargin: parseFloat(document.getElementById('profitMargin').textContent.replace(/%/g, '')) || 0,
-                deliveredOrders: parseFloat(document.getElementById('deliveredOrders').textContent.replace(/[^\d.-]/g, '')) || 0,
-                profitBeforeAds: parseFloat(document.getElementById('profitBeforeAds').textContent.replace(/[^\d.-]/g, '')) || 0,
-                totalAdSpend: parseFloat(document.getElementById('totalAdSpend').textContent.replace(/[^\d.-]/g, '')) || 0,
-                adSpendWithTax: parseFloat(document.getElementById('adSpendWithTax').textContent.replace(/[^\d.-]/g, '')) || 0,
-                returnRate: parseFloat(document.getElementById('returnRate').textContent.replace(/%/g, '')) || 0,
-                totalReturnCost: parseFloat(document.getElementById('totalReturnCost').textContent.replace(/[^\d.-]/g, '')) || 0,
-                netProfitAfterAds: parseFloat(document.getElementById('netProfitAfterAds').textContent.replace(/[^\d.-]/g, '')) || 0
-            };
-        }
-
         let previousProfit = 0;
         const currencySymbols = { EGP: 'ج.م', LYD: 'د.ل', SAR: 'ر.س', AED: 'د.إ' };
         const getCurrencySymbol = () => currencySymbols[document.getElementById('currency').value];
@@ -1038,9 +988,6 @@
             } else {
                 suggestions.innerHTML = '';
             }
-
-            // تحديث reportData بعد الحسابات
-            updateReportData();
         };
 
         const updateTaxStatus = () => {
@@ -1148,188 +1095,140 @@
             closeExportPrompt();
         };
 
-        const exportToExcel = async (fileName = null, isDefault = false) => {
-            let productName = document.getElementById('productNameInput').value.trim();
-            if (!isDefault && !productName) {
-                alert('من فضلك، أدخل اسم المنتج أو اضغط "تخطي"!');
-                return;
-            }
+       const exportToExcel = async (fileName = null, isDefault = false) => {
+    let productName = document.getElementById('productNameInput').value.trim();
+    if (!isDefault && !productName) {
+        alert('من فضلك، أدخل اسم المنتج أو اضغط "تخطي"!');
+        return;
+    }
+    const invalidChars = /[\/:*?"<>|]/g;
+    if (!isDefault && productName.match(invalidChars)) {
+        alert('اسم المنتج يحتوي على أحرف غير مسموح بها!');
+        return;
+    }
+    if (!isDefault) {
+        productName = productName.replace(/ /g, '_');
+    }
+    closeExportPrompt();
+    const currencySymbol = getCurrencySymbol();
+    
+    // تجميع البيانات
+    const inputs = [
+        ['سعر الجملة', `${currencySymbol} ${parseFloat(document.getElementById('productPrice').value) || 0}`],
+        ['سعر البيع بالشحن', `${currencySymbol} ${parseFloat(document.getElementById('sellingPrice').value) || 0}`],
+        ['تكلفة الشحن', `${currencySymbol} ${parseFloat(document.getElementById('shippingCost').value) || 0}`],
+        ['عدد الأوردرات', `${parseFloat(document.getElementById('targetOrders').value) || 0}`],
+        ['نسبة التسليمات', `${parseFloat(document.getElementById('deliveryRate').value) || 0}%`],
+        ['سعر الأوردر (إعلانات)', `${currencySymbol} ${parseFloat(document.getElementById('adCostPerOrder').value) || 0}`],
+        ['تكلفة المرتجع', `${currencySymbol} ${parseFloat(document.getElementById('returnCost').value) || 0}`],
+        ['تغليف الأوردر', `${currencySymbol} ${parseFloat(document.getElementById('packagingCost').value) || 0}`],
+        ['المرتبات', `${currencySymbol} ${parseFloat(document.getElementById('salaries').value) || 0}`],
+        ['مصروفات تشغيلية', `${currencySymbol} ${parseFloat(document.getElementById('subscriptions').value) || 0}`],
+        ['ضريبة 14%', document.getElementById('applyTax').checked ? 'مفعل' : 'غير مفعل']
+    ];
+    
+    const results = [
+        ['ربح الأوردر', document.getElementById('netProfitPerOrder').textContent || `${currencySymbol} 0`],
+        ['هامش الربح', document.getElementById('profitMargin').textContent || '0%'],
+        ['أوردرات مسلمة', document.getElementById('deliveredOrders').textContent || '0'],
+        ['الربح قبل الإعلان', document.getElementById('profitBeforeAds').textContent || `${currencySymbol} 0`],
+        ['إنفاق الإعلانات', document.getElementById('totalAdSpend').textContent || `${currencySymbol} 0`],
+        ['الإنفاق مع الضريبة', document.getElementById('adSpendWithTax').textContent || `${currencySymbol} 0`],
+        ['نسبة المرتجعات', document.getElementById('returnRate').textContent || '0%'],
+        ['تكلفة المرتجعات', document.getElementById('totalReturnCost').textContent || `${currencySymbol} 0`],
+        ['صافي الربح', document.getElementById('netProfitAfterAds').textContent || `${currencySymbol} 0`]
+    ];
+    
+    const allData = [...inputs, ...results];
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('نتائج Sell Right');
+    
+    // إعداد العنوان الأساسي بشكل واضح وبسيط
+    const currentDate = new Date().toLocaleDateString('ar-EG', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    const titleText = isDefault ? `تقرير Sell Right - ${currentDate}` : `تقرير Sell Right - ${productName} - ${currentDate}`;
+    const titleRow = worksheet.addRow([titleText]);
+    worksheet.mergeCells(1, 1, 1, allData.length);
+    titleRow.alignment = { vertical: 'middle', horizontal: 'center' };
+    titleRow.font = { name: 'Cairo', size: 16, bold: true };
+    titleRow.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'FFBEE3F8' }
+    };
+    worksheet.addRow([]);
 
-            const invalidChars = /[\/:*?"<>|]/g;
-            if (!isDefault && productName.match(invalidChars)) {
-                alert('اسم المنتج يحتوي على أحرف غير مسموح بها! (مثل / أو * أو :)');
-                return;
-            }
-
-            if (!isDefault) {
-                productName = productName.replace(/ /g, '_');
-            }
-
-            closeExportPrompt();
-
-            // تحديث القيم في reportData
-            updateReportData();
-
-            const currencySymbol = getCurrencySymbol();
-            const currentDate = new Date().toLocaleDateString('ar-EG', { day: '2-digit', month: '2-digit', year: 'numeric' });
-            const version = "1.4";
-            const title = isDefault ? `تقرير Sell Right - ${currentDate}` : `تقرير Sell Right - ${productName} - ${currentDate}`;
-            const currencyLabel = document.getElementById('currency').value;
-
-            // جمع البيانات من reportData
-            const inputs = [
-                ['سعر الجملة', reportData.productPrice],
-                ['سعر البيع بالشحن', reportData.sellingPrice],
-                ['تكلفة الشحن', reportData.shippingCost],
-                ['عدد الأوردرات', reportData.targetOrders],
-                ['نسبة التسليمات', reportData.deliveryRate],
-                ['سعر الأوردر (إعلانات)', reportData.adCostPerOrder],
-                ['تكلفة المرتجع', reportData.returnCost],
-                ['تغليف الأوردر', reportData.packagingCost],
-                ['المرتبات', reportData.salaries],
-                ['مصروفات تشغيلية', reportData.subscriptions],
-                ['ضريبة 14%', reportData.applyTax ? 'مفعل' : 'غير مفعل']
-            ];
-
-            const results = [
-                ['ربح الأوردر', reportData.netProfitPerOrder],
-                ['هامش الربح', reportData.profitMargin],
-                ['أوردرات مسلمة', reportData.deliveredOrders],
-                ['الربح قبل الإعلان', reportData.profitBeforeAds],
-                ['إنفاق الإعلانات', reportData.totalAdSpend],
-                ['الإنفاق مع الضريبة', reportData.adSpendWithTax],
-                ['نسبة المرتجعات', reportData.returnRate],
-                ['تكلفة المرتجعات', reportData.totalReturnCost],
-                ['صافي الربح', reportData.netProfitAfterAds]
-            ];
-
-            const workbook = new ExcelJS.Workbook();
-            workbook.creator = 'Sell Right Team';
-            workbook.created = new Date();
-            workbook.modified = new Date();
-
-            const worksheet = workbook.addWorksheet('تقرير Sell Right', {
-                properties: { defaultRowHeight: 25 },
-                pageSetup: { paperSize: 9, orientation: 'landscape', margins: { left: 0.5, right: 0.5, top: 0.75, bottom: 0.75 } }
-            });
-
-            // ترويسة وتذييل
-            worksheet.headerFooter.oddHeader = `&RSELL RIGHT v${version} - ${currentDate} - ${currencyLabel}&Lتقرير مالي شامل`;
-            worksheet.headerFooter.oddFooter = '&C&"Cairo,Regular"صفحة &P من &N - © Sell Right 2025';
-
-            // العنوان الرئيسي
-            worksheet.mergeCells('A1:F1');
-            worksheet.getCell('A1').value = title;
-            worksheet.getCell('A1').font = { name: 'Cairo', size: 22, bold: true, color: { argb: 'FFFFFFFF' } };
-            worksheet.getCell('A1').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF1E3A8A' } }; // أزرق غامق
-            worksheet.getCell('A1').alignment = { vertical: 'middle', horizontal: 'center' };
-            worksheet.getCell('A1').border = { top: { style: 'double' }, bottom: { style: 'double' }, left: { style: 'medium' }, right: { style: 'medium' } };
-            worksheet.getRow(1).height = 60;
-
-            // إضافة مسافة
-            worksheet.addRow([]).height = 15;
-
-            // رأس الجدول
-            worksheet.mergeCells('A3:B3');
-            worksheet.getCell('A3').value = 'المدخلات';
-            worksheet.getCell('A3').font = { name: 'Cairo', size: 16, bold: true, color: { argb: 'FFFFFFFF' } };
-            worksheet.getCell('A3').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF3B82F6' } }; // أزرق فاتح
-            worksheet.getCell('A3').alignment = { vertical: 'middle', horizontal: 'center' };
-            worksheet.getCell('A3').border = { top: { style: 'medium' }, left: { style: 'medium' }, right: { style: 'thin' }, bottom: { style: 'medium' } };
-
-            worksheet.mergeCells('D3:E3');
-            worksheet.getCell('D3').value = 'النتائج';
-            worksheet.getCell('D3').font = { name: 'Cairo', size: 16, bold: true, color: { argb: 'FFFFFFFF' } };
-            worksheet.getCell('D3').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF3B82F6' } };
-            worksheet.getCell('D3').alignment = { vertical: 'middle', horizontal: 'center' };
-            worksheet.getCell('D3').border = { top: { style: 'medium' }, left: { style: 'thin' }, right: { style: 'medium' }, bottom: { style: 'medium' } };
-
-            // فاصل عمودي بين المدخلات والنتائج
-            worksheet.getCell('C3').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFD1D5DB' } }; // رمادي فاتح
-            worksheet.getCell('C3').border = { top: { style: 'medium' }, bottom: { style: 'medium' } };
-
-            // إعداد رؤوس الأعمدة
-            const headers = ['البند', 'القيمة', '', 'البند', 'القيمة'];
-            worksheet.addRow(headers).eachCell((cell, colNumber) => {
-                if (colNumber !== 3) { // تجاهل العمود الفاصل
-                    cell.font = { name: 'Cairo', size: 12, bold: true, color: { argb: 'FF1E3A8A' } };
-                    cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF1F5F9' } }; // خلفية رمادية فاتحة جدًا
-                    cell.alignment = { vertical: 'middle', horizontal: 'center' };
-                    cell.border = { top: { style: 'medium' }, left: { style: 'thin' }, bottom: { style: 'medium' }, right: { style: 'thin' } };
-                } else {
-                    cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFD1D5DB' } };
-                    cell.border = { top: { style: 'medium' }, bottom: { style: 'medium' } };
-                }
-            });
-
-            // ملء البيانات في صف واحد
-            const maxLength = Math.max(inputs.length, results.length);
-            for (let i = 0; i < maxLength; i++) {
-                const inputRow = inputs[i] || ['', ''];
-                const resultRow = results[i] || ['', ''];
-                const row = worksheet.addRow([
-                    inputRow[0], // بند المدخلات
-                    inputRow[1], // قيمة المدخلات
-                    '',          // فاصل
-                    resultRow[0], // بند النتائج
-                    resultRow[1]  // قيمة النتائج
-                ]);
-
-                row.eachCell((cell, colNumber) => {
-                    cell.font = { name: 'Cairo', size: 11 };
-                    cell.alignment = { vertical: 'middle', horizontal: colNumber === 1 || colNumber === 5 ? 'center' : 'right' };
-                    cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
-
-                    if (colNumber === 2) {
-                        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFD1D5DB' } }; // فاصل رمادي
-                    } else if (colNumber === 1 || colNumber === 5) { // تنسيق القيم
-                        const value = parseFloat(cell.value);
-                        if (!isNaN(value)) {
-                            // تنسيق النسب المئوية
-                            if ((colNumber === 1 && inputRow[0].includes('نسبة')) || (colNumber === 5 && resultRow[0].includes('نسبة'))) {
-                                cell.numFmt = '0.00%;[Red]-0.00%'; // دعم النسب السالبة باللون الأحمر
-                            } else if (!inputRow[0].includes('عدد') && !resultRow[0].includes('أوردرات') && inputRow[0] !== 'ضريبة 14%') {
-                                cell.numFmt = `${currencySymbol} #,##0.00;[Red](${currencySymbol} #,##0.00)`; // دعم القيم السالبة باللون الأحمر وبين قوسين
-                            }
-                            // تنسيق شرطي للأرباح
-                            if ((inputRow[0].includes('ربح') || resultRow[0].includes('ربح')) && !resultRow[0].includes('هامش')) {
-                                cell.fill = {
-                                    type: 'pattern',
-                                    pattern: 'solid',
-                                    fgColor: { argb: value >= 0 ? 'FFE6FFEC' : 'FFFFE6E6' } // أخضر فاتح للإيجابي، أحمر فاتح للسالب
-                                };
-                            }
-                        }
-                    }
-                });
-            }
-
-            // ضبط عرض الأعمدة
-            worksheet.columns = [
-                { width: 25 }, // بند المدخلات
-                { width: 20 }, // قيمة المدخلات
-                { width: 2 },  // فاصل
-                { width: 25 }, // بند النتائج
-                { width: 20 }  // قيمة النتائج
-            ];
-
-            // إضافة ملاحظة سفلية
-            const lastRow = maxLength + 5;
-            worksheet.mergeCells(`A${lastRow}:E${lastRow}`);
-            worksheet.getCell(`A${lastRow}`).value = 'تم إنشاء هذا التقرير بواسطة Sell Right - للدعم: support@sellright.com';
-            worksheet.getCell(`A${lastRow}`).font = { name: 'Cairo', size: 10, italic: true, color: { argb: 'FF6B7280' } };
-            worksheet.getCell(`A${lastRow}`).alignment = { vertical: 'middle', horizontal: 'center' };
-            worksheet.getRow(lastRow).height = 30;
-
-            // تنسيق الملف وتحميله
-            const buffer = await workbook.xlsx.writeBuffer();
-            const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-            const downloadFileName = fileName || (isDefault ? `SellRight_تقرير_${currentDate}.xlsx` : `SellRight_${productName}_${currentDate}.xlsx`);
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = downloadFileName;
-            link.click();
+    // إضافة رؤوس الأعمدة مع تنسيق بسيط
+    const headerRow = worksheet.addRow(allData.map(item => item[0]));
+    headerRow.eachCell(cell => {
+        cell.font = { name: 'Cairo', size: 12, bold: true };
+        cell.alignment = { vertical: 'middle', horizontal: 'center' };
+        cell.fill = {
+            type: 'pattern',
+            pattern: 'solid',
+            fgColor: { argb: 'FFE8F4FA' }
         };
+        cell.border = {
+            top: { style: 'thin' },
+            left: { style: 'thin' },
+            bottom: { style: 'thin' },
+            right: { style: 'thin' }
+        };
+    });
+    
+    // إضافة بيانات القيم مع محاذاة واضحة
+    const valueRow = worksheet.addRow(allData.map(item => item[1]));
+    valueRow.eachCell(cell => {
+        cell.font = { name: 'Cairo', size: 12 };
+        cell.alignment = { vertical: 'middle', horizontal: 'center' };
+        cell.border = {
+            top: { style: 'thin' },
+            left: { style: 'thin' },
+            bottom: { style: 'thin' },
+            right: { style: 'thin' }
+        };
+    });
+    
+    // ضبط العرض الأمثل للأعمدة
+    allData.forEach((item, index) => {
+        const colWidth = Math.max(item[0].length, item[1].toString().length) + 5;
+        worksheet.getColumn(index + 1).width = colWidth;
+    });
+
+    // إضافة قسم ملخص التقرير بشكل مختصر وبسيط
+    worksheet.addRow([]);
+    const summaryRow = worksheet.addRow(['ملخص التقرير']);
+    worksheet.mergeCells(`A${summaryRow.number}:B${summaryRow.number}`);
+    summaryRow.font = { name: 'Cairo', size: 14, bold: true };
+    summaryRow.alignment = { vertical: 'middle', horizontal: 'center' };
+    worksheet.addRow(['صافي الربح', document.getElementById('netProfitAfterAds').textContent || `${currencySymbol} 0`]);
+    worksheet.addRow(['عدد الأوردرات المسلمة', document.getElementById('deliveredOrders').textContent || '0']);
+
+    // تبسيط التنسيق الشرطي بشكل خفيف لتمييز الأرقام المهمة
+    worksheet.eachRow({ includeEmpty: false }, (row, rowNumber) => {
+        row.eachCell({ includeEmpty: false }, (cell) => {
+            if (cell.value && typeof cell.value === 'string' && cell.value.includes(currencySymbol)) {
+                const numericValue = parseFloat(cell.value.replace(/[^\d.-]/g, ''));
+                if (numericValue > 0) {
+                    cell.font = { color: { argb: 'FF2F855A' }, bold: true };
+                } else if (numericValue < 0) {
+                    cell.font = { color: { argb: 'FF9B2C2C' }, bold: true };
+                }
+            }
+        });
+    });
+
+    // إعداد الملف للتنزيل
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const downloadFileName = fileName || (isDefault 
+        ? `SellRight_تقرير_${currentDate}.xlsx` 
+        : `SellRight_${productName}_${currentDate}.xlsx`);
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = downloadFileName;
+    link.click();
+};
+
 
         const showNotification = () => {
             const lastSeenVersion = localStorage.getItem('lastSeenVersion');
@@ -1371,7 +1270,7 @@
                 dropdownOptions.classList.remove('active');
             }
         });
-        
+
         document.querySelectorAll('input, #currency, #applyTax').forEach(input => {
             input.addEventListener('input', () => {
                 calculateResults();
@@ -1382,4 +1281,4 @@
     </script>
     <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'921c2c869dd9bd3a',t:'MTc0MjIxMTE5MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
-</html>                                   
+</html> 
