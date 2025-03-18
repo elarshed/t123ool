@@ -1095,33 +1095,26 @@
             closeExportPrompt();
         };
 
-    const exportToExcel = async (fileName = null, isDefault = false) => {
-    // التحقق من إدخال اسم المنتج إذا لم يكن الوضع تخطي (isDefault)
+   const exportToExcel = async (fileName = null, isDefault = false) => {
+    // التحقق من إدخال اسم المنتج
     let productName = document.getElementById('productNameInput').value.trim();
     if (!isDefault && !productName) {
         alert('من فضلك، أدخل اسم المنتج أو اضغط "تخطي"!');
         return;
     }
-
-    // التحقق من عدم وجود محارف غير مسموح بها في اسم الملف
     const invalidChars = /[\/:*?"<>|]/g;
     if (!isDefault && productName.match(invalidChars)) {
         alert('اسم المنتج يحتوي على أحرف غير مسموح بها! (مثل / أو * أو :)');
         return;
     }
-
-    // إزالة المسافات واستبدالها بشرطة سفلية إن لزم الأمر
     if (!isDefault) {
         productName = productName.replace(/ /g, '_');
     }
+    closeExportPrompt(); // إغلاق النافذة إن وُجدت
 
-    // إغلاق نافذة التصدير (إن وُجدت)
-    closeExportPrompt();
-
-    // الحصول على رمز العملة (ج.م - ر.س ... إلخ)
     const currencySymbol = getCurrencySymbol();
 
-    // تحضير بيانات "المدخلات"
+    // بيانات المدخلات
     const inputs = [
         ['سعر الجملة', `${currencySymbol} ${parseFloat(document.getElementById('productPrice').value) || 0}`],
         ['سعر البيع بالشحن', `${currencySymbol} ${parseFloat(document.getElementById('sellingPrice').value) || 0}`],
@@ -1136,7 +1129,7 @@
         ['%ضريبة 14', document.getElementById('applyTax').checked ? 'مفعل' : 'غير مفعل'],
     ];
 
-    // تحضير بيانات "النتائج"
+    // بيانات النتائج
     const results = [
         ['ربح الأوردر', document.getElementById('netProfitPerOrder').textContent || `${currencySymbol} 0`],
         ['هامش الربح', document.getElementById('profitMargin').textContent || '0%'],
@@ -1149,44 +1142,43 @@
         ['صافي الربح', document.getElementById('netProfitAfterAds').textContent || `${currencySymbol} 0`]
     ];
 
-    // إنشاء ملف عمل جديد باستخدام ExcelJS
+    // إنشاء ملف عمل جديد
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet('تقرير Sell Right');
 
-    // ========== إعداد الترويسة (Header) ==========
-    // نص العنوان: "تقرير Sell Right - التاريخ" أو مع اسم المنتج
+    // ===== العنوان (Header) في الصف الأول =====
     const currentDate = new Date().toLocaleDateString('ar-EG', { day: '2-digit', month: '2-digit', year: 'numeric' });
     const titleText = isDefault 
-      ? `تقرير Sell Right - ${currentDate}`
-      : `تقرير Sell Right - ${productName} - ${currentDate}`;
+        ? `تقرير Sell Right - ${currentDate}`
+        : `تقرير Sell Right - ${productName} - ${currentDate}`;
 
-    // دمج الخلايا من A1 إلى D1 لعرض العنوان
+    // دمج الخلايا من A1 إلى D1
     worksheet.mergeCells('A1', 'D1');
     const titleCell = worksheet.getCell('A1');
     titleCell.value = titleText;
     titleCell.alignment = {
-      vertical: 'middle',
-      horizontal: 'center',
-      wrapText: false,  // لا نريد التفاف تلقائي
-      textRotation: 0,  // تأكد أن النص غير مدوّر
-      readingOrder: 2   // لجعل اتجاه الكتابة من اليمين لليسار (مفيد للعربية)
+        vertical: 'middle',
+        horizontal: 'center',
+        wrapText: false,
+        textRotation: 0,
+        readingOrder: 2 // RTL للعربية
     };
     titleCell.font = {
-      name: 'Cairo',
-      size: 14,
-      bold: true,
-      color: { argb: 'FFFFFFFF' }
+        name: 'Cairo',
+        size: 14,
+        bold: true,
+        color: { argb: 'FFFFFFFF' }
     };
     titleCell.fill = {
-      type: 'pattern',
-      pattern: 'solid',
-      fgColor: { argb: 'FF2F5597' } // خلفية زرقاء داكنة
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'FF2F5597' } // أزرق داكن
     };
-
-    // زيادة ارتفاع الصف الأول (العنوان) ليتسع للنص
+    // ارتفاع الصف الأول
     worksheet.getRow(1).height = 25;
 
-    // ========== صف أقسام الجدول (المدخلات - النتائج) ==========
+    // ===== صف 2: عناوين أقسام "المدخلات" و "النتائج" =====
+    // دمج الخلايا للمدخلات والنتائج
     worksheet.mergeCells('A2', 'B2');
     worksheet.getCell('A2').value = 'المدخلات';
     worksheet.getCell('A2').alignment = { vertical: 'middle', horizontal: 'center' };
@@ -1207,7 +1199,10 @@
         fgColor: { argb: 'FF4472C4' }
     };
 
-    // ========== صف عناوين الأعمدة: البند - القيمة ==========
+    // تكبير الصف الثاني لعرض النصوص بوضوح
+    worksheet.getRow(2).height = 25; // يمكنك زيادة الرقم لو احتجت مساحة أكبر
+
+    // ===== الصف 3: عناوين الأعمدة "البند" و"القيمة" لكل قسم =====
     worksheet.getCell('A3').value = 'البند';
     worksheet.getCell('B3').value = 'القيمة';
     worksheet.getCell('C3').value = 'البند';
@@ -1230,7 +1225,7 @@
         };
     });
 
-    // ========== تعبئة بيانات "المدخلات" و"النتائج" ==========
+    // ===== تعبئة بيانات المدخلات والنتائج =====
     const maxRows = Math.max(inputs.length, results.length);
     let startRow = 4;
     for (let i = 0; i < maxRows; i++) {
@@ -1243,7 +1238,7 @@
         row.getCell('C').value = resultItem[0];
         row.getCell('D').value = resultItem[1];
 
-        // تنسيق كل خلية
+        // تنسيق كل خلية في هذا الصف
         ['A','B','C','D'].forEach(col => {
             const cell = row.getCell(col);
             cell.alignment = { vertical: 'middle', horizontal: 'center' };
@@ -1257,10 +1252,10 @@
         });
     }
 
-    // إضافة صف فاضي بعد البيانات
+    // ===== صف فاضي بعد البيانات =====
     const emptyRow = worksheet.addRow([]);
 
-    // ========== الفوتر ========== 
+    // ===== الفوتر في آخر الجدول =====
     const footerRowNumber = emptyRow.number + 1;
     worksheet.mergeCells(`A${footerRowNumber}:D${footerRowNumber}`);
     const footerCell = worksheet.getCell(`A${footerRowNumber}`);
@@ -1273,14 +1268,13 @@
         fgColor: { argb: 'FFF3F3F3' }
     };
 
-    // ========== ضبط عرض الأعمدة ==========
-    // يمكنك زيادة القيم حسب حاجتك لعرض نصوص أطول
+    // ===== ضبط عرض الأعمدة لتكون أوسع =====
     worksheet.getColumn('A').width = 25;
-    worksheet.getColumn('B').width = 18;
+    worksheet.getColumn('B').width = 20;
     worksheet.getColumn('C').width = 25;
-    worksheet.getColumn('D').width = 18;
+    worksheet.getColumn('D').width = 20;
 
-    // ========== تنسيق شرطي بسيط للأرقام الموجبة والسالبة ==========
+    // ===== تنسيق شرطي مبسط للأرقام الموجبة والسالبة =====
     const startDataRow = 4;
     const endDataRow = startDataRow + maxRows - 1;
     for (let r = startDataRow; r <= endDataRow; r++) {
@@ -1299,18 +1293,20 @@
         });
     }
 
-    // ========== حفظ الملف وتنزيله ==========
+    // ===== أخيرًا: حفظ الملف وتنزيله =====
     const buffer = await workbook.xlsx.writeBuffer();
     const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
     const downloadFileName = fileName 
-      || (isDefault 
-          ? `SellRight_تقرير_${currentDate}.xlsx`
-          : `SellRight_${productName}_${currentDate}.xlsx`);
+        || (isDefault 
+            ? `SellRight_تقرير_${currentDate}.xlsx`
+            : `SellRight_${productName}_${currentDate}.xlsx`);
+
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = downloadFileName;
     link.click();
 };
+
 
 
 
