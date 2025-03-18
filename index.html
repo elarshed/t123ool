@@ -489,125 +489,156 @@
             color: #63b3ed;
         }
 
-        /* Export Prompt Modal */
-        .export-prompt {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.95);
-            padding: 1.5rem;
-            border-radius: 15px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-            z-index: 2000;
-            width: 300px;
-            text-align: center;
-            animation: fadeIn 0.5s ease;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            border: 2px solid #4a90e2;
-            background: linear-gradient(135deg, #f0f4f8, #e2e8f0);
-        }
-        .export-prompt.active {
-            display: block;
-            opacity: 1;
-        }
-        .export-prompt.leaving {
-            opacity: 0;
-        }
-        .dark-mode .export-prompt {
-            background: linear-gradient(135deg, #2d3748, #4a5568);
-            color: #e2e8f0;
-            border-color: #63b3ed;
-        }
-        .export-prompt h3 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #4a90e2;
-            margin-bottom: 1rem;
-        }
-        .dark-mode .export-prompt h3 {
-            color: #63b3ed;
-        }
-        .export-prompt .input-group {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-        .export-prompt input {
-            width: 80%;
-            padding: 0.5rem;
-            font-size: 1rem;
-            border: 1px solid #4a90e2;
-            border-radius: 6px;
-            margin-bottom: 1rem;
-            background: #fff;
-            font-family: 'Cairo', sans-serif;
-        }
-        .dark-mode .export-prompt input {
-            background: #2d3748;
-            color: #e2e8f0;
-            border-color: #63b3ed;
-        }
-        .export-prompt .export-btn {
-            background: #4a90e2;
-            color: #fff;
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .export-prompt .export-btn:hover {
-            background: #63b3ed;
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-        .export-prompt .skip-btn {
-            background: #ed8936;
-            color: #fff;
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-left: 0.5rem;
-        }
-        .dark-mode .export-prompt .skip-btn {
-            background: #f6ad55;
-        }
-        .export-prompt .skip-btn:hover {
-            background: #dd6b20;
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-        .export-prompt .cancel-btn {
-            background: #f56565;
-            color: #fff;
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-left: 0.5rem;
-        }
-        .dark-mode .export-prompt .cancel-btn {
-            background: #fc8181;
-        }
-        .export-prompt .cancel-btn:hover {
-            background: #e53e3e;
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-
+       /* نافذة التصدير الرئيسية */
+.export-prompt {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    z-index: 2000;
+    width: 300px;
+    text-align: center;
+    animation: fadeIn 0.5s ease;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border: 2px solid #4a90e2;
+    background: linear-gradient(135deg, #f0f4f8, #e2e8f0);
 }
+.export-prompt.active {
+    display: block;
+    opacity: 1;
+}
+.export-prompt.leaving {
+    opacity: 0;
+}
+
+/* عنوان النافذة */
+.export-prompt h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #4a90e2;
+    margin-bottom: 1rem;
+}
+
+/* أيقونة التاج (tag) */
+.tag-icon {
+    font-size: 1.2rem;
+    color: #4a90e2;
+}
+
+/* مجموعة الإدخال */
+.export-prompt .input-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+/* حقل الإدخال */
+.export-prompt input {
+    width: 80%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #4a90e2;
+    border-radius: 6px;
+    background: #fff;
+    font-family: 'Cairo', sans-serif;
+}
+
+/* تصغير حجم الخط الخاص بالنص التجريبي (placeholder) */
+.export-prompt input::placeholder {
+    font-size: 0.9rem; /* عدّل القيمة حسب الحجم المطلوب */
+    color: #999;
+}
+
+/* الأزرار */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem; /* مسافة بين الأزرار */
+}
+
+/* زر التصدير */
+.export-prompt .export-btn {
+    background: #4a90e2;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.export-prompt .export-btn:hover {
+    background: #63b3ed;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* زر التخطي */
+.export-prompt .skip-btn {
+    background: #ed8936;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.export-prompt .skip-btn:hover {
+    background: #dd6b20;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* زر الإلغاء */
+.export-prompt .cancel-btn {
+    background: #f56565;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.export-prompt .cancel-btn:hover {
+    background: #e53e3e;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* وضعية الليلي (Dark Mode) */
+.dark-mode .export-prompt {
+    background: linear-gradient(135deg, #2d3748, #4a5568);
+    color: #e2e8f0;
+    border-color: #63b3ed;
+}
+.dark-mode .export-prompt h3 {
+    color: #63b3ed;
+}
+.dark-mode .export-prompt input {
+    background: #2d3748;
+    color: #e2e8f0;
+    border-color: #63b3ed;
+}
+.dark-mode .export-prompt .skip-btn {
+    background: #f6ad55;
+}
+.dark-mode .export-prompt .cancel-btn {
+    background: #fc8181;
+}
+
 
 
         /* Responsive Adjustments */
@@ -847,18 +878,19 @@
     </div>
 
     <!-- Export Prompt Modal -->
-    <div class="export-prompt" id="exportPrompt">
-        <h3>أدخل تفاصيل التقرير</h3>
-        <div class="input-group">
-            <i class="fas fa-tag" style="font-size: 1.2rem; color: #4a90e2;"></i>
-            <input type="text" id="productNameInput" placeholder="اسم المنتج (مثال: قميص أحمر)">
-        </div>
-        <div>
-            <button class="export-btn" onclick="exportToExcel()">تصدير</button>
-            <button class="skip-btn" onclick="exportWithDefaultName()">تخطي</button>
-            <button class="cancel-btn" onclick="closeExportPrompt()">إلغاء</button>
-        </div>
+<div class="export-prompt" id="exportPrompt">
+    <h3>أدخل تفاصيل التقرير</h3>
+    <div class="input-group">
+        <i class="fas fa-tag tag-icon"></i>
+        <input type="text" id="productNameInput" placeholder="اسم المنتج (مثال: قميص أحمر)">
     </div>
+    <div class="button-container">
+        <button class="export-btn" onclick="exportToExcel()">تصدير</button>
+        <button class="skip-btn" onclick="exportWithDefaultName()">تخطي</button>
+        <button class="cancel-btn" onclick="closeExportPrompt()">إلغاء</button>
+    </div>
+</div>
+
 
     <script>
         let previousProfit = 0;
